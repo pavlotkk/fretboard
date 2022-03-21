@@ -4,7 +4,7 @@ help:
 
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
-PACKAGE := freatboard
+PACKAGE := fretboard
 LIST_TARGETS := $(PACKAGE) tests
 
 # install scripts
