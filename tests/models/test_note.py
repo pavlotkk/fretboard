@@ -51,11 +51,8 @@ def test__note(note_args: tuple, expected: Note):
 
 @pytest.mark.parametrize(
     "note_args",
-    [
-        ("A", Sharp, 0)
-    ],
+    [("A", Sharp, 0)],
 )
 def test__note__exception(note_args: tuple):
     with pytest.raises(ValueError):
-        actual = Note(*note_args)
-
+        Note(*note_args)
