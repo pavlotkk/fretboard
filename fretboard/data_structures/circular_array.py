@@ -35,10 +35,10 @@ class CircularArray:
         return self._array == other._array
 
     def __str__(self):
-        return str(self._array)
+        return "".join([str(i) for i in self._array])
 
     def __repr__(self):
-        return str(self._array)
+        return " - ".join([str(i) for i in self._array])
 
     def __getitem__(self, index):
         if not isinstance(index, int):

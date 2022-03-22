@@ -40,6 +40,8 @@ def test__interval__create_exception(args: tuple):
     [
         (Interval(), Interval(2), Interval(2)),
         (Interval(1), 8, Interval(9)),
+        (Interval(1), "m6", Interval(9)),
+        (Interval(1), "Minor sixth", Interval(9)),
     ],
 )
 def test__interval__add(
@@ -65,6 +67,8 @@ def test__interval__add_exception(left: Interval, right: Union[Interval, int]):
     [
         (Interval(), Interval(2), Interval(2)),
         (Interval(1), 8, Interval(9)),
+        (Interval(1), "m6", Interval(9)),
+        (Interval(1), "Minor sixth", Interval(9)),
     ],
 )
 def test__interval__iadd(
@@ -90,6 +94,8 @@ def test__interval__iadd_exception(left: Interval, right: Union[Interval, int]):
     [
         (Interval(), Interval(2), Interval(-2)),
         (Interval(9), 6, Interval(3)),
+        (Interval(9), "TT", Interval(3)),
+        (Interval(9), "Tritone", Interval(3)),
     ],
 )
 def test__interval__sub(
@@ -115,6 +121,8 @@ def test__interval__sub_exception(left: Interval, right: Union[Interval, int]):
     [
         (Interval(), Interval(2), Interval(-2)),
         (Interval(9), 6, Interval(3)),
+        (Interval(9), "TT", Interval(3)),
+        (Interval(9), "Tritone", Interval(3)),
     ],
 )
 def test__interval__isub(

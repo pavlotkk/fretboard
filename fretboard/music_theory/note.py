@@ -87,7 +87,7 @@ class Note:
         return hash((self._name, self._pitch.value))
 
     def __str__(self):
-        return f"{self._name}{self._pitch.value or ''}"
+        return f"{self._name}{self._pitch.value if self._pitch else ''}"
 
     def __repr__(self):
-        return f"{self._name}{self._pitch.value or ''}"
+        return f"{self._name}{self._pitch.value if self._pitch else ''}"

@@ -32,6 +32,7 @@ IntervalShortNameMap = {
     "P8": (12, "Octave"),
 }
 
+# TOTO: convert full names to lowercase
 IntervalNameMap = {
     "Unison": (0, "P1"),
     "Minor second": (1, "m2"),
@@ -47,6 +48,9 @@ IntervalNameMap = {
     "Major seventh": (11, "M7"),
     "Octave": (12, "P8"),
 }
+
+
+MajorScaleIntervals = ("M2", "M2", "m2", "M2", "M2", "M2", "m2")
 
 
 class Interval:
@@ -120,6 +124,8 @@ class Interval:
     def __add__(self, other):
         if isinstance(other, int):
             return Interval(self.semitones + other)
+        elif isinstance(other, str):
+            return Interval(self.semitones + Interval(other).semitones)
         elif isinstance(other, Interval):
             return Interval(self.semitones + other.semitones)
         else:
@@ -128,6 +134,9 @@ class Interval:
     def __iadd__(self, other):
         if isinstance(other, int):
             self._semitones = self._semitones + other
+            return self
+        elif isinstance(other, str):
+            self._semitones = self._semitones + Interval(other).semitones
             return self
         elif isinstance(other, Interval):
             self._semitones = self._semitones + other.semitones
@@ -138,6 +147,8 @@ class Interval:
     def __sub__(self, other):
         if isinstance(other, int):
             return Interval(self.semitones - other)
+        elif isinstance(other, str):
+            return Interval(self.semitones - Interval(other).semitones)
         elif isinstance(other, Interval):
             return Interval(self.semitones - other.semitones)
         else:
@@ -146,6 +157,9 @@ class Interval:
     def __isub__(self, other):
         if isinstance(other, int):
             self._semitones = self._semitones - other
+            return self
+        elif isinstance(other, str):
+            self._semitones = self._semitones - Interval(other).semitones
             return self
         elif isinstance(other, Interval):
             self._semitones = self._semitones - other.semitones
