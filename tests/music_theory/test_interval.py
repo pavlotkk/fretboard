@@ -2,7 +2,7 @@ from typing import Union
 
 import pytest
 
-from fretboard.models.interval import Interval
+from fretboard.music_theory.interval import Interval
 
 
 @pytest.mark.parametrize(

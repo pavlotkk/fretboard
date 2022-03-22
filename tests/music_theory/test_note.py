@@ -1,6 +1,6 @@
 import pytest
 
-from fretboard.models.note import Note, Sharp, parse_note
+from fretboard.music_theory.note import Note, Sharp, parse_note
 
 
 @pytest.mark.parametrize(
