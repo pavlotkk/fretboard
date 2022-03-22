@@ -57,16 +57,11 @@ class Note:
     Represents a musical note
     """
 
-    def __init__(self, name: str, pitch: Optional[str] = None, octave: int = 1):
+    def __init__(self, name: str, pitch: Optional[str] = None):
         self._name, self._pitch = parse_note(name)
 
         if not pitch:
             self._pitch = pitch
-
-        if octave < 1:
-            raise ValueError(f"Invalid octave value {octave}")
-
-        self._octave: int = octave
 
     def __eq__(self, other):
         if not other:
@@ -75,17 +70,13 @@ class Note:
         if not isinstance(other, Note):
             return False
 
-        return (
-            self._name == other._name
-            and self._pitch == other._pitch
-            and self._octave == other._octave
-        )
+        return self._name == other._name and self._pitch == other._pitch
 
     def __hash__(self):
-        return hash((self._name, self._pitch, self._octave))
+        return hash((self._name, self._pitch))
 
     def __str__(self):
         return f"{self._name}{self._pitch or ''}"
 
     def __repr__(self):
-        return f"{self._name}{self._pitch or ''}({self._octave})"
+        return f"{self._name}{self._pitch or ''}"

@@ -47,12 +47,3 @@ def test__parse_note__value_error(note):
 def test__note(note_args: tuple, expected: Note):
     actual = Note(*note_args)
     assert actual == expected
-
-
-@pytest.mark.parametrize(
-    "note_args",
-    [("A", Sharp, 0)],
-)
-def test__note__exception(note_args: tuple):
-    with pytest.raises(ValueError):
-        Note(*note_args)
