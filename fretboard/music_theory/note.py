@@ -1,12 +1,15 @@
-from typing import Optional, Tuple
+from enum import Enum
+from typing import Optional, Tuple, Union
 
-Sharp = "#"
-Flat = "b"
 Notes = {"A", "B", "C", "D", "E", "F", "G"}
-Pitches = {Sharp, Flat}
 
 
-def parse_note(note: str) -> Tuple[str, Optional[str]]:
+class Pitch(Enum):
+    Sharp = "#"
+    Flat = "b"
+
+
+def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
     """
     Parse note form string source, fixing case
 
@@ -36,15 +39,17 @@ def parse_note(note: str) -> Tuple[str, Optional[str]]:
     elif len(note) == 2:
         note_pitch = note[1].lower()
 
-        if note_pitch not in Pitches:
+        try:
+            note_pitch = Pitch(note_pitch)
+        except ValueError:
             raise ValueError(f"Invalid note {note}")
 
         # Exception for notes that can't have flats
-        if note_name in {"F", "C"} and note_pitch == Flat:
+        if note_name in {"F", "C"} and note_pitch == Pitch.Flat:
             raise ValueError(f"Invalid note {note}")
 
         # Exception for notes that can't have sharps
-        if note_name in {"B", "E"} and note_pitch == Sharp:
+        if note_name in {"B", "E"} and note_pitch == Pitch.Sharp:
             raise ValueError(f"Invalid note {note}")
 
         return note_name, note_pitch
@@ -57,10 +62,16 @@ class Note:
     Represents a musical note
     """
 
-    def __init__(self, name: str, pitch: Optional[str] = None):
+    def __init__(self, name: str, pitch: Optional[Union[str, Pitch]] = None):
         self._name, self._pitch = parse_note(name)
 
         if not pitch:
+            if isinstance(pitch, str):
+                try:
+                    self._pitch = Pitch(pitch)
+                except ValueError:
+                    raise ValueError(f"Invalid pitch value: {pitch}")
+
             self._pitch = pitch
 
     def __eq__(self, other):
@@ -73,10 +84,10 @@ class Note:
         return self._name == other._name and self._pitch == other._pitch
 
     def __hash__(self):
-        return hash((self._name, self._pitch))
+        return hash((self._name, self._pitch.value))
 
     def __str__(self):
-        return f"{self._name}{self._pitch or ''}"
+        return f"{self._name}{self._pitch.value or ''}"
 
     def __repr__(self):
-        return f"{self._name}{self._pitch or ''}"
+        return f"{self._name}{self._pitch.value or ''}"
