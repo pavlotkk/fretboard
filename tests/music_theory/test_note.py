@@ -1,6 +1,7 @@
 import pytest
 
-from fretboard.music_theory.note import Note, Pitch, parse_note
+from fretboard.music_theory import Note, Pitch, note
+from fretboard.music_theory.note import parse_note
 
 
 @pytest.mark.parametrize(
@@ -38,12 +39,28 @@ def test__parse_note__value_error(note):
 
 
 @pytest.mark.parametrize(
-    "note_args,expected",
+    "note_args,expected_str",
     [
-        (("A#",), Note("A#")),
-        (("A", Pitch.Sharp), Note("A#")),
+        (("C",), "C"),
+        (("A#",), "A#"),
+        (("Bb",), "Bb"),
+        (("A", Pitch.Sharp), "A#"),
     ],
 )
-def test__note(note_args: tuple, expected: Note):
+def test__note__create(note_args: tuple, expected_str: str):
     actual = Note(*note_args)
-    assert actual == expected
+    assert str(actual) == expected_str
+
+
+@pytest.mark.parametrize(
+    "note_args,expected_str",
+    [
+        (("C",), "C"),
+        (("A#",), "A#"),
+        (("Bb",), "Bb"),
+        (("A", Pitch.Sharp), "A#"),
+    ],
+)
+def test__note__create_builder(note_args: tuple, expected_str: str):
+    actual = note(*note_args)
+    assert str(actual) == expected_str

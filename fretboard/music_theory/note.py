@@ -65,7 +65,7 @@ class Note:
     def __init__(self, name: str, pitch: Optional[Union[str, Pitch]] = None):
         self._name, self._pitch = parse_note(name)
 
-        if not pitch:
+        if pitch:
             if isinstance(pitch, str):
                 try:
                     self._pitch = Pitch(pitch)

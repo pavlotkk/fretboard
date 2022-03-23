@@ -47,6 +47,10 @@ def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
         root_note: the root note
         key: scale key
 
+    Examples:
+        >>> scale("c", "major")
+        >>> "C - D - E - F - G - A - B"
+
     Returns: scale
 
     """
@@ -58,7 +62,7 @@ def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
     # case key
     if isinstance(key, str):
         try:
-            key = Key(key)
+            key = Key(key.lower())
         except ValueError:
             raise ValueError(f"Invalid key value, {key}")
 
