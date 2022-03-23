@@ -1,52 +1,52 @@
 from typing import Union
 
 IntervalSemitonesMap = {
-    0: ("P1", "Unison"),
-    1: ("m2", "Minor second"),
-    2: ("M2", "Major second"),
-    3: ("m3", "Minor third"),
-    4: ("M3", "Major third"),
-    5: ("P4", "Perfect fourth"),
-    6: ("TT", "Tritone"),
-    7: ("P5", "Perfect fifth"),
-    8: ("m6", "Minor sixth"),
-    9: ("M6", "Major sixth"),
-    10: ("m7", "Minor seventh"),
-    11: ("M7", "Major seventh"),
-    12: ("P8", "Octave"),
+    0: ("P1", "unison"),
+    1: ("m2", "minor second"),
+    2: ("M2", "major second"),
+    3: ("m3", "minor third"),
+    4: ("M3", "major third"),
+    5: ("P4", "perfect fourth"),
+    6: ("TT", "tritone"),
+    7: ("P5", "perfect fifth"),
+    8: ("m6", "minor sixth"),
+    9: ("M6", "major sixth"),
+    10: ("m7", "minor seventh"),
+    11: ("M7", "major seventh"),
+    12: ("P8", "octave"),
 }
 
 IntervalShortNameMap = {
-    "P1": (0, "Unison"),
-    "m2": (1, "Minor second"),
-    "M2": (2, "Major second"),
-    "m3": (3, "Minor third"),
-    "M3": (4, "Major third"),
-    "P4": (5, "Perfect fourth"),
-    "TT": (6, "Tritone"),
-    "P5": (7, "Perfect fifth"),
-    "m6": (8, "Minor sixth"),
-    "M6": (9, "Major sixth"),
-    "m7": (10, "Minor seventh"),
-    "M7": (11, "Major seventh"),
-    "P8": (12, "Octave"),
+    "P1": (0, "unison"),
+    "m2": (1, "minor second"),
+    "M2": (2, "major second"),
+    "m3": (3, "minor third"),
+    "M3": (4, "major third"),
+    "P4": (5, "perfect fourth"),
+    "TT": (6, "tritone"),
+    "P5": (7, "perfect fifth"),
+    "m6": (8, "minor sixth"),
+    "M6": (9, "major sixth"),
+    "m7": (10, "minor seventh"),
+    "M7": (11, "major seventh"),
+    "P8": (12, "octave"),
 }
 
 # TOTO: convert full names to lowercase
 IntervalNameMap = {
-    "Unison": (0, "P1"),
-    "Minor second": (1, "m2"),
-    "Major second": (2, "M2"),
-    "Minor third": (3, "m3"),
-    "Major third": (4, "M3"),
-    "Perfect fourth": (5, "P4"),
-    "Tritone": (6, "TT"),
-    "Perfect fifth": (7, "P5"),
-    "Minor sixth": (8, "m6"),
-    "Major sixth": (9, "M6"),
-    "Minor seventh": (10, "m7"),
-    "Major seventh": (11, "M7"),
-    "Octave": (12, "P8"),
+    "unison": (0, "P1"),
+    "minor second": (1, "m2"),
+    "major second": (2, "M2"),
+    "minor third": (3, "m3"),
+    "major third": (4, "M3"),
+    "perfect fourth": (5, "P4"),
+    "tritone": (6, "TT"),
+    "perfect fifth": (7, "P5"),
+    "minor sixth": (8, "m6"),
+    "major sixth": (9, "M6"),
+    "minor seventh": (10, "m7"),
+    "major seventh": (11, "M7"),
+    "octave": (12, "P8"),
 }
 
 
@@ -64,6 +64,11 @@ class Interval:
             name_or_semitones = 0
 
         self._semitones = None
+
+        if isinstance(name_or_semitones, str):
+            name_or_semitones = name_or_semitones.strip()
+            if len(name_or_semitones) > 2:
+                name_or_semitones = name_or_semitones.lower()
 
         # validate int argument
         if isinstance(name_or_semitones, int):
@@ -97,7 +102,7 @@ class Interval:
     def name(self) -> str:
         try:
             _, name = IntervalSemitonesMap[self._semitones]
-            return name
+            return name.capitalize()
         except KeyError:
             return "?"
 
