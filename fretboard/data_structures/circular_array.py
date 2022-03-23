@@ -38,7 +38,7 @@ class CircularArray:
         return "".join([str(i) for i in self._array])
 
     def __repr__(self):
-        return " - ".join([str(i) for i in self._array])
+        return " - ".join([repr(i) for i in self._array])
 
     def __getitem__(self, index):
         if not isinstance(index, int):

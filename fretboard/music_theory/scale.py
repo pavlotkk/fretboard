@@ -15,6 +15,16 @@ class Scale:
     def __getitem__(self, index):
         return self._notes[index]
 
+    def __hash__(self):
+        return hash(self._notes)
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+        if not isinstance(other, Scale):
+            return False
+        return self._notes == other._notes
+
     def __str__(self):
         return str(self._notes)
 

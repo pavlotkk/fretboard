@@ -50,21 +50,28 @@ def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
     Returns: scale
 
     """
+
+    # case note
     if isinstance(root_note, str):
         root_note = note(root_note)
 
+    # case key
     if isinstance(key, str):
         try:
             key = Key(key)
         except ValueError:
             raise ValueError(f"Invalid key value, {key}")
 
+    # use chromatic scale as a source
     chromatic_scale = CircularArray(ChromaticNotes, start_value=root_note)
+
+    # find a formula to build a target scale
     try:
         scale_intervals = ScaleKeyMap[key]
     except KeyError:
         raise ValueError(f"{key.value} is not supported scale key")
 
+    # apply scale formula
     scale_notes = []
     current_interval = interval()
     for interval_name in scale_intervals:
