@@ -78,7 +78,7 @@ def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
         scale_notes.append(chromatic_scale[current_interval.semitones])
         current_interval += interval_name
 
-    return Scale(tuple(scale_notes))
+    return Scale(scale_notes)
 
 
 __all__ = [

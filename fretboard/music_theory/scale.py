@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Union
 
 from fretboard.data_structures import CircularArray
 
@@ -9,7 +10,7 @@ class Key(Enum):
 
 
 class Scale:
-    def __init__(self, notes: tuple):
+    def __init__(self, notes: Union[tuple, list]):
         self._notes = CircularArray(notes)
 
     def __getitem__(self, index):
