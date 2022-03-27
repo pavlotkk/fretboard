@@ -27,10 +27,6 @@ def test__parse_note(note: str, expected):
         "H",
         "Gg",
         "F#g",
-        "Fb",
-        "Cb",
-        "B#",
-        "E#",
     ],
 )
 def test__parse_note__value_error(note):

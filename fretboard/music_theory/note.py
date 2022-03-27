@@ -44,14 +44,6 @@ def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
         except ValueError:
             raise ValueError(f"Invalid note {note}")
 
-        # Exception for notes that can't have flats
-        if note_name in {"F", "C"} and note_pitch == Pitch.Flat:
-            raise ValueError(f"Invalid note {note}")
-
-        # Exception for notes that can't have sharps
-        if note_name in {"B", "E"} and note_pitch == Pitch.Sharp:
-            raise ValueError(f"Invalid note {note}")
-
         return note_name, note_pitch
     else:
         raise ValueError(f"Invalid note {note}")
