@@ -66,6 +66,15 @@ class Note:
 
             self._pitch = pitch
 
+    @property
+    def root(self) -> "Note":
+        """
+        Get root note without flat or sharp sign
+        Returns:
+
+        """
+        return Note(self._name)
+
     def __eq__(self, other):
         if not other:
             return False

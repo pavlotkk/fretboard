@@ -5,12 +5,19 @@ from fretboard.music_theory.interval import Interval, MajorScaleIntervals
 from fretboard.music_theory.note import Note, Pitch
 from fretboard.music_theory.scale import Key, Scale
 
-ChromaticNotes = tuple(
-    [Note(n) for n in "C, C#, D, D#, E, F, F#, G, G#, A, A#, B".split(", ")]
+_FullChromaticScale = tuple(
+    [
+        tuple([Note(n) for n in str_n.split("/")])
+        for str_n in "B#/C, C#/Db, D, D#/Eb, E/Fb, E#/F, F#/Gb, G, G#/Ab, A, A#/Bb, B/Cb".split(
+            ", "
+        )
+    ]
 )
 
+_ChromaticNotes: tuple = tuple([Note(n) for n in "C, D, E, F, G, A, B".split(", ")])
 
-ScaleKeyMap = {Key.Major: MajorScaleIntervals}
+
+_ScaleKeyMap = {Key.Major: MajorScaleIntervals}
 
 
 def note(name: str, pitch: Optional[Union[str, Pitch]] = None) -> Note:
@@ -40,6 +47,37 @@ def interval(name_or_semitones: Union[int, str] = 0) -> Interval:
     return Interval(name_or_semitones)
 
 
+def _scale(root_note: Note, key: Key, scale_intervals: tuple) -> Scale:
+    # use chromatic scale as a source
+    start_note = None
+    for ch_notes in _FullChromaticScale:
+        if root_note in ch_notes:
+            start_note = ch_notes
+            break
+    chromatic_scale = CircularArray(_FullChromaticScale, start_value=start_note)
+    chromatic_notes_order = CircularArray(_ChromaticNotes)
+
+    # apply scale formula
+    scale_notes: list[Note] = []
+    current_interval = interval()
+    for interval_name in scale_intervals:
+        notes_in_interval: tuple[Note, Optional[Note]] = chromatic_scale[
+            current_interval.semitones
+        ]
+        try:
+            target_root_note = chromatic_notes_order[
+                chromatic_notes_order.index(scale_notes[-1].root) + 1
+            ]
+        except IndexError:
+            target_root_note = root_note
+        scale_notes.append(
+            next(n for n in notes_in_interval if n.root == target_root_note)
+        )
+        current_interval += interval_name
+
+    return Scale(scale_notes)
+
+
 def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
     """
     Create a scale
@@ -55,34 +93,24 @@ def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
 
     """
 
-    # case note
+    # cast note
     if isinstance(root_note, str):
         root_note = note(root_note)
 
-    # case key
+    # cast key
     if isinstance(key, str):
         try:
             key = Key(key.lower())
         except ValueError:
             raise ValueError(f"Invalid key value, {key}")
 
-    # use chromatic scale as a source
-    chromatic_scale = CircularArray(ChromaticNotes, start_value=root_note)
-
     # find a formula to build a target scale
     try:
-        scale_intervals = ScaleKeyMap[key]
+        scale_intervals = _ScaleKeyMap[key]
     except KeyError:
         raise ValueError(f"{key.value} is not supported scale key")
 
-    # apply scale formula
-    scale_notes = []
-    current_interval = interval()
-    for interval_name in scale_intervals:
-        scale_notes.append(chromatic_scale[current_interval.semitones])
-        current_interval += interval_name
-
-    return Scale(scale_notes)
+    return _scale(root_note, key, scale_intervals)
 
 
 __all__ = [
@@ -90,9 +118,9 @@ __all__ = [
     "Note",
     "Interval",
     "Key",
-    "ChromaticNotes",
     "MajorScaleIntervals",
     "Scale",
     "note",
     "interval",
+    "scale",
 ]
