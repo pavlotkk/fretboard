@@ -11,6 +11,10 @@ from fretboard.music_theory.note import parse_note
         ("bb", ("B", Pitch.Flat)),
         ("GB", ("G", Pitch.Flat)),
         ("F", ("F", None)),
+        ("Fb", ("F", Pitch.Flat)),
+        ("Cb", ("C", Pitch.Flat)),
+        ("B#", ("B", Pitch.Sharp)),
+        ("E#", ("E", Pitch.Sharp)),
     ],
 )
 def test__parse_note(note: str, expected):
@@ -41,6 +45,10 @@ def test__parse_note__value_error(note):
         (("A#",), "A#"),
         (("Bb",), "Bb"),
         (("A", Pitch.Sharp), "A#"),
+        (("F", Pitch.Flat), "Fb"),
+        (("C", Pitch.Flat), "Cb"),
+        (("B", Pitch.Sharp), "B#"),
+        (("E", Pitch.Sharp), "E#"),
     ],
 )
 def test__note__create(note_args: tuple, expected_str: str):
@@ -55,6 +63,10 @@ def test__note__create(note_args: tuple, expected_str: str):
         (("A#",), "A#"),
         (("Bb",), "Bb"),
         (("A", Pitch.Sharp), "A#"),
+        (("F", Pitch.Flat), "Fb"),
+        (("C", Pitch.Flat), "Cb"),
+        (("B", Pitch.Sharp), "B#"),
+        (("E", Pitch.Sharp), "E#"),
     ],
 )
 def test__note__create_builder(note_args: tuple, expected_str: str):

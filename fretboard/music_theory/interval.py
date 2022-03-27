@@ -126,7 +126,7 @@ class Interval:
     def __int__(self):
         return self.semitones
 
-    def __add__(self, other):
+    def __add__(self, other: Union[int, str, "Interval"]):
         if isinstance(other, int):
             return Interval(self.semitones + other)
         elif isinstance(other, str):
@@ -136,7 +136,7 @@ class Interval:
         else:
             raise ValueError(f"Invalid `add` operation between {self} and {other}")
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: Union[int, str, "Interval"]):
         if isinstance(other, int):
             self._semitones = self._semitones + other
             return self
@@ -149,7 +149,7 @@ class Interval:
         else:
             raise ValueError(f"Invalid `add` operation between {self} and {other}")
 
-    def __sub__(self, other):
+    def __sub__(self, other: Union[int, str, "Interval"]):
         if isinstance(other, int):
             return Interval(self.semitones - other)
         elif isinstance(other, str):
@@ -159,7 +159,7 @@ class Interval:
         else:
             raise ValueError(f"Invalid `sub` operation between {self} and {other}")
 
-    def __isub__(self, other):
+    def __isub__(self, other: Union[int, str, "Interval"]):
         if isinstance(other, int):
             self._semitones = self._semitones - other
             return self
