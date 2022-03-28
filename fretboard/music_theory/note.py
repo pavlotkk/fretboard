@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple
 
 Notes = {"A", "B", "C", "D", "E", "F", "G"}
 
@@ -56,17 +56,8 @@ class Note:
     Represents a musical note
     """
 
-    def __init__(self, name: str, pitch: Optional[Union[str, Pitch]] = None):
+    def __init__(self, name: str):
         self._name, self._pitch = parse_note(name)
-
-        if pitch:
-            if isinstance(pitch, str):
-                try:
-                    self._pitch = Pitch(pitch)
-                except ValueError:
-                    raise ValueError(f"Invalid pitch value: {pitch}")
-
-            self._pitch = pitch
 
     @property
     def root(self) -> "Note":
@@ -76,6 +67,22 @@ class Note:
 
         """
         return Note(self._name)
+
+    @property
+    def has_pitch(self) -> bool:
+        return self._pitch is not None
+
+    @property
+    def pitch(self) -> Pitch:
+        return self._pitch
+
+    @property
+    def is_sharp(self) -> bool:
+        return self._pitch == Pitch.Sharp
+
+    @property
+    def is_flat(self) -> bool:
+        return self._pitch == Pitch.Flat
 
     def __eq__(self, other):
         if not other:

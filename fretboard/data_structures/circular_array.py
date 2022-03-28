@@ -24,6 +24,10 @@ class CircularArray:
         if start_value is not None:
             self._start_index = array.index(start_value)
 
+    @property
+    def size(self) -> int:
+        return self._length
+
     def index(self, value) -> int:
         return next(i for i in range(self._length) if self[i] == value)
 

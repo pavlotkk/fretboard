@@ -1,6 +1,6 @@
 import pytest
 
-from fretboard.music_theory import Note, Pitch, note
+from fretboard.music_theory import Note, note
 from fretboard.music_theory.note import parse_note
 
 
@@ -45,11 +45,11 @@ def test__parse_note__value_error(note):
         (("C",), "C"),
         (("A#",), "A#"),
         (("Bb",), "Bb"),
-        (("A", Pitch.Sharp), "A#"),
-        (("F", Pitch.Flat), "Fb"),
-        (("C", Pitch.Flat), "Cb"),
-        (("B", Pitch.Sharp), "B#"),
-        (("E", Pitch.Sharp), "E#"),
+        (("A#",), "A#"),
+        (("Fb",), "Fb"),
+        (("Cb",), "Cb"),
+        (("B#",), "B#"),
+        (("E#",), "E#"),
     ],
 )
 def test__note__create(note_args: tuple, expected_str: str):
@@ -63,11 +63,11 @@ def test__note__create(note_args: tuple, expected_str: str):
         (("C",), "C"),
         (("A#",), "A#"),
         (("Bb",), "Bb"),
-        (("A", Pitch.Sharp), "A#"),
-        (("F", Pitch.Flat), "Fb"),
-        (("C", Pitch.Flat), "Cb"),
-        (("B", Pitch.Sharp), "B#"),
-        (("E", Pitch.Sharp), "E#"),
+        (("A#",), "A#"),
+        (("Fb",), "Fb"),
+        (("Cb",), "Cb"),
+        (("B#",), "B#"),
+        (("E#",), "E#"),
     ],
 )
 def test__note__create_builder(note_args: tuple, expected_str: str):

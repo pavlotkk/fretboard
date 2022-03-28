@@ -20,7 +20,7 @@ _ChromaticNotes: tuple = tuple([Note(n) for n in "C, D, E, F, G, A, B".split(", 
 _ScaleKeyMap = {Key.Major: MajorScaleIntervals}
 
 
-def note(name: str, pitch: Optional[Union[str, Pitch]] = None) -> Note:
+def note(name: str) -> Note:
     """
     Create a note
     Args:
@@ -29,7 +29,7 @@ def note(name: str, pitch: Optional[Union[str, Pitch]] = None) -> Note:
 
     Returns: note instance
     """
-    return Note(name, pitch)
+    return Note(name)
 
 
 def interval(name_or_semitones: Union[int, str] = 0) -> Interval:
@@ -110,7 +110,29 @@ def scale(root_note: Union[str, Note], key: Union[str, Key]) -> Scale:
     except KeyError:
         raise ValueError(f"{key.value} is not supported scale key")
 
-    return _scale(root_note, key, scale_intervals)
+    if root_note.has_pitch:
+        note_without_pitch = root_note.root
+        new_scale = _scale(note_without_pitch, key, scale_intervals)
+
+        # pitched scales created with adding pitch to each note to "original" scale,
+        # e.g. C# scale created by adding sharp to all notes in C scale.
+        new_scale_notes = []
+        for note_in_scale in new_scale:  # type: Note
+            no_pitch = not note_in_scale.has_pitch
+            same_pitch = note_in_scale.pitch == root_note.pitch
+
+            if no_pitch or same_pitch:
+                new_scale_notes.append(
+                    Note(f"{str(note_in_scale)}{root_note.pitch.value}")
+                )
+            else:
+                new_scale_notes.append(note_in_scale.root)
+        new_scale = Scale(new_scale_notes)
+
+    else:
+        new_scale = _scale(root_note, key, scale_intervals)
+
+    return new_scale
 
 
 __all__ = [

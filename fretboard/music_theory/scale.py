@@ -26,6 +26,9 @@ class Scale:
             return False
         return self._notes == other._notes
 
+    def __iter__(self):
+        return (self._notes[i] for i in range(self._notes.size))
+
     def __str__(self):
         return str(self._notes)
 
