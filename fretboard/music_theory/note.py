@@ -101,3 +101,14 @@ class Note:
 
     def __repr__(self):
         return f"{self._name}{self._pitch.value if self._pitch else ''}"
+
+
+def note(name: str) -> Note:
+    """
+    Create a note
+    Args:
+        name: note name, could be A, or with pitch like A#
+
+    Returns: note instance
+    """
+    return Note(name)
