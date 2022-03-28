@@ -29,15 +29,19 @@ def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
     if not note:
         raise ValueError(f"Invalid note {note}")
 
-    note_name = note[0].upper()
+    # fix case
+    note = note[0].upper() + note[1:].lower()
 
-    if note_name not in Notes:
+    if note[0] not in Notes:
         raise ValueError(f"Invalid note {note}")
+
+    # note could have double sharps, e.g. C##. So note name is all chars except last one
+    note_name = note[:-1] if len(note) > 1 else note
 
     if len(note) == 1:
         return note_name, None
-    elif len(note) == 2:
-        note_pitch = note[1].lower()
+    else:
+        note_pitch = note[-1]
 
         try:
             note_pitch = Pitch(note_pitch)
@@ -45,8 +49,6 @@ def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
             raise ValueError(f"Invalid note {note}")
 
         return note_name, note_pitch
-    else:
-        raise ValueError(f"Invalid note {note}")
 
 
 class Note:
