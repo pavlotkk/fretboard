@@ -2,7 +2,7 @@ from typing import Union
 
 import pytest
 
-from fretboard.music_theory import Interval, interval
+from fretboard.music_theory import Interval
 
 
 @pytest.mark.parametrize(
@@ -40,7 +40,7 @@ def test__interval__create(args: tuple, expected: tuple):
 )
 def test__interval__create_builder(args: tuple, expected: tuple):
     semitones, short_name, full_name = expected
-    actual = interval(*args)
+    actual = Interval(*args)
 
     assert actual.semitones == semitones
     assert actual.short_name == short_name

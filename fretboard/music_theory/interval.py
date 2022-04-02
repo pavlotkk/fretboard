@@ -171,18 +171,3 @@ class Interval:
             return self
         else:
             raise ValueError(f"Invalid `sub` operation between {self} and {other}")
-
-
-def interval(name_or_semitones: Union[int, str] = 0) -> Interval:
-    """
-    Create interval between notes
-    Args:
-        name_or_semitones: interval name or semitones amount
-
-    Examples:
-        >>> interval("Perfect fourth") == interval(5) == interval("P4")
-        >>> True
-
-    Returns: interval instance
-    """
-    return Interval(name_or_semitones)
