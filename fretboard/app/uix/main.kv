@@ -1,0 +1,35 @@
+#:kivy 1.0.9
+
+# print borders for debug
+<Widget>:
+    canvas.before:
+        Color:
+            rgba: app.style.color.black
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+
+<MainWidget>:
+    # root background color to white
+    canvas.before:
+        Color:
+            rgba: app.style.color.white
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    # root
+    BoxLayout:
+        id: root_layout
+        orientation: "vertical"
+        padding: 10
+        spacing: 5
+        size: root.size
+
+        # scale layout
+        GridLayout:
+            id: scale_layout
+            size_hint: None, .3
+            cols: 9
+            spacing: 20
