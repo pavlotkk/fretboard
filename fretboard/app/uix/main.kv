@@ -119,14 +119,14 @@
                     size: 200, 100
                     text: "Add"
                     disabled: True
-                    on_press: root.on_add_scale()
+                    on_release: root.on_add_scale()
 
                 Button:
                     id: btn_clear
                     size_hint: None, None
                     size: 200, 100
                     text: "Clear"
-                    on_press: root.on_clear()
+                    on_release: root.on_clear()
 
         VerticalSpacer:
             size_hint_y: 0.1
