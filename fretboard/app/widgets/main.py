@@ -29,6 +29,10 @@ class MainWidget(Widget):
         self.reset_note_btn_state()
         self.reset_pitch_btn_state()
 
+        scale_layout: GridLayout = self.ids.scale_layout
+        for w in [w for w in scale_layout.children]:
+            scale_layout.remove_widget(w)
+
     def on_selected_note(
         self, note_btn: ToggleButton, state_value: Literal["down", "normal"]
     ):
