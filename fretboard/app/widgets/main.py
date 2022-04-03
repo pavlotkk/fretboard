@@ -1,84 +1,117 @@
-from typing import Literal, Optional
+from typing import Optional
 
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.spinner import Spinner
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 
 from fretboard.app.widgets.scale_grid_layout import ScaleGridlayout
-from fretboard.music_theory import Key, Note
+from fretboard.music_theory import Key, Note, Pitch
 
 
 class MainWidget(Widget):
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
 
-        self.btn_add: Button = self.ids.btn_add
-        self.scale_grid_layout: ScaleGridlayout = self.ids.scale_layout
-        self.selected_note_btn: Optional[ToggleButton] = None
-        self.selected_pitch_btn: Optional[ToggleButton] = None
-        self.selected_key: Optional[Key] = None
+    @property
+    def add_btn(self) -> Button:
+        return self.ids.add_btn
+
+    @property
+    def scale_grid_layout(self) -> ScaleGridlayout:
+        return self.ids.scale_layout
+
+    @property
+    def scale_note_layout(self) -> BoxLayout:
+        return self.ids.scale_note_layout
+
+    @property
+    def pitch_layout(self) -> BoxLayout:
+        return self.ids.pitch_layout
+
+    @property
+    def key_dropdown(self) -> Spinner:
+        return self.ids.key_dropdown
+
+    def get_selected_note_btn(self) -> Optional[ToggleButton]:
+        return next(
+            (
+                btn
+                for btn in self.scale_note_layout.children
+                if isinstance(btn, ToggleButton) and btn.state == "down"
+            ),
+            None,
+        )
+
+    def get_selected_pitch_btn(self) -> Optional[ToggleButton]:
+        return next(
+            (
+                btn
+                for btn in self.pitch_layout.children
+                if isinstance(btn, ToggleButton) and btn.state == "down"
+            ),
+            None,
+        )
+
+    @property
+    def selected_note(self) -> Optional[Note]:
+        note_btn = self.get_selected_note_btn()
+        if not note_btn:
+            return None
+
+        note_str = note_btn.text.upper()
+
+        pitch_btn = self.get_selected_pitch_btn()
+        if pitch_btn:
+            note_str = f"{note_str}{pitch_btn.text.lower()}"
+
+        return Note(note_str)
+
+    @property
+    def selected_pitch(self) -> Optional[Pitch]:
+        btn = self.get_selected_pitch_btn()
+        if not btn:
+            return None
+
+        return Pitch(btn.text.lower())
+
+    @property
+    def selected_key(self) -> Optional[Key]:
+        try:
+            return Key(self.key_dropdown.text.lower())
+        except ValueError:
+            return None
 
     def on_add_scale(self):
-        note = self.get_selected_note()
+        note = self.selected_note
 
         if note:
             self.scale_grid_layout.add_scale(note, self.selected_key)
 
-        self.reset_note_btn_state()
-        self.reset_pitch_btn_state()
+        self.reset_selected_note()
+        self.reset_selected_pitch()
 
     def on_clear(self):
-        self.reset_note_btn_state()
-        self.reset_pitch_btn_state()
+        self.reset_selected_note()
+        self.reset_selected_pitch()
         self.scale_grid_layout.clear()
 
-    def on_selected_note(
-        self, note_btn: ToggleButton, state_value: Literal["down", "normal"]
-    ):
-        if state_value == "normal":
-            self.selected_note_btn = None
-        else:
-            self.selected_note_btn = note_btn
-
-        self.update_add_btn_state()
-
-    def on_selected_pitch(
-        self, pitch_btn: ToggleButton, state_value: Literal["down", "normal"]
-    ):
-        if state_value == "normal":
-            self.selected_pitch_btn = None
-        else:
-            self.selected_pitch_btn = pitch_btn
-
-        self.update_add_btn_state()
-
-    def on_selected_key(self, str_key: Literal["major", "minor"]):
-        self.selected_key = Key(str_key)
-
-        self.update_add_btn_state()
-
     def update_add_btn_state(self):
-        note_not_selected = self.selected_note_btn is None
-        key_not_selected = self.selected_key is None
-        self.btn_add.disabled = note_not_selected or key_not_selected
+        self.add_btn.disabled = (self.selected_note is None) or (
+            self.selected_key is None
+        )
 
-    def reset_note_btn_state(self):
-        if self.selected_note_btn:
-            self.selected_note_btn.state = "normal"
-            self.selected_note_btn = None
+    def reset_selected_note(self):
+        btn = self.get_selected_note_btn()
+        if btn:
+            btn.state = "normal"
+
         self.update_add_btn_state()
 
-    def reset_pitch_btn_state(self):
-        if self.selected_pitch_btn:
-            self.selected_pitch_btn.state = "normal"
-            self.selected_pitch_btn = None
+    def reset_selected_pitch(self):
+        btn = self.get_selected_pitch_btn()
+        if btn:
+            btn.state = "normal"
+
         self.update_add_btn_state()
-
-    def get_selected_note(self) -> Optional[Note]:
-        if not self.selected_note_btn:
-            return None
-
-        str_note = self.selected_note_btn.text
-        str_pitch = self.selected_pitch_btn.text if self.selected_pitch_btn else ""
-        str_note = f"{str_note}{str_pitch}".strip()
-        return Note(str_note)

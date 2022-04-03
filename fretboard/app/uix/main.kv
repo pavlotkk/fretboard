@@ -46,7 +46,6 @@
 
         # Scale box layout
         GridLayout:
-            id: scale_controls_layout
             cols: 2
             size_hint_y: None
             height: self.minimum_height
@@ -61,56 +60,59 @@
             ScaleFormLabel:
                 text: "Root note:"
             BoxLayout:
+                id: scale_note_layout
                 orientation: "horizontal"
                 size_hint_y: None
                 height: self.minimum_height
 
                 NoteToggle:
                     text: "C"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
                 NoteToggle:
                     text: "D"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
                 NoteToggle:
                     text: "E"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
                 NoteToggle:
                     text: "F"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
                 NoteToggle:
                     text: "G"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
                 NoteToggle:
                     text: "A"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
                 NoteToggle:
                     text: "B"
-                    on_state: root.on_selected_note(self, self.state)
+                    on_state: root.update_add_btn_state()
 
             # Row 2 (Pitch)
             ScaleFormLabel:
                 text: "Pitch:"
             BoxLayout:
+                id: pitch_layout
                 orientation: "horizontal"
                 size_hint_y: None
                 height: self.minimum_height
 
                 PitchToggle:
                     text: "#"
-                    on_state: root.on_selected_pitch(self, self.state)
+                    on_state: root.update_add_btn_state()
                 PitchToggle:
                     text: "b"
-                    on_state: root.on_selected_pitch(self, self.state)
+                    on_state: root.update_add_btn_state()
 
             # Row 3 (Key)
             ScaleFormLabel:
                 text: "Key:"
             Spinner:
+                id: key_dropdown
                 size_hint: None, None
                 size: 200, 100
                 text: "..."
                 values: "Major",
-                on_text: root.on_selected_key(self.text.lower())
+                on_text: root.update_add_btn_state()
 
             # Row 4 (Action buttons)
             ScaleFormLabel:
@@ -122,7 +124,7 @@
                 height: self.minimum_height
 
                 Button:
-                    id: btn_add
+                    id: add_btn
                     size_hint: None, None
                     size: 200, 100
                     text: "Add"
@@ -130,14 +132,15 @@
                     on_release: root.on_add_scale()
 
                 Button:
-                    id: btn_clear
+                    id: clear_btn
                     size_hint: None, None
                     size: 200, 100
                     text: "Clear"
                     on_release: root.on_clear()
 
         VerticalSpacer:
-            size_hint_y: 0.1
+            size_hint_y: None
+            height: 30
 
         # Scales layout
         ScrollView:
@@ -146,6 +149,3 @@
             do_scroll_x: False
             ScaleGridlayout:
                 id: scale_layout
-
-        VerticalSpacer:
-            size_hint_y: 0.1
