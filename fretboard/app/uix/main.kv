@@ -57,11 +57,9 @@
                     size: self.size
                     pos: self.pos
 
-            # Row 1 (Root note)
+            # Row 1 (Notes)
             ScaleFormLabel:
                 text: "Root note:"
-
-            # Row 1 (Notes)
             BoxLayout:
                 orientation: "horizontal"
                 size_hint_y: None
@@ -104,7 +102,17 @@
                     text: "b"
                     on_state: root.on_selected_pitch(self, self.state)
 
-            # Row 2 (Action buttons)
+            # Row 3 (Key)
+            ScaleFormLabel:
+                text: "Key:"
+            Spinner:
+                size_hint: None, None
+                size: 200, 100
+                text: "..."
+                values: "Major",
+                on_text: root.on_selected_key(self.text.lower())
+
+            # Row 4 (Action buttons)
             ScaleFormLabel:
                 text: ""
 

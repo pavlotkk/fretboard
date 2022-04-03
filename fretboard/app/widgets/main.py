@@ -16,12 +16,13 @@ class MainWidget(Widget):
         self.scale_grid_layout: ScaleGridlayout = self.ids.scale_layout
         self.selected_note_btn: Optional[ToggleButton] = None
         self.selected_pitch_btn: Optional[ToggleButton] = None
+        self.selected_key: Optional[Key] = None
 
     def on_add_scale(self):
         note = self.get_selected_note()
 
         if note:
-            self.scale_grid_layout.add_scale(note, Key.Major)
+            self.scale_grid_layout.add_scale(note, self.selected_key)
 
         self.reset_note_btn_state()
         self.reset_pitch_btn_state()
@@ -51,8 +52,15 @@ class MainWidget(Widget):
 
         self.update_add_btn_state()
 
+    def on_selected_key(self, str_key: Literal["major", "minor"]):
+        self.selected_key = Key(str_key)
+
+        self.update_add_btn_state()
+
     def update_add_btn_state(self):
-        self.btn_add.disabled = self.selected_note_btn is None
+        note_not_selected = self.selected_note_btn is None
+        key_not_selected = self.selected_key is None
+        self.btn_add.disabled = note_not_selected or key_not_selected
 
     def reset_note_btn_state(self):
         if self.selected_note_btn:
