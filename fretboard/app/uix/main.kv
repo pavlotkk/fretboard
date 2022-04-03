@@ -1,13 +1,30 @@
 #:kivy 1.0.9
 
 # print borders for debug
-<Widget>:
-    canvas.before:
-        Color:
-            rgba: app.style.color.black
-        Line:
-            width: 2
-            rectangle: self.x, self.y, self.width, self.height
+#<Widget>:
+#    canvas.before:
+#        Color:
+#            rgba: app.style.color.black
+#        Line:
+#            width: 2
+#            rectangle: self.x, self.y, self.width, self.height
+
+<NoteToggle@ToggleButton>:
+    size_hint: None, None
+    size: 100, 100
+    group: "note"
+
+<PitchToggle@ToggleButton>:
+    size_hint: None, None
+    size: 100, 100
+    group: "pitch"
+
+
+<ScaleFormLabel@Label>:
+    size_hint_x: 0.3
+    size_hint_y: None
+    height: 100
+    color: app.style.color.black
 
 
 <MainWidget>:
@@ -27,9 +44,97 @@
         spacing: 5
         size: root.size
 
-        # scale layout
+        # Scale box layout
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: self.minimum_height
+            canvas.before:
+                Color:
+                    rgba: app.style.color.grey
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            # Row 1 (Root note)
+            ScaleFormLabel:
+                text: "Root note:"
+
+            # Row 1 (Notes)
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: self.minimum_height
+
+                NoteToggle:
+                    text: "C"
+                    on_state: root.on_selected_note(self, self.state)
+                NoteToggle:
+                    text: "D"
+                    on_state: root.on_selected_note(self, self.state)
+                NoteToggle:
+                    text: "E"
+                    on_state: root.on_selected_note(self, self.state)
+                NoteToggle:
+                    text: "F"
+                    on_state: root.on_selected_note(self, self.state)
+                NoteToggle:
+                    text: "G"
+                    on_state: root.on_selected_note(self, self.state)
+                NoteToggle:
+                    text: "A"
+                    on_state: root.on_selected_note(self, self.state)
+                NoteToggle:
+                    text: "B"
+                    on_state: root.on_selected_note(self, self.state)
+
+            # Row 2 (Pitch)
+            ScaleFormLabel:
+                text: "Pitch:"
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: self.minimum_height
+
+                PitchToggle:
+                    text: "#"
+                    on_state: root.on_selected_pitch(self, self.state)
+                PitchToggle:
+                    text: "b"
+                    on_state: root.on_selected_pitch(self, self.state)
+
+            # Row 2 (Action buttons)
+            ScaleFormLabel:
+                text: ""
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: self.minimum_height
+
+                Button:
+                    id: btn_add
+                    size_hint: None, None
+                    size: 200, 100
+                    text: "Add"
+                    disabled: True
+                    on_press: root.on_add_scale()
+
+                Button:
+                    id: btn_clear
+                    size_hint: None, None
+                    size: 200, 100
+                    text: "Clear"
+                    on_press: root.on_clear()
+
+        VerticalSpacer:
+
+        # Scales layout
         GridLayout:
             id: scale_layout
-            size_hint: None, .3
-            cols: 9
+            size_hint_y: None
+            height: self.minimum_height
+            cols: 11
             spacing: 20
+
+        VerticalSpacer:
