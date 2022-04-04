@@ -1,7 +1,7 @@
 #:kivy 1.0.9
 
 <NoteLabel@Label>:
-    font_size: 60
+    font_size: 50
     color: app.style.color.black
     size_hint: None, None
     width: 100
@@ -14,7 +14,7 @@
             rgba: app.style.color.black
         Line:
             width: 2
-            rectangle: self.x, self.y, self.width, self.height
+            rectangle: self.x, self.y, self.width - 2, self.height - 2
 
 
 <NoPitchNoteLabel>:
@@ -32,7 +32,7 @@
             rgba: self.bg_color
         Line:
             width: 4
-            circle: self.center_x, self.center_y, self.width / 2
+            circle: self.center_x, self.center_y, self.width / 2 - 4
 
 
 <FlatNoteLabel>:
@@ -41,4 +41,4 @@
             rgba: self.bg_color
         Line:
             width: 4
-            circle: self.center_x, self.center_y, self.width / 2, 0, 360, 6
+            circle: self.center_x, self.center_y, self.width / 2 - 4, 0, 360, 6
