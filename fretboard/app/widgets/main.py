@@ -7,6 +7,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 
 from fretboard.app.widgets.scale_grid_layout import ScaleGridlayout
+from fretboard.core.collections import ToggleButtonState
 from fretboard.music_theory import Key, Note, Pitch
 
 
@@ -39,7 +40,7 @@ class MainWidget(Widget):
             (
                 btn
                 for btn in self.scale_note_layout.children
-                if isinstance(btn, ToggleButton) and btn.state == "down"
+                if isinstance(btn, ToggleButton) and btn.state == ToggleButtonState.Down
             ),
             None,
         )
@@ -49,7 +50,7 @@ class MainWidget(Widget):
             (
                 btn
                 for btn in self.pitch_layout.children
-                if isinstance(btn, ToggleButton) and btn.state == "down"
+                if isinstance(btn, ToggleButton) and btn.state == ToggleButtonState.Down
             ),
             None,
         )
@@ -105,13 +106,13 @@ class MainWidget(Widget):
     def reset_selected_note(self):
         btn = self.get_selected_note_btn()
         if btn:
-            btn.state = "normal"
+            btn.state = ToggleButtonState.Normal
 
         self.update_add_btn_state()
 
     def reset_selected_pitch(self):
         btn = self.get_selected_pitch_btn()
         if btn:
-            btn.state = "normal"
+            btn.state = ToggleButtonState.Normal
 
         self.update_add_btn_state()
