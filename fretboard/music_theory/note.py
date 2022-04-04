@@ -1,10 +1,11 @@
-from enum import Enum
 from typing import Optional, Tuple
+
+from fretboard.core.collections import StrEnum
 
 Notes = {"A", "B", "C", "D", "E", "F", "G"}
 
 
-class Pitch(Enum):
+class Pitch(StrEnum):
     Sharp = "#"
     Flat = "b"
 

@@ -1,12 +1,12 @@
-from enum import Enum
 from typing import Optional, Union
 
+from fretboard.core.collections import StrEnum
 from fretboard.data_structures import CircularArray
 from fretboard.music_theory.interval import Interval, MajorScaleIntervals
 from fretboard.music_theory.note import Note
 
 
-class Key(Enum):
+class Key(StrEnum):
     Minor = "minor"
     Major = "major"
 
