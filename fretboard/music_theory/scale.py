@@ -7,7 +7,6 @@ from fretboard.music_theory.note import Note
 
 
 class Key(StrEnum):
-    Minor = "minor"
     Major = "major"
 
 

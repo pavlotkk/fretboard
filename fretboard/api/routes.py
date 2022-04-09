@@ -4,6 +4,8 @@ from datetime import datetime
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from fretboard.music_theory import Key
+
 router = APIRouter()
 
 logger = logging.getLogger(__name__)
@@ -36,4 +38,22 @@ async def api_health():
     return HealthResponse(
         status="ok",
         up_time=f"{int(days)} days : {int(hours)} hours : {int(minutes)} minutes : {int(seconds)} seconds",
+    )
+
+
+class ScaleResponse(ApiResponse):
+    id: str
+    name: str
+
+
+class SupportedScalesResponse(ApiResponse):
+    data: list[ScaleResponse]
+
+
+@router.get("/supported-scales", response_model=SupportedScalesResponse)
+async def api_get_supported_scales():
+    return SupportedScalesResponse(
+        data=[
+            ScaleResponse(id=Key.Major.value, name="Major"),
+        ]
     )
