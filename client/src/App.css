@@ -1,0 +1,38 @@
+.ScaleTable-Layout {
+  border-spacing: 0 5px;
+  border-collapse: separate;
+}
+
+.VerticalSpacing {
+    height: 10px;
+}
+
+.ScaleNote {
+    width: 75px;
+    height: 75px;
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px;
+}
+
+
+.ScaleNote-Before {
+    border: 5px solid black;
+    min-width: 75px;
+    height: 75px;
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.ScaleNote-After {
+    border: 5px solid black;
+    min-width: 75px;
+    height: 75px;
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
