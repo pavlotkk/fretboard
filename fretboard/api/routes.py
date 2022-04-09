@@ -1,10 +1,10 @@
 import logging
 from datetime import datetime
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from fretboard.music_theory import Key
+from fretboard.music_theory import Key, Note, Scale
 
 router = APIRouter()
 
@@ -41,19 +41,44 @@ async def api_health():
     )
 
 
-class ScaleResponse(ApiResponse):
+class ScaleKeyResponse(ApiResponse):
     id: str
     name: str
 
 
-class SupportedScalesResponse(ApiResponse):
-    data: list[ScaleResponse]
+class SupportedScaleKeysResponse(ApiResponse):
+    data: list[ScaleKeyResponse]
 
 
-@router.get("/supported-scales", response_model=SupportedScalesResponse)
-async def api_get_supported_scales():
-    return SupportedScalesResponse(
-        data=[
-            ScaleResponse(id=Key.Major.value, name="Major"),
-        ]
+@router.get("/supported-scale-keys", response_model=SupportedScaleKeysResponse)
+async def api_get_supported_scale_keys():
+    return SupportedScaleKeysResponse(
+        data=[ScaleKeyResponse(id=k.value, name=k.desc) for k in Key]
+    )
+
+
+class ScaleResponse(ApiResponse):
+    id: str
+    name: str
+    notes: list[str]
+    flats_count: int
+    sharps_count: int
+
+
+@router.get("/scale", response_model=ScaleResponse)
+async def api_get_scale(root_note: str, key: str):
+    try:
+        note = Note(root_note)
+        key = Key(key.lower())
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    scale = Scale(note, key)
+
+    return ScaleResponse(
+        id=scale.id,
+        name=scale.name,
+        notes=[str(n) for n in scale],
+        flats_count=scale.flats_count,
+        sharps_count=scale.sharps_count,
     )

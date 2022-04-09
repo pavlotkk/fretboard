@@ -9,6 +9,10 @@ from fretboard.music_theory.note import Note
 class Key(StrEnum):
     Major = "major"
 
+    @property
+    def desc(self) -> str:
+        return self.name
+
 
 _FullChromaticScale = tuple(
     [
@@ -51,6 +55,9 @@ class Scale:
                 key = Key(key.lower())
             except ValueError:
                 raise ValueError(f"Invalid key value, {key}")
+
+        self.root_note: Note = root_note
+        self.key: Key = key
 
         # find a formula to build a target scale
         try:
@@ -133,6 +140,19 @@ class Scale:
             current_interval += interval_name
 
         return scale_notes
+
+    @property
+    def id(self) -> str:
+        return self.name.lower().replace(" ", "_")
+
+    @property
+    def name(self) -> str:
+        """
+        Human readable scale name
+        Returns:
+            scale name
+        """
+        return f"{str(self.root_note)} {self.key.desc}"
 
     @property
     def flats_count(self) -> int:
