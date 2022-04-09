@@ -15,8 +15,14 @@ install-env:
 		$(PYTHON) -m pip install --upgrade pip; \
 	fi
 
+	if [ ! -f ".env"]; then \
+  		cp sample.env .env; \
+  	fi
+
 install: install-env  ## install dependencies
 	$(PIP) install -r requirements.txt
+	$(PIP) install -r requirements-app.txt
+	$(PIP) install -r requirements-api.txt
 
 install-dev: install-env  ## install dev dependencies
 	$(PIP) install -r requirements-dev.txt
