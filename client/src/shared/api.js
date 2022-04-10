@@ -1,12 +1,12 @@
 function Api(){
-    this.host = window.app_config.api_host || ""
+    this.host = (window.app_config.api_host || "").trim()
 
     this.getSupportedScales = () => {
-        return this.get('/supported-scale-keys').then(r => r.data)
+        return this.get('/api/supported-scale-keys').then(r => r.data)
     }
 
     this.getScale = (note, key) => {
-        return this.get("/scale", {note: note, key: key})
+        return this.get("/api/scale", {note: note, key: key})
     }
 
     this.request = (method, url, params = null, headers = null) => {
@@ -18,8 +18,6 @@ function Api(){
         if(headers == null){
             headers = {}
         }
-
-        console.log(`${this.host}${url}?${params}`)
 
         return window.fetch(`${this.host}${url}?${params}`, {
             method: method,

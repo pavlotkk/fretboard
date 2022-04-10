@@ -17,7 +17,7 @@ def test__api_health__ok(test_client: TestClient):
 
 
 def test__api_supported_scales__ok(test_client: TestClient):
-    resp = test_client.get("/supported-scale-keys")
+    resp = test_client.get("/api/supported-scale-keys")
     assert resp.status_code == 200, resp.text
 
     data = SupportedScaleKeysResponse(**resp.json())
@@ -25,7 +25,7 @@ def test__api_supported_scales__ok(test_client: TestClient):
 
 
 def test__api_get_scale__ok(test_client: TestClient):
-    resp = test_client.get("/scale", params={"note": "C", "key": Key.Major.value})
+    resp = test_client.get("/api/scale", params={"note": "C", "key": Key.Major.value})
     assert resp.status_code == 200, resp.text
 
     data = ScaleResponse(**resp.json())

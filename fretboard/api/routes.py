@@ -23,6 +23,7 @@ class HealthResponse(ApiResponse):
 
 
 @router.get("/health", response_model=HealthResponse)
+@router.get("/api/health", response_model=HealthResponse)
 async def api_health():
     now = datetime.now()
     up_time_total_seconds = (now - app_start_dts).total_seconds()
@@ -50,7 +51,7 @@ class SupportedScaleKeysResponse(ApiResponse):
     data: list[ScaleKeyResponse]
 
 
-@router.get("/supported-scale-keys", response_model=SupportedScaleKeysResponse)
+@router.get("/api/supported-scale-keys", response_model=SupportedScaleKeysResponse)
 async def api_get_supported_scale_keys():
     return SupportedScaleKeysResponse(
         data=[ScaleKeyResponse(id=k.value, name=k.desc) for k in Key]
@@ -65,7 +66,7 @@ class ScaleResponse(ApiResponse):
     sharps_count: int
 
 
-@router.get("/scale", response_model=ScaleResponse)
+@router.get("/api/scale", response_model=ScaleResponse)
 async def api_get_scale(note: str, key: str):
     try:
         note = Note(note)
