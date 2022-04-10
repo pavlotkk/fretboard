@@ -4,7 +4,11 @@ Fun project for learning music theory with python.
 ![](docs/example.png)
 
 ## Features:
-1. Build major scale for any note
+1. Build a scale from an any note:
+   * Major
+   * Minor
+   * Harmonic minor
+   * Ascending and descending melodic minor
 
 ## Tech stack:
 1. [Python 3.9](https://www.python.org/)

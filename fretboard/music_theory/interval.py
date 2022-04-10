@@ -54,6 +54,7 @@ MajorScaleIntervals = ("M2", "M2", "m2", "M2", "M2", "M2", "m2")
 MinorScaleIntervals = ("M2", "m2", "M2", "M2", "m2", "M2", "m2")
 HarmonicMinorScaleIntervals = ("M2", "m2", "M2", "M2", "m2", "m3", "m2")
 AscMelodicMinorScaleIntervals = ("M2", "m2", "M2", "M2", "M2", "M2", "m2")
+DescMelodicMinorScaleIntervals = ("M2", "M2", "m2", "M2", "M2", "m2", "M2")
 
 
 class Interval:

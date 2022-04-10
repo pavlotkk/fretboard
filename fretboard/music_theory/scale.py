@@ -2,8 +2,14 @@ from typing import Optional, Union
 
 from fretboard.core.collections import StrEnum
 from fretboard.data_structures import CircularArray
-from fretboard.music_theory.interval import Interval, MajorScaleIntervals, MinorScaleIntervals, \
-    HarmonicMinorScaleIntervals, AscMelodicMinorScaleIntervals
+from fretboard.music_theory.interval import (
+    AscMelodicMinorScaleIntervals,
+    DescMelodicMinorScaleIntervals,
+    HarmonicMinorScaleIntervals,
+    Interval,
+    MajorScaleIntervals,
+    MinorScaleIntervals,
+)
 from fretboard.music_theory.note import Note
 
 
@@ -12,6 +18,7 @@ class Key(StrEnum):
     Minor = "minor"
     HarmonicMinor = "harmonic_minor"
     AscMelodicMinor = "asc_melodic_minor"
+    DescMelodicMinor = "desc_melodic_minor"
 
     @property
     def desc(self) -> str:
@@ -19,6 +26,8 @@ class Key(StrEnum):
             return "Harmonic Minor"
         elif self == Key.AscMelodicMinor:
             return "Melodic Minor ⬆️"
+        elif self == Key.DescMelodicMinor:
+            return "Melodic Minor ⬇️️"
 
         return self.name
 
@@ -40,6 +49,7 @@ _ScaleKeyMap = {
     Key.Minor: MinorScaleIntervals,
     Key.HarmonicMinor: HarmonicMinorScaleIntervals,
     Key.AscMelodicMinor: AscMelodicMinorScaleIntervals,
+    Key.DescMelodicMinor: DescMelodicMinorScaleIntervals,
 }
 
 
@@ -73,6 +83,12 @@ class Scale:
         self.root_note: Note = root_note
         self.key: Key = key
 
+        # exception for descending minor scale, it's same as natural minor
+        # but due to complicity of generation, I've decided to implement
+        # such shortcut :)
+        if self.key == Key.DescMelodicMinor:
+            key = Key.Minor
+
         # find a formula to build a target scale
         try:
             scale_intervals = _ScaleKeyMap[key]
@@ -102,6 +118,11 @@ class Scale:
             new_scale = self._scale(root_note, scale_intervals)
 
         self._notes = CircularArray(new_scale)
+
+        # desc melodic minor is same as desc natural minor
+        if self.key == Key.DescMelodicMinor:
+            new_scale = [new_scale[0]] + list(reversed(new_scale[1:]))
+            self._notes = CircularArray(new_scale)
 
     def __getitem__(self, index):
         return self._notes[index]

@@ -2,6 +2,7 @@
 per-file-ignores =
      tests/api_scraper/test_stats_scraper.py: E101, W191, E501
      tests/api_scraper/test_login_scraper.py: E101, W191, E501
+     fretboard/music_theory/scale.py: C901
 exclude =
     .git,
     __pycache__,
