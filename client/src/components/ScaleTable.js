@@ -7,12 +7,21 @@ function ScaleTable({scales = []}) {
             return <td key={n} className={"ScaleNote"} style={GetNoteStyle(n)}>{n}</td>
         });
 
+        let desc = ""
+        if(scale.sharps_count > 0){
+            desc = `${scale.sharps_count} #`
+        } else if (scale.flats_count > 0){
+            desc = `${scale.flats_count} b`
+        } else if (scale.sharps_count === 0 && scale.flats_count === 0){
+            desc = "0"
+        }
+
         return (
             <React.Fragment key={scale.id}>
                 <tr>
-                    <td className={scale.name !== null && scale.name !== "" ? "ScaleNote-Before" : ""}>{scale.name || ""}</td>
+                    <td className={scale.name != null && scale.name !== "" ? "ScaleNote-Before" : ""}>{scale.name || ""}</td>
                     {cols}
-                    <td className={scale.desc !== null && scale.desc !== "" ? "ScaleNote-After" : ""}>{scale.desc || ""}</td>
+                    <td className={desc ? "ScaleNote-After" : ""}>{desc}</td>
                 </tr>
             </React.Fragment>
         )

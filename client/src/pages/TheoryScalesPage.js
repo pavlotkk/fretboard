@@ -2,17 +2,34 @@ import React from "react";
 import Dropdown from "../components/Dropdown";
 import RadioButtonGroup from "../components/RadioButtonGroup";
 import ScaleTable from "../components/ScaleTable";
+import {PITCHES, CHROMATIC_SCALE} from "../shared/constants";
 
-function TheoryScaleForm({onSubmit}) {
-    const notes = ["C", "D", "E", "F", "G", "A", "B"]
-    const pitches = ["#", "b"]
-    const scales = ["Major", "Minor"]
+function TheoryScaleForm({onSubmit, onReset}) {
+    const [scaleKeys, setScaleKeys] = React.useState([])
 
     const [data, setData] = React.useState({
-        note: null,
-        pitch: null,
-        scale: null
+        note: '',
+        pitch: '',
+        key: ''
     })
+
+    const disabled = !data.note || !data.key
+
+    React.useEffect(() => {
+        if(scaleKeys.length > 0){
+            return
+        }
+
+        new Api().getSupportedScales().then(resp => {
+            const supportedScaleKeys = resp.map((item) => {
+                return {value: item.id, text: item.name}
+            })
+            const firstKey = supportedScaleKeys.length > 0 ? supportedScaleKeys[0].value : ''
+
+            setScaleKeys(supportedScaleKeys)
+            setData({...data, key: firstKey})
+        })
+    }, [scaleKeys])
 
     const _onSubmit = (event) => {
         event.preventDefault();
@@ -21,11 +38,12 @@ function TheoryScaleForm({onSubmit}) {
     }
 
     const _onClear = () => {
-        setData({note: null, pitch: null, scale: null})
+        setData({...data, note: '', pitch: ''})
+        onReset()
     }
 
-    const _onScaleChange = (value) => {
-        setData({...data, scale: value})
+    const _onScaleKeyChange = (value) => {
+        setData({...data, key: value})
     }
 
     const _onNoteChange = (value) => {
@@ -41,50 +59,73 @@ function TheoryScaleForm({onSubmit}) {
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Root note:</label>
                 <div className="col-sm-10 d-flex justify-content-between">
-                    <RadioButtonGroup options={notes} selectedValue={data.note} name={"note"} onChange={_onNoteChange}/>
-                    <RadioButtonGroup options={pitches} name={"pitch"} selectedValue={data.pitch} onChange={_onPitchChange}/>
+                    <RadioButtonGroup options={CHROMATIC_SCALE} selectedValue={data.note} name={"note"} onChange={_onNoteChange}/>
+                    <RadioButtonGroup options={PITCHES} name={"pitch"} selectedValue={data.pitch} onChange={_onPitchChange}/>
                 </div>
             </div>
 
             <div className="row mb-3">
-                <label className="col-sm-2 col-form-label">Scale:</label>
+                <label className="col-sm-2 col-form-label">Key:</label>
                 <div className="col-sm-10">
-                    <Dropdown options={scales} selectedItem={data.scale} onChange={_onScaleChange}/>
+                    <Dropdown options={scaleKeys} defaultValue={data.key} onChange={_onScaleKeyChange}/>
                 </div>
             </div>
 
-            <button type="submit" className="btn btn-primary">Add</button>
+            <button type="submit" className="btn btn-primary" disabled={disabled}>Add</button>
             <button type="button" className="btn btn-link" onClick={_onClear}>Clear</button>
         </form>
     )
 }
 
 
-function TheoryScalesPage() {
-    const scales = [
-        {
-            "id": "c_major",
-            "name": "C Major",
-            "desc": "0",
-            "notes": ["C", "D", "E", "F", "G", "A", "B"]
-        }
-    ]
+const API_HOST = "http://localhost:5000"
 
-    const onSubmitHandler = (note) => {
-        console.log(note);
+
+function Api(){
+    this.getSupportedScales = () => {
+        return window.fetch(`${API_HOST}/supported-scale-keys`, {
+            method: "GET",
+            headers: {
+                'content-type': "application/json"
+            }
+        }).then(r => r.json()).then(r => r.data)
+    }
+
+    this.getScale = (note, key) => {
+        return window.fetch(`${API_HOST}/scale?` + new URLSearchParams({note: note, key: key}), {
+            method: "GET",
+            headers: {
+                'content-type': "application/json"
+            }
+        }).then(r => r.json())
+    }
+}
+
+
+function TheoryScalesPage() {
+    const [scales, setScales] = React.useState([])
+
+    const onSubmitHandler = (data) => {
+        // console.log(scale)
+        new Api().getScale(`${data.note}${data.pitch}`.trim(), data.key).then(newScale => {
+            setScales([...scales, newScale])
+        })
+    }
+
+    const onResetHandler = () => {
+        setScales([])
     }
 
     return (
         <>
             <div className="bg-light p-5 rounded">
                 <h1>Scales</h1>
-                <TheoryScaleForm onSubmit={onSubmitHandler}/>
+                <TheoryScaleForm onSubmit={onSubmitHandler} onReset={onResetHandler}/>
             </div>
             <div className={"d-flex justify-content-center"}>
                 <ScaleTable scales={scales}/>
             </div>
         </>
-
     )
 }
 
