@@ -51,6 +51,7 @@ IntervalNameMap = {
 
 
 MajorScaleIntervals = ("M2", "M2", "m2", "M2", "M2", "M2", "m2")
+MinorScaleIntervals = ("M2", "m2", "M2", "M2", "m2", "M2", "m2")
 
 
 class Interval:
