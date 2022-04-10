@@ -66,9 +66,9 @@ class ScaleResponse(ApiResponse):
 
 
 @router.get("/scale", response_model=ScaleResponse)
-async def api_get_scale(root_note: str, key: str):
+async def api_get_scale(note: str, key: str):
     try:
-        note = Note(root_note)
+        note = Note(note)
         key = Key(key.lower())
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
