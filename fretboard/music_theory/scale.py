@@ -2,16 +2,20 @@ from typing import Optional, Union
 
 from fretboard.core.collections import StrEnum
 from fretboard.data_structures import CircularArray
-from fretboard.music_theory.interval import Interval, MajorScaleIntervals, MinorScaleIntervals
+from fretboard.music_theory.interval import Interval, MajorScaleIntervals, MinorScaleIntervals, \
+    HarmonicMinorScaleIntervals
 from fretboard.music_theory.note import Note
 
 
 class Key(StrEnum):
     Major = "major"
     Minor = "minor"
+    HarmonicMinor = "harmonic_minor"
 
     @property
     def desc(self) -> str:
+        if self == Key.HarmonicMinor:
+            return "Harmonic Minor"
         return self.name
 
 
@@ -30,6 +34,7 @@ _ChromaticNotes: tuple = tuple([Note(n) for n in "C, D, E, F, G, A, B".split(", 
 _ScaleKeyMap = {
     Key.Major: MajorScaleIntervals,
     Key.Minor: MinorScaleIntervals,
+    Key.HarmonicMinor: HarmonicMinorScaleIntervals,
 }
 
 

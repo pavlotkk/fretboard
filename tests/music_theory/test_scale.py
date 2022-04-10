@@ -38,6 +38,8 @@ from fretboard.music_theory import Scale
         ("G", "minor", "G A Bb C D Eb F"),
         ("A", "minor", "A B C D E F G"),
         ("B", "minor", "B C# D E F# G A"),
+        # harmonic minor
+        ("A", "harmonic_minor", "A B C D E F G#"),
     ],
 )
 def test__scale__create_builder(root_note, key, expected):
