@@ -3,7 +3,7 @@ from typing import Optional, Union
 from fretboard.core.collections import StrEnum
 from fretboard.data_structures import CircularArray
 from fretboard.music_theory.interval import Interval, MajorScaleIntervals, MinorScaleIntervals, \
-    HarmonicMinorScaleIntervals
+    HarmonicMinorScaleIntervals, AscMelodicMinorScaleIntervals
 from fretboard.music_theory.note import Note
 
 
@@ -11,11 +11,15 @@ class Key(StrEnum):
     Major = "major"
     Minor = "minor"
     HarmonicMinor = "harmonic_minor"
+    AscMelodicMinor = "asc_melodic_minor"
 
     @property
     def desc(self) -> str:
         if self == Key.HarmonicMinor:
             return "Harmonic Minor"
+        elif self == Key.AscMelodicMinor:
+            return "Melodic Minor ⬆️"
+
         return self.name
 
 
@@ -35,6 +39,7 @@ _ScaleKeyMap = {
     Key.Major: MajorScaleIntervals,
     Key.Minor: MinorScaleIntervals,
     Key.HarmonicMinor: HarmonicMinorScaleIntervals,
+    Key.AscMelodicMinor: AscMelodicMinorScaleIntervals,
 }
 
 
