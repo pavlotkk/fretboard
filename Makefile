@@ -55,4 +55,4 @@ test-pytest:
 # Application
 
 run:
-	$(PYTHON) -m $(PACKAGE)
+	$(PYTHON) -m $(PACKAGE).app
