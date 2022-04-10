@@ -2,7 +2,8 @@ import React from "react";
 import Dropdown from "../components/Dropdown";
 import RadioButtonGroup from "../components/RadioButtonGroup";
 import ScaleTable from "../components/ScaleTable";
-import {PITCHES, CHROMATIC_SCALE} from "../shared/constants";
+import {CHROMATIC_SCALE, PITCHES} from "../shared/constants";
+import Api from "../shared/api";
 
 function TheoryScaleForm({onSubmit, onReset}) {
     const [scaleKeys, setScaleKeys] = React.useState([])
@@ -16,7 +17,7 @@ function TheoryScaleForm({onSubmit, onReset}) {
     const disabled = !data.note || !data.key
 
     React.useEffect(() => {
-        if(scaleKeys.length > 0){
+        if (scaleKeys.length > 0) {
             return
         }
 
@@ -59,8 +60,10 @@ function TheoryScaleForm({onSubmit, onReset}) {
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Root note:</label>
                 <div className="col-sm-10 d-flex justify-content-between">
-                    <RadioButtonGroup options={CHROMATIC_SCALE} selectedValue={data.note} name={"note"} onChange={_onNoteChange}/>
-                    <RadioButtonGroup options={PITCHES} name={"pitch"} selectedValue={data.pitch} onChange={_onPitchChange}/>
+                    <RadioButtonGroup options={CHROMATIC_SCALE} selectedValue={data.note} name={"note"}
+                                      onChange={_onNoteChange}/>
+                    <RadioButtonGroup options={PITCHES} name={"pitch"} selectedValue={data.pitch}
+                                      onChange={_onPitchChange}/>
                 </div>
             </div>
 
@@ -75,30 +78,6 @@ function TheoryScaleForm({onSubmit, onReset}) {
             <button type="button" className="btn btn-link" onClick={_onClear}>Clear</button>
         </form>
     )
-}
-
-
-const API_HOST = "http://localhost:5000"
-
-
-function Api(){
-    this.getSupportedScales = () => {
-        return window.fetch(`${API_HOST}/supported-scale-keys`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json"
-            }
-        }).then(r => r.json()).then(r => r.data)
-    }
-
-    this.getScale = (note, key) => {
-        return window.fetch(`${API_HOST}/scale?` + new URLSearchParams({note: note, key: key}), {
-            method: "GET",
-            headers: {
-                'content-type': "application/json"
-            }
-        }).then(r => r.json())
-    }
 }
 
 
