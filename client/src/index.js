@@ -2,14 +2,26 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {HashRouter as Router, Route, Routes, Navigate} from "react-router-dom";
+import TheoryScalesPage from "./pages/TheoryScalesPage";
+import LearnScalesPage from "./pages/LearnScalesPage";
+import App from "./App";
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
+
 root.render(
     <React.StrictMode>
-        <App/>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Navigate to="/theory/scales" replace />} />
+                <Route path="/" element={<App/>}>
+                    <Route path="theory/scales" element={<TheoryScalesPage/>}/>
+                    <Route path="learn/scales" element={<LearnScalesPage/>}/>
+                </Route>
+            </Routes>
+        </Router>
     </React.StrictMode>,
 );
 

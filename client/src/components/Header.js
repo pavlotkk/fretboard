@@ -1,19 +1,30 @@
-function SingleHeaderMenuItem({title, link, isActive = false}) {
+import React from 'react';
+import {NavLink, useLocation} from "react-router-dom";
+
+function SingleHeaderMenuItem({title, link}) {
     return (
         <li className="nav-item" key={title}>
-            <a className={`nav-link ${isActive ? "active" : ""}`} aria-current="page" href={link}>{title}</a>
+            <NavLink to={link}>{title}</NavLink>
         </li>
     )
 }
 
-function NestedHeaderMenuItem({title, isActive = false, subItems = []}) {
-    const dropdownId = `dropdown_${new Date().getTime()}`;
-    const menuItems = subItems.map(({title, link, isActive = false}) => {
-        return <li key={title}><a className={`dropdown-item ${isActive ? "active" : ""}`} href={link}>{title}</a></li>
+function NestedHeaderMenuItem({title, subItems = []}) {
+    const { pathname } = useLocation();
+    const style = {
+        color: subItems.some((item) => item.link === pathname) ? "#fff" : "rgba(255,255,255,.55)"
+    }
+    const dropdownId = `dropdown_${title}`.toLowerCase().replaceAll(" ", "_");
+    const menuItems = subItems.map(({title, link}) => {
+        return (
+            <li key={link}>
+                <NavLink to={link} className={pathname === link ? "dropdown-item active" : "dropdown-item"}>{title}</NavLink>
+            </li>
+        )
     });
     return (
         <li className={"nav-item dropdown"} key={title}>
-            <a className={`nav-link dropdown-toggle ${isActive ? "active" : ""}`} href="#" id={dropdownId} data-bs-toggle="dropdown"
+            <a className={"nav-link dropdown-toggle"} style={style} href="#" id={dropdownId} data-bs-toggle="dropdown"
                aria-expanded="false">{title}</a>
             <ul className="dropdown-menu" aria-labelledby={dropdownId}>
                 {menuItems}
@@ -22,12 +33,12 @@ function NestedHeaderMenuItem({title, isActive = false, subItems = []}) {
     )
 }
 
-function HeaderMenuItem({title, link, isActive = false, subItems = null}) {
+function HeaderMenuItem({title, link, subItems = null}) {
     const isSingleItem = subItems === null || subItems.length === 0;
     if (isSingleItem) {
-        return SingleHeaderMenuItem({title: title, link: link, isActive: isActive})
+        return SingleHeaderMenuItem({title: title, link: link})
     } else {
-        return NestedHeaderMenuItem({title: title, isActive: isActive, subItems: subItems})
+        return NestedHeaderMenuItem({title: title, subItems: subItems})
     }
 }
 

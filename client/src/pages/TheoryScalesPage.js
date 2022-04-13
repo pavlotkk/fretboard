@@ -96,7 +96,7 @@ function TheoryScalesPage() {
     }
 
     return (
-        <>
+        <main className="container">
             <div className="bg-light p-5 rounded">
                 <h1>Scales</h1>
                 <TheoryScaleForm onSubmit={onSubmitHandler} onReset={onResetHandler}/>
@@ -104,7 +104,7 @@ function TheoryScalesPage() {
             <div className={"d-flex justify-content-center"}>
                 <ScaleTable scales={scales}/>
             </div>
-        </>
+        </main>
     )
 }
 

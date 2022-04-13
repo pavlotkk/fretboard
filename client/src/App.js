@@ -1,39 +1,16 @@
 import './App.css';
+import {Outlet} from "react-router-dom";
 import Header from "./components/Header";
-import TheoryScalesPage from "./pages/TheoryScalesPage";
+import MENU from "./menu";
+
 
 function App() {
-    const menuItems = [
-        {
-            title: "Theory",
-            isActive: true,
-            subItems: [
-                {
-                    title: "Scales",
-                    link: "#",
-                    isActive: true
-                },
-            ]
-        },
-        {
-            title: "Learn",
-            subItems: [
-                {
-                    title: "Scales",
-                    link: "#",
-                },
-            ]
-        }
-    ]
-
     return (
         <div className="App">
-            <Header menuItems={menuItems}/>
-            <main className="container">
-                <TheoryScalesPage />
-            </main>
+            <Header menuItems={MENU}/>
+            <Outlet/>
         </div>
-    );
+    )
 }
 
 export default App;
