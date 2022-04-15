@@ -1,15 +1,19 @@
-function Api(){
-    this.host = (window.app_config.api_host || "").trim()
+class Api{
+    host: string
 
-    this.getSupportedScales = () => {
+    constructor() {
+         this.host = (window.app_config.api_host || "").trim()
+    }
+
+    getSupportedScales = () => {
         return this.get('/api/supported-scale-keys').then(r => r.data)
     }
 
-    this.getScale = (note, key) => {
+    getScale = (note: string, key: string) => {
         return this.get("/api/scale", {note: note, key: key})
     }
 
-    this.request = (method, url, params = null, headers = null) => {
+    request = (method: string, url: string, params: any = null, headers: any = null) => {
         if(params == null){
             params = {}
         }
@@ -28,7 +32,7 @@ function Api(){
         })
     }
 
-    this.get = (url, params = null, headers = null) => {
+    get = (url: string, params: any = null, headers: any = null) => {
         return this.request("GET", url, params, headers).then(r => r.json())
     }
 }

@@ -1,4 +1,4 @@
-function convertPrimitiveToOptionObject(value) {
+function convertPrimitiveToOptionObject(value: object | string | number) {
     if (typeof value === "object") {
         return value
     } else {

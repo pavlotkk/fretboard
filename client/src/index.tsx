@@ -1,23 +1,22 @@
 import React from 'react';
-import {createRoot} from 'react-dom/client';
-
+import ReactDOM from 'react-dom/client';
 import './index.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {HashRouter as Router, Route, Routes, Navigate} from "react-router-dom";
-import TheoryScalesPage from "./pages/TheoryScalesPage";
+import {HashRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import LearnScalesPage from "./pages/LearnScalesPage";
-import App from "./App";
+import TheoryScalesPage from "./pages/TheoryScalesPage";
 
-const container = document.getElementById('root');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
-
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
     <React.StrictMode>
         <Router>
             <Routes>
                 <Route path="/" element={<Navigate to="/theory/scales" replace />} />
                 <Route path="/" element={<App/>}>
-                    <Route path="theory/scales" element={<TheoryScalesPage/>}/>
+                    <Route path="theory/scales" element={<TheoryScalesPage />}/>
                     <Route path="learn/scales" element={<LearnScalesPage/>}/>
                 </Route>
             </Routes>

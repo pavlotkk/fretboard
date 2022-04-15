@@ -4,9 +4,24 @@ import RadioButtonGroup from "../components/RadioButtonGroup";
 import ScaleTable from "../components/ScaleTable";
 import {CHROMATIC_SCALE, PITCHES} from "../shared/constants";
 import Api from "../shared/api";
+import {Scale} from "../interfaces/music";
 
-function TheoryScaleForm({onSubmit, onReset}) {
-    const [scaleKeys, setScaleKeys] = React.useState([])
+
+interface TheoryScaleFormData {
+    note: string,
+    pitch: string,
+    key: string
+}
+
+
+interface TheoryScaleFormParams {
+    onSubmit: (data: TheoryScaleFormData) => void,
+    onReset: () => void,
+}
+
+
+function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
+    const [scaleKeys, setScaleKeys] = React.useState<TheoryScaleFormData[]>([])
 
     const [data, setData] = React.useState({
         note: '',
@@ -22,7 +37,7 @@ function TheoryScaleForm({onSubmit, onReset}) {
         }
 
         new Api().getSupportedScales().then(resp => {
-            const supportedScaleKeys = resp.map((item) => {
+            const supportedScaleKeys = resp.map((item: Scale) => {
                 return {value: item.id, text: item.name}
             })
             const firstKey = supportedScaleKeys.length > 0 ? supportedScaleKeys[0].value : ''
@@ -32,7 +47,7 @@ function TheoryScaleForm({onSubmit, onReset}) {
         })
     }, [scaleKeys])
 
-    const _onSubmit = (event) => {
+    const _onSubmit = (event: React.SyntheticEvent ) => {
         event.preventDefault();
         onSubmit(data);
         _onClear()
@@ -43,15 +58,15 @@ function TheoryScaleForm({onSubmit, onReset}) {
         onReset()
     }
 
-    const _onScaleKeyChange = (value) => {
+    const _onScaleKeyChange = (value: string) => {
         setData({...data, key: value})
     }
 
-    const _onNoteChange = (value) => {
+    const _onNoteChange = (value: string) => {
         setData({...data, note: value})
     }
 
-    const _onPitchChange = (value) => {
+    const _onPitchChange = (value: string) => {
         setData({...data, pitch: value})
     }
 
@@ -82,9 +97,9 @@ function TheoryScaleForm({onSubmit, onReset}) {
 
 
 function TheoryScalesPage() {
-    const [scales, setScales] = React.useState([])
+    const [scales, setScales] = React.useState<Scale[]>([])
 
-    const onSubmitHandler = (data) => {
+    const onSubmitHandler = (data: TheoryScaleFormData) => {
         // console.log(scale)
         new Api().getScale(`${data.note}${data.pitch}`.trim(), data.key).then(newScale => {
             setScales([...scales, newScale])

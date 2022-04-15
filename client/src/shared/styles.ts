@@ -7,12 +7,12 @@ const NoteColor = {
     A: "#DEDEFF",
     B: "#E08FFF",
 
-    get: function (value) {
-        return this[value[0].toUpperCase()]
+    get: function (value: string): string {
+        return (this as any)[value[0].toUpperCase()]  // tslint:disable
     }
 }
 
-function GetNoteStyle(note) {
+function GetNoteStyle(note: string) {
     const color = NoteColor.get(note);
 
     if (note.length === 1) {
