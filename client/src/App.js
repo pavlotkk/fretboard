@@ -1,4 +1,4 @@
-import './App.css';
+import './app.css';
 import {Outlet} from "react-router-dom";
 import Header from "./components/Header";
 import MENU from "./menu";

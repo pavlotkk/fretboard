@@ -1,13 +1,9 @@
-.ScaleTable-Layout {
+.scale-table__layout {
   border-spacing: 0 5px;
   border-collapse: separate;
 }
 
-.VerticalSpacing {
-    height: 10px;
-}
-
-.ScaleNote {
+.scale-note {
     width: 75px;
     height: 75px;
     font-size: 40px;
@@ -18,7 +14,7 @@
 }
 
 
-.ScaleNote-Before {
+.scale-note-before {
     border: 5px solid black;
     min-width: 75px;
     height: 75px;
@@ -28,7 +24,7 @@
 }
 
 
-.ScaleNote-After {
+.scale-note-after {
     border: 5px solid black;
     min-width: 75px;
     height: 75px;
