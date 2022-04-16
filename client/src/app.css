@@ -4,6 +4,7 @@
 }
 
 .scale-note {
+    box-sizing: border-box;
     width: 75px;
     height: 75px;
     font-size: 40px;
@@ -13,22 +14,22 @@
     margin: 5px;
 }
 
+.note__no_pitch {
 
-.scale-note-before {
+}
+
+.scale-note__desc {
+    box-sizing: content-box;
     border: 5px solid black;
-    min-width: 75px;
-    height: 75px;
     font-size: 40px;
     text-align: center;
     vertical-align: middle;
 }
 
+.scale-note__name {
+    padding: 0 5px;
+}
 
-.scale-note-after {
-    border: 5px solid black;
-    min-width: 75px;
-    height: 75px;
-    font-size: 40px;
-    text-align: center;
-    vertical-align: middle;
+
+.scale-note__sharps_flats_count {
 }

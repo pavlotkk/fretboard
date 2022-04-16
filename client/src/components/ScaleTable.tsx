@@ -1,43 +1,36 @@
-import {GetNoteStyle} from "../shared/styles";
 import React from "react";
 import classNames from "classnames";
 import {Scale} from "../interfaces/music";
+import ScaleService from "../services/scale-service";
+import NoteService from "../services/note-service";
 
 interface ScaleTableParams {
     scales: Scale[]
 }
 
 function ScaleTable({scales = []}: ScaleTableParams) {
-    function getScaleDesc(scale: Scale) {
-        let desc = ""
-        if (scale.sharps_count > 0) {
-            desc = `${scale.sharps_count} #`
-        } else if (scale.flats_count > 0) {
-            desc = `${scale.flats_count} b`
-        } else if (scale.sharps_count === 0 && scale.flats_count === 0) {
-            desc = "0"
-        }
-        return desc
-    }
-
     const rows = scales.map((scale: Scale) => {
+        const scaleService = new ScaleService(scale);
+
         const cols = scale.notes.map((n) => {
-            return <td key={n} className={"scale-note"} style={GetNoteStyle(n)}>{n}</td>
+            const noteService = new NoteService(n);
+            return <td key={n} className={"scale-note"} style={noteService.getStyle()}>{n}</td>
         });
 
-        let desc = getScaleDesc(scale)
-        const beforeClass = classNames({
-            "scale-note-before": scale.name != null && scale.name !== ""
+        const scaleNameClass = classNames({
+            "scale-note__desc": scale.name,
+            "scale-note__name": scale.name
         })
-        const afterClass = classNames({
-            "scale-note-after": desc
+        const scaleSharpsFlatsCountClass = classNames({
+            "scale-note__desc": scaleService.desc,
+            "scale-note__sharps_flats_count": scaleService.desc
         })
 
         return (
             <tr key={scale.id}>
-                <td className={beforeClass}>{scale.name || ""}</td>
+                <td className={scaleNameClass}>{scale.name || ""}</td>
                 {cols}
-                <td className={afterClass}>{desc}</td>
+                <td className={scaleSharpsFlatsCountClass}>{scaleService.desc}</td>
             </tr>
         )
     })
