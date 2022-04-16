@@ -1,4 +1,4 @@
-import {convertPrimitiveToOptionObject} from "../shared/converters";
+import {toTextValue} from "../shared/converters";
 
 import React from "react";
 import {TextValue} from "../interfaces/textvalue";
@@ -11,7 +11,7 @@ interface RadioButtonParams {
 }
 
 function RadioButtonGroup({options, name, selectedValue = null, onChange = null, ...props}: RadioButtonParams) {
-    options = options.map(convertPrimitiveToOptionObject);
+    options = options.map(toTextValue);
 
     let [value, setValue] = React.useState(selectedValue);
     if(value !== selectedValue){

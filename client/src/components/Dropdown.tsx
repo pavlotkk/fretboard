@@ -1,5 +1,5 @@
 import React from 'react';
-import {convertPrimitiveToOptionObject} from "../shared/converters";
+import {toTextValue} from "../shared/converters";
 import {TextValue} from "../interfaces/textvalue";
 
 
@@ -10,7 +10,7 @@ interface DropdownParams {
 }
 
 function Dropdown({options, defaultValue = '', onChange = null}: DropdownParams) {
-    options = options.map(convertPrimitiveToOptionObject);
+    options = options.map(toTextValue);
 
     const noOptions = options && options.length === 0
 

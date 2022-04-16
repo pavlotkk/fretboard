@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {HashRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import LearnScalesPage from "./pages/LearnScalesPage";
-import TheoryScalesPage from "./pages/TheoryScalesPage";
+import TheoryScalesPage from "./pages/theory-scales/TheoryScalesPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,9 +1,11 @@
-function convertPrimitiveToOptionObject(value: object | string | number) {
+import {TextValue} from "../interfaces/textvalue";
+
+function toTextValue(value: object | TextValue | string | number): TextValue {
     if (typeof value === "object") {
-        return value
+        return value as TextValue
     } else {
-        return {value: value, text: value}
+        return {value: value, text: value} as TextValue
     }
 }
 
-export {convertPrimitiveToOptionObject};
+export {toTextValue};
