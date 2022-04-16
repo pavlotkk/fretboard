@@ -191,8 +191,8 @@ class Scale:
 
     @property
     def flats_count(self) -> int:
-        return len([n for n in self if n.is_flat])
+        return sum((len(str(n)) - 1 for n in self if n.is_flat))
 
     @property
     def sharps_count(self) -> int:
-        return len([n for n in self if n.is_sharp])
+        return sum((len(str(n)) - 1 for n in self if n.is_sharp))
