@@ -89,10 +89,13 @@ class Note:
         if not other:
             return False
 
-        if not isinstance(other, Note):
-            return False
+        if isinstance(other, str):
+            return str(self) == other
 
-        return self._name == other._name and self._pitch == other._pitch
+        if isinstance(other, Note):
+            return self._name == other._name and self._pitch == other._pitch
+
+        return False
 
     def __hash__(self):
         return hash((self._name, self._pitch.value))

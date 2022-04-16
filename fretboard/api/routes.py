@@ -1,12 +1,12 @@
 import logging
-import uuid
 from datetime import datetime
+from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from fretboard.music_theory import Key, Note, Scale
-from fretboard.storage.db import Db
+from fretboard.services.learning_service import LearningService
 
 router = APIRouter()
 
@@ -87,12 +87,17 @@ async def api_get_scale(note: str, key: str):
     )
 
 
-class SessionResponse(ApiResponse):
-    session: str
+class ScaleToLearnResponse(ApiResponse):
+    id: str
+    name: str
 
 
-@router.get("/api/session/allocate", response_model=SessionResponse)
-async def api_allocate_session():
-    session_id = uuid.uuid4().hex
-    Db().put_session(session_id)
-    return SessionResponse(session=session_id)
+@router.get("/api/learn/scale", response_model=ScaleToLearnResponse)
+async def api_learn_scale(note: Optional[str] = None, key: Optional[Key] = None):
+    session_service = LearningService()
+    scale = session_service.get_scale_to_learn(Note(note) if note else None, key)
+
+    return ScaleToLearnResponse(
+        id=scale.id,
+        name=scale.name,
+    )

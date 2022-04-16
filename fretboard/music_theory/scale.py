@@ -196,3 +196,13 @@ class Scale:
     @property
     def sharps_count(self) -> int:
         return sum((len(str(n)) - 1 for n in self if n.is_sharp))
+
+    @property
+    def is_theoretical(self) -> bool:
+        """
+        Scales that have more than 7 pitches - are theoretical.
+        E.g. D# has 9 sharps.
+        Returns:
+            True or False
+        """
+        return self.sharps_count > 7 or self.flats_count > 7

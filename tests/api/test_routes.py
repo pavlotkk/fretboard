@@ -1,13 +1,13 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from fretboard.api.routes import (
     HealthResponse,
     ScaleResponse,
-    SessionResponse,
+    ScaleToLearnResponse,
     SupportedScaleKeysResponse,
 )
 from fretboard.music_theory import Key
-from fretboard.storage.db import Db
 
 
 def test__api_health__ok(test_client: TestClient):
@@ -38,9 +38,41 @@ def test__api_get_scale__ok(test_client: TestClient):
     assert len(data.notes) == 7
 
 
-def test__api_allocate_session__ok(test_client: TestClient, db: Db):
-    resp = test_client.get("/api/session/allocate")
+def test__api_get_scale_to_learn__get_any(test_client: TestClient):
+    resp = test_client.get("/api/learn/scale")
     assert resp.status_code == 200, resp.text
 
-    data = SessionResponse(**resp.json())
-    assert db.session_exists(data.session)
+    data = ScaleToLearnResponse(**resp.json())
+    assert data
+
+
+@pytest.mark.parametrize("note", ["C", "C#", "D#"])
+def test__api_get_scale_to_learn__for_note_any_key(test_client: TestClient, note: str):
+    resp = test_client.get("/api/learn/scale", params={"note": note})
+    assert resp.status_code == 200, resp.text
+
+    data = ScaleToLearnResponse(**resp.json())
+    assert data
+    assert data.name.startswith(note), data
+
+
+@pytest.mark.parametrize("key", list(Key.all()))
+def test__api_get_scale_to_learn__for_key_any_note(test_client: TestClient, key: str):
+    resp = test_client.get("/api/learn/scale", params={"key": key})
+    assert resp.status_code == 200, resp.text
+
+    data = ScaleToLearnResponse(**resp.json())
+    assert data
+    assert Key(key).desc in data.name
+
+
+@pytest.mark.parametrize("note,key", [("C", Key.Major.value)])
+def test__api_get_scale_to_learn__for_note_key(
+    test_client: TestClient, note: str, key: str
+):
+    resp = test_client.get("/api/learn/scale", params={"note": note, "key": key})
+    assert resp.status_code == 200, resp.text
+
+    data = ScaleToLearnResponse(**resp.json())
+    assert data
+    assert data.name == f"{note} {Key(key).desc}"
