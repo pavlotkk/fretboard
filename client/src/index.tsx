@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {HashRouter as Router, Navigate, Route, Routes} from "react-router-dom";
-import LearnScalesPage from "./pages/LearnScalesPage";
+import LearnScalesPage from "./pages/learn-scales/LearnScalesPage";
 import TheoryScalesPage from "./pages/theory-scales/TheoryScalesPage";
 
 const root = ReactDOM.createRoot(

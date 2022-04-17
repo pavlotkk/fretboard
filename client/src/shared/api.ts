@@ -13,6 +13,10 @@ class Api{
         return this.get("/api/scale", {note: note, key: key})
     }
 
+    getScaleToLearn = (note: string, key: string) => {
+        return this.get("/api/learn/scale", {note: note, key: key})
+    }
+
     request = (method: string, url: string, params: any = null, headers: any = null) => {
         if(params == null){
             params = {}
