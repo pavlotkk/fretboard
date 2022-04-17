@@ -14,7 +14,7 @@ function Dropdown({options, defaultValue = '', onChange = null}: DropdownParams)
 
     const noOptions = options && options.length === 0
 
-    const _onChange = function (e: any){
+    const onChangeHandler = function (e: any){
         const newValue = e.target.value
         if(onChange){
             onChange(newValue)
@@ -22,7 +22,7 @@ function Dropdown({options, defaultValue = '', onChange = null}: DropdownParams)
     }
 
     return (
-        <select className="form-select" value={defaultValue} onChange={_onChange} disabled={noOptions ? true : undefined}>
+        <select className="form-select" value={defaultValue} onChange={onChangeHandler} disabled={noOptions ? true : undefined}>
             {(options as TextValue[]).map((op: TextValue) => {
                 return <option key={op.value} value={op.value}>{op.text}</option>
             })}

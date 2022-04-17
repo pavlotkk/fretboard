@@ -1,10 +1,7 @@
-import {TextValue} from "../../interfaces/textvalue";
 import React from "react";
-import Api from "../../shared/api";
-import {Scale} from "../../interfaces/music";
 import RadioButtonGroup from "../../components/RadioButtonGroup";
 import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
-import Dropdown from "../../components/Dropdown";
+import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
 
 export interface LearnScaleFormSubmitData {
     note: string,
@@ -13,38 +10,27 @@ export interface LearnScaleFormSubmitData {
 }
 
 interface LearnScaleFormData extends LearnScaleFormSubmitData{
-    supportedScaleKeys: TextValue[]
-}
 
+}
 
 interface LearnScaleFormParams {
     onSubmit: (data: LearnScaleFormSubmitData) => void,
     onReset: () => void,
 }
 
+const ANY_VALUE = "_"
+
 function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
     const [data, setData] = React.useState<LearnScaleFormData>({
         note: '',
         pitch: '',
-        key: '',
-        supportedScaleKeys: [{text: "Any", value: ""}]
+        key: ANY_VALUE,
     })
 
     const disabled = !data.note || !data.key
 
-    React.useEffect(() => {
-        new Api().getSupportedScales().then(resp => {
-            let supportedScaleKeys = resp.map((item: Scale) => {
-                return {value: item.id, text: item.name}
-            })
-            supportedScaleKeys = [...data.supportedScaleKeys, ...supportedScaleKeys];
-            const firstKey = supportedScaleKeys.length > 0 ? supportedScaleKeys[0].value : ''
-            setData({...data, supportedScaleKeys: supportedScaleKeys, key: firstKey})
-        })
-    }, [])
-
     const resetForm = () => {
-        setData({...data, note: '', pitch: ''})
+        setData({...data, note: '', pitch: '', key: ANY_VALUE})
     }
 
     const submitForm = (event: React.SyntheticEvent ) => {
@@ -81,9 +67,9 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Key:</label>
                 <div className="col-sm-10">
-                    <Dropdown
-                        options={data.supportedScaleKeys}
-                        defaultValue={data.key}
+                    <ScaleKeyDropdown
+                        preloadOptions={[{text: "Any", value: ANY_VALUE}]}
+                        selectedValue={data.key}
                         onChange={(value) => setData({...data, key: value})}
                     />
                 </div>

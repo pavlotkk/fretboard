@@ -1,10 +1,7 @@
-import {TextValue} from "../../interfaces/textvalue";
 import React from "react";
-import Api from "../../shared/api";
-import {Scale} from "../../interfaces/music";
 import RadioButtonGroup from "../../components/RadioButtonGroup";
 import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
-import Dropdown from "../../components/Dropdown";
+import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
 
 export interface TheoryScaleFormSubmitData {
     note: string,
@@ -13,9 +10,8 @@ export interface TheoryScaleFormSubmitData {
 }
 
 interface TheoryScaleFormData extends TheoryScaleFormSubmitData{
-    supportedScaleKeys: TextValue[]
-}
 
+}
 
 interface TheoryScaleFormParams {
     onSubmit: (data: TheoryScaleFormSubmitData) => void,
@@ -27,20 +23,9 @@ function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
         note: '',
         pitch: '',
         key: '',
-        supportedScaleKeys: []
     })
 
     const disabled = !data.note || !data.key
-
-    React.useEffect(() => {
-        new Api().getSupportedScales().then(resp => {
-            const supportedScaleKeys = resp.map((item: Scale) => {
-                return {value: item.id, text: item.name}
-            })
-            const firstKey = supportedScaleKeys.length > 0 ? supportedScaleKeys[0].value : ''
-            setData({...data, supportedScaleKeys: supportedScaleKeys, key: firstKey})
-        })
-    }, [])
 
     const resetForm = () => {
         setData({...data, note: '', pitch: ''})
@@ -80,9 +65,8 @@ function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Key:</label>
                 <div className="col-sm-10">
-                    <Dropdown
-                        options={data.supportedScaleKeys}
-                        defaultValue={data.key}
+                    <ScaleKeyDropdown
+                        selectedValue={data.key}
                         onChange={(value) => setData({...data, key: value})}
                     />
                 </div>

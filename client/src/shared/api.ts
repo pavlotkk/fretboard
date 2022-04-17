@@ -1,12 +1,25 @@
 class Api{
+    static _cache = {
+        supportedScales:  null
+    }
+
     host: string
 
     constructor() {
          this.host = (window.app_config.api_host || "").trim()
     }
 
-    getSupportedScales = () => {
-        return this.get('/api/supported-scale-keys').then(r => r.data)
+    getSupportedScales = (useCache = true) => {
+        if(Api._cache.supportedScales === null || !useCache) {
+            return this.get('/api/supported-scale-keys').then(r => {
+                Api._cache.supportedScales = r.data;
+                return r.data
+            })
+        }
+
+        return new Promise<any>((resolve, reject) => {
+            resolve(Api._cache.supportedScales)
+        })
     }
 
     getScale = (note: string, key: string) => {
