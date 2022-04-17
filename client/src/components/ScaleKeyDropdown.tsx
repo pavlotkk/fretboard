@@ -12,7 +12,6 @@ interface ScaleKeyDropdownParams {
 
 interface ScaleKeyDropdownData {
     options: TextValue[]
-    selectedValue: string
 }
 
 
@@ -24,7 +23,6 @@ export default function ScaleKeyDropdown(
     }: ScaleKeyDropdownParams) {
     const [data, setData] = React.useState<ScaleKeyDropdownData>({
         options: preloadOptions,
-        selectedValue: selectedValue
     })
 
     React.useEffect(() => {
@@ -35,9 +33,9 @@ export default function ScaleKeyDropdown(
             supportedScaleKeys = [...data.options, ...supportedScaleKeys];
 
             // auto select first item if other wasn't provided
-            if (data.selectedValue === '') {
+            if (selectedValue === '') {
                 const firstKey = supportedScaleKeys.length > 0 ? supportedScaleKeys[0].value : ''
-                setData({...data, options: supportedScaleKeys, selectedValue: firstKey})
+                setData({...data, options: supportedScaleKeys})
                 if (onChange) {
                     onChange(firstKey)
                 }
@@ -48,7 +46,7 @@ export default function ScaleKeyDropdown(
     }, [])
 
     const onChangeHandler = (value: string) => {
-        setData({...data, selectedValue: value})
+        setData({...data})
         if (onChange) {
             onChange(value)
         }
@@ -57,7 +55,7 @@ export default function ScaleKeyDropdown(
     return (
         <Dropdown
             options={data.options}
-            defaultValue={data.selectedValue}
+            defaultValue={selectedValue}
             onChange={onChangeHandler}
         />
     )

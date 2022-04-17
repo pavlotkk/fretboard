@@ -4,13 +4,15 @@ import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
 
 export interface LearnScaleFormSubmitData {
+    note: string | null,
+    pitch: string | null,
+    key: string | null
+}
+
+interface LearnScaleFormData{
     note: string,
     pitch: string,
     key: string
-}
-
-interface LearnScaleFormData extends LearnScaleFormSubmitData{
-
 }
 
 interface LearnScaleFormParams {
@@ -27,15 +29,19 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
         key: ANY_VALUE,
     })
 
-    const disabled = !data.note || !data.key
+    const disabled = (data.note == null || data.note.length === 0) && (data.pitch != null && data.pitch.length > 0);
 
     const resetForm = () => {
-        setData({...data, note: '', pitch: '', key: ANY_VALUE})
+        setData({note: '', pitch: '', key: ANY_VALUE})
     }
 
     const submitForm = (event: React.SyntheticEvent ) => {
         event.preventDefault();
-        onSubmit(data);
+        onSubmit({
+            note: data.note || null,
+            pitch: data.pitch || null,
+            key: data.key === ANY_VALUE ? null : data.key
+        } as LearnScaleFormSubmitData);
         resetForm()
     }
 

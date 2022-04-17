@@ -93,9 +93,15 @@ class ScaleToLearnResponse(ApiResponse):
 
 
 @router.get("/api/learn/scale", response_model=ScaleToLearnResponse)
-async def api_learn_scale(note: Optional[str] = None, key: Optional[Key] = None):
+async def api_learn_scale(note: Optional[str] = None, key: Optional[str] = None):
+    try:
+        note = Note(note) if note else None
+        key = Key(key.lower()) if key else None
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
     session_service = LearningService()
-    scale = session_service.get_scale_to_learn(Note(note) if note else None, key)
+    scale = session_service.get_scale_to_learn(note, key)
 
     return ScaleToLearnResponse(
         id=scale.id,
