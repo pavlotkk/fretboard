@@ -46,7 +46,13 @@ function LearnScalesPage() {
     }
 
     const onResetHandler = () => {
-
+        setState({
+            scale_id: null,
+            scale_name: null,
+            answer: "",
+            form_last_note: null,
+            form_last_key: null
+        })
     }
 
     const onSubmitAnswer = (event: React.SyntheticEvent) => {
