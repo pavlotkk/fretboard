@@ -9,7 +9,7 @@ export interface LearnScaleFormSubmitData {
     key: string | null
 }
 
-interface LearnScaleFormData{
+interface LearnScaleFormData {
     note: string,
     pitch: string,
     key: string
@@ -35,7 +35,7 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
         setData({note: '', pitch: '', key: ANY_VALUE})
     }
 
-    const submitForm = (event: React.SyntheticEvent ) => {
+    const submitForm = (event: React.SyntheticEvent) => {
         event.preventDefault();
         onSubmit({
             note: data.note || null,
@@ -84,7 +84,8 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
             <button type="submit" className="btn btn-primary" disabled={disabled}>Learn</button>
             <button
                 type="button" className="btn btn-link"
-                onClick={clearForm}>Clear</button>
+                onClick={clearForm}>Clear
+            </button>
         </form>
     )
 }

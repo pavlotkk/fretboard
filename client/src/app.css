@@ -33,3 +33,7 @@
 
 .scale-note__sharps_flats_count {
 }
+
+.hide {
+    display: none !important;
+}
