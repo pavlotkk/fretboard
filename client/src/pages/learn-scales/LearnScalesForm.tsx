@@ -42,7 +42,6 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
             pitch: data.pitch || null,
             key: data.key === ANY_VALUE ? null : data.key
         } as LearnScaleFormSubmitData);
-        resetForm()
     }
 
     const clearForm = () => {

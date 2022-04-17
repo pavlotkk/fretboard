@@ -10,6 +10,8 @@ interface LearnScalesPageState {
     scale_id: string | null,
     scale_name: string | null
     answer?: string
+    form_last_note: string | null
+    form_last_key: string | null
 }
 
 interface ScaleToLearn {
@@ -17,16 +19,30 @@ interface ScaleToLearn {
     name: string
 }
 
+
 function LearnScalesPage() {
     const [state, setState] = React.useState<LearnScalesPageState>({
         scale_id: null,
         scale_name: null,
-        answer: ''
+        answer: "",
+        form_last_note: null,
+        form_last_key: null
     })
-    const onScaleSelectedHandler = (data: LearnScaleFormSubmitData) => {
-        new Api().getScaleToLearn(`${data.note || ''}${data.pitch || ''}`, data.key).then((resp: ScaleToLearn) => {
-            setState({...state, scale_id: resp.id, scale_name: resp.name})
+
+    const getScaleToLearn = (note: string | null, key: string | null) => {
+        new Api().getScaleToLearn(note, key).then((resp: ScaleToLearn) => {
+            setState({
+                ...state,
+                scale_id: resp.id,
+                scale_name: resp.name,
+                form_last_note: note,
+                form_last_key: key
+            })
         })
+    }
+
+    const onScaleSelectedHandler = (data: LearnScaleFormSubmitData) => {
+        getScaleToLearn(`${data.note || ''}${data.pitch || ''}`, data.key)
     }
 
     const onResetHandler = () => {
@@ -43,14 +59,15 @@ function LearnScalesPage() {
     }
 
     const onSkipHandler = () => {
-
+        setState({...state, answer: ""})
+        getScaleToLearn(state.form_last_note, state.form_last_key)
     }
 
     const formClasses = classNames({
         "bg-light": true,
         "p-5": true,
         "justify-content-center": true,
-        "hide": false //state.scale_id == null
+        "hide": state.scale_id == null
     })
 
     return (
@@ -60,12 +77,13 @@ function LearnScalesPage() {
                 <LearnScaleForm onSubmit={onScaleSelectedHandler} onReset={onResetHandler}/>
             </div>
             <div className={formClasses} style={{marginTop: "10px"}}>
+                <h1 style={{textAlign: "center"}}>{state.scale_name}</h1>
+
                 <div className={"d-flex justify-content-center"}>
                     <LearnScalesAnswer notes={NoteService.parse(state.answer || '', 7)}/>
                 </div>
 
                 <form className={"row g-3"} onSubmit={onSubmitAnswer}>
-                    <h1 style={{textAlign: "center"}}>{state.scale_name}</h1>
                     <div className="col-md-12">
                         <input
                             type="text"
