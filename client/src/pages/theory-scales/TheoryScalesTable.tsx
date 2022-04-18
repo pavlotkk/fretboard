@@ -8,7 +8,7 @@ interface ScaleTableParams {
     scales: Scale[]
 }
 
-function ScaleTable({scales = []}: ScaleTableParams) {
+function TheoryScalesTable({scales = []}: ScaleTableParams) {
     const rows = scales.map((scale: Scale) => {
         const scaleService = new ScaleService(scale);
 
@@ -44,4 +44,4 @@ function ScaleTable({scales = []}: ScaleTableParams) {
     )
 }
 
-export default ScaleTable;
+export default TheoryScalesTable;

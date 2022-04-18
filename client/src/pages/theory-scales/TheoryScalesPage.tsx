@@ -1,5 +1,5 @@
 import React from "react";
-import ScaleTable from "./ScaleTable";
+import TheoryScalesTable from "./TheoryScalesTable";
 import Api from "../../services/api";
 import {Scale} from "../../interfaces/music";
 import TheoryScaleForm, {TheoryScaleFormSubmitData} from "./TheoryScalesForm";
@@ -24,7 +24,7 @@ function TheoryScalesPage() {
                 />
             </div>
             <div className={"d-flex justify-content-center"}>
-                <ScaleTable scales={scales}/>
+                <TheoryScalesTable scales={scales}/>
             </div>
         </main>
     )
