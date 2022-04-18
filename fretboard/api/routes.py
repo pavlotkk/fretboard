@@ -90,6 +90,7 @@ async def api_get_scale(note: str, key: str):
 class ScaleToLearnResponse(ApiResponse):
     id: str
     name: str
+    notes: list[str]
 
 
 @router.get("/api/learn/scale", response_model=ScaleToLearnResponse)
@@ -106,4 +107,5 @@ async def api_learn_scale(note: Optional[str] = None, key: Optional[str] = None)
     return ScaleToLearnResponse(
         id=scale.id,
         name=scale.name,
+        notes=[str(n) for n in scale]
     )

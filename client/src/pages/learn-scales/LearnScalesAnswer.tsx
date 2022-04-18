@@ -3,31 +3,40 @@ import NoteService from "../../services/note-service";
 
 
 interface LearnScalesAnswerParams {
-    notes: string[]
+    actual_notes: string[],
+    expected_notes: string[],
 }
 
-function LearnScalesAnswer({notes = []}: LearnScalesAnswerParams) {
-    const notesCols = notes.map((n, index) => {
+function LearnScalesAnswer({actual_notes = [], expected_notes = []}: LearnScalesAnswerParams) {
+    const actualNotesCols = actual_notes.map((n, index) => {
         const noteService = new NoteService(n);
         return (
             <td key={index} className={"scale-note"} style={noteService.getStyle()}>{n}</td>
         )
     })
 
-    const resultsCols = notes.map((n, index) => {
+    const expectedNotesCols = expected_notes.map((n, index) => {
+        let value: string
+        if(actual_notes.some((v) => v === "")){
+            value = "..."
+        } else if (n === actual_notes[index]){
+            value = "✅"
+        } else {
+            value = "❌"
+        }
         return (
-            <td key={index} className={"scale-note"}>...</td>
+            <td key={index} className={"scale-note"}>{value}</td>
         )
     })
 
     return (
         <table className={`scale-table__layout`}>
             <tbody>
-            <tr key={"notes"}>
-                {notesCols}
+            <tr key={"actual_notes"}>
+                {actualNotesCols}
             </tr>
-            <tr key={"results"}>
-                {resultsCols}
+            <tr key={"expected_notes"}>
+                {expectedNotesCols}
             </tr>
             </tbody>
         </table>

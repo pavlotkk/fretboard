@@ -4,77 +4,102 @@ import Api from "../../shared/api";
 import classNames from "classnames";
 import LearnScalesAnswer from "./LearnScalesAnswer";
 import NoteService from "../../services/note-service";
+import {NOTES_COUNT} from "../../shared/constants";
 
 
-interface LearnScalesPageState {
-    scale_id: string | null,
-    scale_name: string | null
-    answer?: string
+interface FormState {
     form_last_note: string | null
     form_last_key: string | null
 }
 
-interface ScaleToLearn {
+interface ScaleState {
+    scale_id: string | null,
+    scale_name: string | null
+    scale_notes: string[],
+}
+
+interface ScaleResponse {
     id: string,
     name: string
+    notes: string[]
 }
 
 
 function LearnScalesPage() {
-    const [state, setState] = React.useState<LearnScalesPageState>({
+    const [answer, setAnswer] = React.useState<string>("")
+    const [scale, setScale] = React.useState<ScaleState>({
         scale_id: null,
         scale_name: null,
-        answer: "",
+        scale_notes: new Array(NOTES_COUNT).fill(""),
+    })
+    const [form, setForm] = React.useState<FormState>({
         form_last_note: null,
         form_last_key: null
     })
 
     const getScaleToLearn = (note: string | null, key: string | null) => {
-        new Api().getScaleToLearn(note, key).then((resp: ScaleToLearn) => {
-            setState({
-                ...state,
+        new Api().getScaleToLearn(note, key).then((resp: ScaleResponse) => {
+            setScale({
                 scale_id: resp.id,
                 scale_name: resp.name,
-                form_last_note: note,
-                form_last_key: key
+                scale_notes: resp.notes,
             })
         })
     }
 
     const onScaleSelectedHandler = (data: LearnScaleFormSubmitData) => {
-        getScaleToLearn(`${data.note || ''}${data.pitch || ''}`, data.key)
+        const note = `${data.note || ''}${data.pitch || ''}`
+
+        setAnswer("")
+        setForm({form_last_note: note, form_last_key: data.key})
+        getScaleToLearn(note, data.key)
     }
 
     const onResetHandler = () => {
-        setState({
+        console.log('onResetHandler')
+        setAnswer("")
+        setScale({
             scale_id: null,
             scale_name: null,
-            answer: "",
+            scale_notes: new Array(NOTES_COUNT).fill(""),
+        })
+        setForm({
             form_last_note: null,
             form_last_key: null
         })
     }
 
     const onSubmitAnswer = (event: React.SyntheticEvent) => {
+        console.log('onSubmitAnswer')
         event.preventDefault()
+        setAnswer("")
+        getScaleToLearn(form.form_last_note, form.form_last_key)
     }
 
     const onAnswerChanged = (event: any) => {
         const answer = event.target.value
-        setState({...state, answer: answer})
+        setAnswer(answer)
     }
 
     const onSkipHandler = () => {
-        setState({...state, answer: ""})
-        getScaleToLearn(state.form_last_note, state.form_last_key)
+        setAnswer("")
+        getScaleToLearn(form.form_last_note, form.form_last_key)
     }
 
     const formClasses = classNames({
         "bg-light": true,
         "p-5": true,
         "justify-content-center": true,
-        "hide": state.scale_id == null
+        "hide": scale.scale_id == null
     })
+
+    let answerNotes = NoteService.parse(answer || '', NOTES_COUNT)
+    let nextAvailable: boolean
+    if (answerNotes.length !== NOTES_COUNT) {
+        nextAvailable = false
+    } else {
+        nextAvailable = answerNotes.every((v, i) => v === scale.scale_notes[i])
+    }
 
     return (
         <main className="container">
@@ -83,10 +108,13 @@ function LearnScalesPage() {
                 <LearnScaleForm onSubmit={onScaleSelectedHandler} onReset={onResetHandler}/>
             </div>
             <div className={formClasses} style={{marginTop: "10px"}}>
-                <h1 style={{textAlign: "center"}}>{state.scale_name}</h1>
+                <h1 style={{textAlign: "center"}}>{scale.scale_name}</h1>
 
                 <div className={"d-flex justify-content-center"}>
-                    <LearnScalesAnswer notes={NoteService.parse(state.answer || '', 7)}/>
+                    <LearnScalesAnswer
+                        actual_notes={answerNotes}
+                        expected_notes={scale.scale_notes}
+                    />
                 </div>
 
                 <form className={"row g-3"} onSubmit={onSubmitAnswer}>
@@ -96,11 +124,11 @@ function LearnScalesPage() {
                             className="form-control form-control-lg"
                             placeholder={"Type scale notes here.."}
                             onChange={onAnswerChanged}
-                            value={state.answer}
+                            value={answer}
                         />
                     </div>
                     <div className="col-12">
-                        <button type="submit" className="btn btn-primary">Next</button>
+                        <button type="submit" className="btn btn-primary" disabled={!nextAvailable}>Next</button>
                         <button
                             type="button" className="btn btn-link"
                             onClick={onSkipHandler}>Skip
