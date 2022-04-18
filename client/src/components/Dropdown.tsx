@@ -4,25 +4,22 @@ import {TextValue} from "../interfaces/textvalue";
 
 
 interface DropdownParams {
-    options: object[] | TextValue[] | string[] | number[],
-    defaultValue: string,
-    onChange?: ((value: string) => void) | null
+    options: TextValue[] | any[],
+    value: any,
+    onChange: ((value: string) => void)
 }
 
-function Dropdown({options, defaultValue = '', onChange = null}: DropdownParams) {
+function Dropdown({options, onChange, value = ''}: DropdownParams) {
     options = options.map(toTextValue);
 
     const noOptions = options && options.length === 0
 
     const onChangeHandler = function (e: any){
-        const newValue = e.target.value
-        if(onChange){
-            onChange(newValue)
-        }
+        onChange(e.target.value)
     }
 
     return (
-        <select className="form-select" value={defaultValue} onChange={onChangeHandler} disabled={noOptions ? true : undefined}>
+        <select className="form-select" value={value} onChange={onChangeHandler} disabled={noOptions ? true : undefined}>
             {(options as TextValue[]).map((op: TextValue) => {
                 return <option key={op.value} value={op.value}>{op.text}</option>
             })}

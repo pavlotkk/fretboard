@@ -6,57 +6,43 @@ import {Scale} from "../interfaces/music";
 
 interface ScaleKeyDropdownParams {
     preloadOptions?: TextValue[],
-    selectedValue: string,
-    onChange?: ((value: string) => void) | null
+    value: string,
+    onChange: ((value: string) => void)
 }
-
-interface ScaleKeyDropdownData {
-    options: TextValue[]
-}
-
 
 export default function ScaleKeyDropdown(
     {
         preloadOptions = [],
-        selectedValue = '',
-        onChange = null
+        value = '',
+        onChange
     }: ScaleKeyDropdownParams) {
-    const [data, setData] = React.useState<ScaleKeyDropdownData>({
-        options: preloadOptions,
-    })
+    const [options, setOptions] = React.useState<TextValue[]>(preloadOptions)
 
     React.useEffect(() => {
         new Api().getSupportedScales(true).then(resp => {
             let supportedScaleKeys = resp.map((item: Scale) => {
                 return {value: item.id, text: item.name}
             })
-            supportedScaleKeys = [...data.options, ...supportedScaleKeys];
+            supportedScaleKeys = [...options, ...supportedScaleKeys];
 
             // auto select first item if other wasn't provided
-            if (selectedValue === '') {
+            if (value === '') {
                 const firstKey = supportedScaleKeys.length > 0 ? supportedScaleKeys[0].value : ''
-                setData({...data, options: supportedScaleKeys})
+                setOptions(supportedScaleKeys)
                 if (onChange) {
                     onChange(firstKey)
                 }
             } else {
-                setData({...data, options: supportedScaleKeys})
+                setOptions(supportedScaleKeys)
             }
         })
     }, [])
 
-    const onChangeHandler = (value: string) => {
-        setData({...data})
-        if (onChange) {
-            onChange(value)
-        }
-    }
-
     return (
         <Dropdown
-            options={data.options}
-            defaultValue={selectedValue}
-            onChange={onChangeHandler}
+            options={options}
+            value={value}
+            onChange={onChange}
         />
     )
 }

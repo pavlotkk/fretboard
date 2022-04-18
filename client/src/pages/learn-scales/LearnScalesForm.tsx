@@ -74,7 +74,7 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
                 <div className="col-sm-10">
                     <ScaleKeyDropdown
                         preloadOptions={[{text: "Any", value: ANY_KEY_VALUE}]}
-                        selectedValue={data.key}
+                        value={data.key}
                         onChange={(value) => setData({...data, key: value})}
                     />
                 </div>

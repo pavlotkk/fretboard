@@ -102,7 +102,7 @@ async def api_learn_scale(
     try:
         notes = [Note(n) for n in notes] if notes else []
         pitches = [Pitch(p.lower()) for p in pitches] if pitches else []
-        keys = [Key(k.lower()) for k in keys] if keys else None
+        keys = [Key(k.lower()) for k in keys] if keys else []
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 

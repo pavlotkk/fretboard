@@ -66,7 +66,7 @@ function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
                 <label className="col-sm-2 col-form-label">Key:</label>
                 <div className="col-sm-10">
                     <ScaleKeyDropdown
-                        selectedValue={data.key}
+                        value={data.key}
                         onChange={(value) => setData({...data, key: value})}
                     />
                 </div>

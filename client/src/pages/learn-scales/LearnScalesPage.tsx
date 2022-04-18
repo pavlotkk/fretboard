@@ -40,7 +40,7 @@ function LearnScalesPage() {
     })
 
     const getScaleToLearn = (notes: string[], pitches: string[], key: string) => {
-        new Api().getScaleToLearn(notes, pitches, [key]).then((resp: ScaleResponse) => {
+        new Api().getScaleToLearn(notes, pitches, key ? [key]: null).then((resp: ScaleResponse) => {
             setScale({
                 scale_id: resp.id,
                 scale_name: resp.name,

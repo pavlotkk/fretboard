@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import {Scale} from "../interfaces/music";
-import ScaleService from "../services/scale-service";
-import NoteService from "../services/note-service";
+import {Scale} from "../../interfaces/music";
+import ScaleService from "../../services/scale-service";
+import NoteService from "../../services/note-service";
 
 interface ScaleTableParams {
     scales: Scale[]

@@ -1,5 +1,5 @@
 import React from "react";
-import ScaleTable from "../../components/ScaleTable";
+import ScaleTable from "./ScaleTable";
 import Api from "../../services/api";
 import {Scale} from "../../interfaces/music";
 import TheoryScaleForm, {TheoryScaleFormSubmitData} from "./TheoryScalesForm";
