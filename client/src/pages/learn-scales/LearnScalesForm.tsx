@@ -1,7 +1,7 @@
 import React from "react";
-import RadioButtonGroup from "../../components/RadioButtonGroup";
 import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
+import {MultiToggle} from "../../components/Toggles";
 
 export interface LearnScaleFormSubmitData {
     note: string | null,
@@ -10,8 +10,8 @@ export interface LearnScaleFormSubmitData {
 }
 
 interface LearnScaleFormData {
-    note: string,
-    pitch: string,
+    notes: string[],
+    pitches: string[],
     key: string
 }
 
@@ -24,22 +24,22 @@ const ANY_VALUE = "_"
 
 function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
     const [data, setData] = React.useState<LearnScaleFormData>({
-        note: '',
-        pitch: '',
+        notes: [],
+        pitches: [],
         key: ANY_VALUE,
     })
 
-    const disabled = (data.note == null || data.note.length === 0) && (data.pitch != null && data.pitch.length > 0);
+    const disabled = (data.notes.length === 0) && (data.pitches.length > 0);
 
     const resetForm = () => {
-        setData({note: '', pitch: '', key: ANY_VALUE})
+        setData({notes: [], pitches: [], key: ANY_VALUE})
     }
 
     const submitForm = (event: React.SyntheticEvent) => {
         event.preventDefault();
         onSubmit({
-            note: data.note || null,
-            pitch: data.pitch || null,
+            note: data.notes.join(",") || null,
+            pitch: data.pitches.join(",") || null,
             key: data.key === ANY_VALUE ? null : data.key
         } as LearnScaleFormSubmitData);
     }
@@ -54,17 +54,17 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Root note:</label>
                 <div className="col-sm-10 d-flex justify-content-between">
-                    <RadioButtonGroup
-                        options={CHROMATIC_SCALE}
-                        selectedValue={data.note}
+                    <MultiToggle
                         name={"note"}
-                        onChange={(value) => setData({...data, note: value})}
+                        items={CHROMATIC_SCALE}
+                        values={data.notes}
+                        onChange={(value) => setData({...data, notes: value})}
                     />
-                    <RadioButtonGroup
-                        options={PITCHES}
+                    <MultiToggle
                         name={"pitch"}
-                        selectedValue={data.pitch}
-                        onChange={(value) => setData({...data, pitch: value})}
+                        items={["No", ...PITCHES]}
+                        values={data.pitches}
+                        onChange={(value) => setData({...data, pitches: value})}
                     />
                 </div>
             </div>

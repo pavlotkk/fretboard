@@ -1,7 +1,7 @@
 import React from "react";
-import RadioButtonGroup from "../../components/RadioButtonGroup";
 import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
+import {SingleToggle} from "../../components/Toggles";
 
 export interface TheoryScaleFormSubmitData {
     note: string,
@@ -47,17 +47,17 @@ function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Root note:</label>
                 <div className="col-sm-10 d-flex justify-content-between">
-                    <RadioButtonGroup
-                        options={CHROMATIC_SCALE}
-                        selectedValue={data.note}
+                    <SingleToggle
                         name={"note"}
-                        onChange={(value) => setData({...data, note: value})}
+                        items={CHROMATIC_SCALE}
+                        value={data.note}
+                        onChange={(value) => setData({...data, note: value as string})}
                     />
-                    <RadioButtonGroup
-                        options={PITCHES}
+                    <SingleToggle
                         name={"pitch"}
-                        selectedValue={data.pitch}
-                        onChange={(value) => setData({...data, pitch: value})}
+                        items={PITCHES}
+                        value={data.pitch}
+                        onChange={(value) => setData({...data, pitch: value as string})}
                     />
                 </div>
             </div>

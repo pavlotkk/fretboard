@@ -56,7 +56,6 @@ function LearnScalesPage() {
     }
 
     const onResetHandler = () => {
-        console.log('onResetHandler')
         setAnswer("")
         setScale({
             scale_id: null,
@@ -70,7 +69,6 @@ function LearnScalesPage() {
     }
 
     const onSubmitAnswer = (event: React.SyntheticEvent) => {
-        console.log('onSubmitAnswer')
         event.preventDefault()
         setAnswer("")
         getScaleToLearn(form.form_last_note, form.form_last_key)
