@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Tuple
 
 from fretboard.core.collections import StrEnum
 
@@ -8,9 +8,10 @@ Notes = {"A", "B", "C", "D", "E", "F", "G"}
 class Pitch(StrEnum):
     Sharp = "#"
     Flat = "b"
+    No = ""
 
 
-def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
+def parse_note(note: str) -> Tuple[str, Pitch]:
     """
     Parse note form string source, fixing case
 
@@ -20,7 +21,7 @@ def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
         >>> parse_note("bb")
         >>> ("B", "b")
         >>> parse_note("G")
-        >>> ("G", None)
+        >>> ("G", "")
 
     Args:
         note: note name, e.g. G, A#, Bb
@@ -40,7 +41,7 @@ def parse_note(note: str) -> Tuple[str, Optional[Pitch]]:
     note_name = note[:-1] if len(note) > 1 else note
 
     if len(note) == 1:
-        return note_name, None
+        return note_name, Pitch.No.value
     else:
         note_pitch = note[-1]
 
@@ -58,7 +59,8 @@ class Note:
     """
 
     def __init__(self, name: str):
-        self._name, self._pitch = parse_note(name)
+        _name, _pitch = parse_note(name)
+        self._name, self._pitch = _name, Pitch(_pitch)
 
     @property
     def root(self) -> "Note":
@@ -71,7 +73,7 @@ class Note:
 
     @property
     def has_pitch(self) -> bool:
-        return self._pitch is not None
+        return self._pitch != Pitch.No
 
     @property
     def pitch(self) -> Pitch:
@@ -101,7 +103,7 @@ class Note:
         return hash((self._name, self._pitch.value))
 
     def __str__(self):
-        return f"{self._name}{self._pitch.value if self._pitch else ''}"
+        return f"{self._name}{self._pitch.value}"
 
     def __repr__(self):
-        return f"{self._name}{self._pitch.value if self._pitch else ''}"
+        return f"{self._name}{self._pitch.value}"

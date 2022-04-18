@@ -10,7 +10,7 @@ class LearningService:
         learning_scales = []
 
         for note_name in Notes:
-            for pitch_name in {"", *Pitch.all()}:
+            for pitch_name in Pitch.all():
                 for scale_key_name in Key.all():
                     note = Note(note_name + pitch_name)
                     scale = Scale(note, scale_key_name)
@@ -19,15 +19,25 @@ class LearningService:
         return learning_scales
 
     def get_scale_to_learn(
-        self, note: Optional[Note] = None, key: Optional[Key] = None
+        self,
+        notes: Optional[list[Note]] = None,
+        pitches: Optional[list[Pitch]] = None,
+        keys: Optional[list[Key]] = None,
     ) -> Scale:
         all_scales = self.get_all_scales_to_learn()
 
-        if note:
-            all_scales = [scale for scale in all_scales if scale.root_note == note]
+        if notes:
+            all_scales = [
+                scale for scale in all_scales if scale.root_note.root in notes
+            ]
 
-        if key:
-            all_scales = [scale for scale in all_scales if scale.key == key]
+        if pitches:
+            all_scales = [
+                scale for scale in all_scales if scale.root_note.pitch in pitches
+            ]
+
+        if keys:
+            all_scales = [scale for scale in all_scales if scale.key in keys]
 
         # skip theoretical scales if note wasn't provided intentionally
         all_scales = [scale for scale in all_scales if not scale.is_theoretical]

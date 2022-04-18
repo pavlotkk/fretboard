@@ -46,19 +46,30 @@ def test__api_get_scale_to_learn__get_any(test_client: TestClient):
     assert data
 
 
-@pytest.mark.parametrize("note", ["C", "C#", "D#"])
-def test__api_get_scale_to_learn__for_note_any_key(test_client: TestClient, note: str):
-    resp = test_client.get("/api/learn/scale", params={"note": note})
+@pytest.mark.parametrize(
+    "notes,pitches",
+    [
+        ("C", ""),
+        ("C", "#"),
+        ("D", "#"),
+    ],
+)
+def test__api_get_scale_to_learn__for_note_any_key(
+    test_client: TestClient, notes: str, pitches: str
+):
+    resp = test_client.get(
+        "/api/learn/scale", params={"notes": notes, "pitches": pitches}
+    )
     assert resp.status_code == 200, resp.text
 
     data = ScaleToLearnResponse(**resp.json())
     assert data
-    assert data.name.startswith(note), data
+    assert data.name.startswith(notes), data
 
 
 @pytest.mark.parametrize("key", list(Key.all()))
 def test__api_get_scale_to_learn__for_key_any_note(test_client: TestClient, key: str):
-    resp = test_client.get("/api/learn/scale", params={"key": key})
+    resp = test_client.get("/api/learn/scale", params={"keys": key})
     assert resp.status_code == 200, resp.text
 
     data = ScaleToLearnResponse(**resp.json())
@@ -70,7 +81,9 @@ def test__api_get_scale_to_learn__for_key_any_note(test_client: TestClient, key:
 def test__api_get_scale_to_learn__for_note_key(
     test_client: TestClient, note: str, key: str
 ):
-    resp = test_client.get("/api/learn/scale", params={"note": note, "key": key})
+    resp = test_client.get(
+        "/api/learn/scale", params={"notes": note, "pitches": "", "keys": key}
+    )
     assert resp.status_code == 200, resp.text
 
     data = ScaleToLearnResponse(**resp.json())

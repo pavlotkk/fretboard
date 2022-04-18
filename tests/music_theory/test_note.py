@@ -10,7 +10,7 @@ from fretboard.music_theory.note import Pitch, parse_note
         ("a#", ("A", Pitch.Sharp)),
         ("bb", ("B", Pitch.Flat)),
         ("GB", ("G", Pitch.Flat)),
-        ("F", ("F", None)),
+        ("F", ("F", Pitch.No)),
         ("Fb", ("F", Pitch.Flat)),
         ("Cb", ("C", Pitch.Flat)),
         ("B#", ("B", Pitch.Sharp)),

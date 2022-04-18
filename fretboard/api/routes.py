@@ -2,10 +2,10 @@ import logging
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from fretboard.music_theory import Key, Note, Scale
+from fretboard.music_theory import Key, Note, Pitch, Scale
 from fretboard.services.learning_service import LearningService
 
 router = APIRouter()
@@ -94,18 +94,21 @@ class ScaleToLearnResponse(ApiResponse):
 
 
 @router.get("/api/learn/scale", response_model=ScaleToLearnResponse)
-async def api_learn_scale(note: Optional[str] = None, key: Optional[str] = None):
+async def api_learn_scale(
+    notes: Optional[list[str]] = Query([]),
+    pitches: Optional[list[str]] = Query([]),
+    keys: Optional[list[str]] = Query([]),
+):
     try:
-        note = Note(note) if note else None
-        key = Key(key.lower()) if key else None
+        notes = [Note(n) for n in notes] if notes else []
+        pitches = [Pitch(p.lower()) for p in pitches] if pitches else []
+        keys = [Key(k.lower()) for k in keys] if keys else None
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
     session_service = LearningService()
-    scale = session_service.get_scale_to_learn(note, key)
+    scale = session_service.get_scale_to_learn(notes, pitches, keys)
 
     return ScaleToLearnResponse(
-        id=scale.id,
-        name=scale.name,
-        notes=[str(n) for n in scale]
+        id=scale.id, name=scale.name, notes=[str(n) for n in scale]
     )
