@@ -26,6 +26,9 @@ class LearningService:
     ) -> Scale:
         all_scales = self.get_all_scales_to_learn()
 
+        # skip theoretical scales if note wasn't provided intentionally
+        all_scales = [scale for scale in all_scales if not scale.is_theoretical]
+
         if notes:
             all_scales = [
                 scale for scale in all_scales if scale.root_note.root in notes
@@ -38,8 +41,5 @@ class LearningService:
 
         if keys:
             all_scales = [scale for scale in all_scales if scale.key in keys]
-
-        # skip theoretical scales if note wasn't provided intentionally
-        all_scales = [scale for scale in all_scales if not scale.is_theoretical]
 
         return random.choice(all_scales)

@@ -1,6 +1,6 @@
 import React from "react";
 import LearnScaleForm, {LearnScaleFormSubmitData} from "./LearnScalesForm";
-import Api from "../../shared/api";
+import Api from "../../services/api";
 import classNames from "classnames";
 import LearnScalesAnswer from "./LearnScalesAnswer";
 import NoteService from "../../services/note-service";
@@ -8,8 +8,9 @@ import {NOTES_COUNT} from "../../shared/constants";
 
 
 interface FormState {
-    form_last_note: string | null
-    form_last_key: string | null
+    form_last_notes: string[]
+    form_last_pitches: string[]
+    form_last_key: string
 }
 
 interface ScaleState {
@@ -33,12 +34,13 @@ function LearnScalesPage() {
         scale_notes: new Array(NOTES_COUNT).fill(""),
     })
     const [form, setForm] = React.useState<FormState>({
-        form_last_note: null,
-        form_last_key: null
+        form_last_notes: [],
+        form_last_pitches: [],
+        form_last_key: ""
     })
 
-    const getScaleToLearn = (note: string | null, key: string | null) => {
-        new Api().getScaleToLearn(note, key).then((resp: ScaleResponse) => {
+    const getScaleToLearn = (notes: string[], pitches: string[], key: string) => {
+        new Api().getScaleToLearn(notes, pitches, [key]).then((resp: ScaleResponse) => {
             setScale({
                 scale_id: resp.id,
                 scale_name: resp.name,
@@ -48,11 +50,9 @@ function LearnScalesPage() {
     }
 
     const onScaleSelectedHandler = (data: LearnScaleFormSubmitData) => {
-        const note = `${data.note || ''}${data.pitch || ''}`
-
         setAnswer("")
-        setForm({form_last_note: note, form_last_key: data.key})
-        getScaleToLearn(note, data.key)
+        setForm({form_last_notes: data.notes, form_last_pitches: data.pitches, form_last_key: data.key})
+        getScaleToLearn(data.notes, data.pitches, data.key)
     }
 
     const onResetHandler = () => {
@@ -63,15 +63,16 @@ function LearnScalesPage() {
             scale_notes: new Array(NOTES_COUNT).fill(""),
         })
         setForm({
-            form_last_note: null,
-            form_last_key: null
+            form_last_notes: [],
+            form_last_pitches: [],
+            form_last_key: ""
         })
     }
 
     const onSubmitAnswer = (event: React.SyntheticEvent) => {
         event.preventDefault()
         setAnswer("")
-        getScaleToLearn(form.form_last_note, form.form_last_key)
+        getScaleToLearn(form.form_last_notes, form.form_last_pitches, form.form_last_key)
     }
 
     const onAnswerChanged = (event: any) => {
@@ -81,7 +82,7 @@ function LearnScalesPage() {
 
     const onSkipHandler = () => {
         setAnswer("")
-        getScaleToLearn(form.form_last_note, form.form_last_key)
+        getScaleToLearn(form.form_last_notes, form.form_last_pitches, form.form_last_key)
     }
 
     const formClasses = classNames({

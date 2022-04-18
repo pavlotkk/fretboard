@@ -5,8 +5,8 @@ class Api {
 
     host: string
 
-    constructor() {
-        this.host = (window.app_config.api_host || "").trim()
+    constructor(host = "") {
+        this.host = (host || window.app_config.api_host || "").trim()
     }
 
     getSupportedScales = (useCache = true) => {
@@ -26,8 +26,8 @@ class Api {
         return this.get("/api/scale", {note: note, key: key})
     }
 
-    getScaleToLearn = (note?: string | null, key?: string | null) => {
-        return this.get("/api/learn/scale", {note: note, key: key})
+    getScaleToLearn = (notes?: string[] | null, pitches?: string[] | null, keys?: string[] | null) => {
+        return this.get("/api/learn/scale", {notes: notes, pitches: pitches, keys: keys})
     }
 
     request = (method: string, url: string, params: any = null, headers: any = null) => {
@@ -50,21 +50,30 @@ class Api {
         return this.request("GET", url, params, headers).then(r => r.json())
     }
 
-    createSearchParams(params: any): string {
+    createSearchParams(params: object): string {
         if (params == null) {
             return ""
         }
 
-        let urlParams = new URLSearchParams()
+        let urlParams: any[][] = []
 
         for (const [key, value] of Object.entries(params)) {
             if (value == null || value === '') {
                 continue
             }
-            urlParams.append(key, value as any)
+            if(Array.isArray(value)){
+                if(value.length === 0){
+                    continue
+                }
+                for(const i of value){
+                    urlParams.push([key, i])
+                }
+            } else {
+                urlParams.push([key, value as any])
+            }
         }
 
-        return urlParams.toString()
+        return new URLSearchParams(urlParams).toString()
     }
 }
 

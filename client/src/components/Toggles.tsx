@@ -50,7 +50,7 @@ function SingleToggle({name, items, onChange, value = "", label = ""}: SingleTog
 
 interface MultiToggleParams {
     name: string,
-    items: TextValue[] | string[]
+    items: TextValue[] | string[] | any[]
     label?: string
     values: string[]
     onChange: (value: string[]) => void

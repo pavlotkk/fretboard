@@ -1,7 +1,7 @@
 import Dropdown from "./Dropdown";
 import React from "react";
 import {TextValue} from "../interfaces/textvalue";
-import Api from "../shared/api";
+import Api from "../services/api";
 import {Scale} from "../interfaces/music";
 
 interface ScaleKeyDropdownParams {

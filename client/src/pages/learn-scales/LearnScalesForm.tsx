@@ -2,11 +2,12 @@ import React from "react";
 import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
 import {MultiToggle} from "../../components/Toggles";
+import {TextValue} from "../../interfaces/textvalue";
 
 export interface LearnScaleFormSubmitData {
-    note: string | null,
-    pitch: string | null,
-    key: string | null
+    notes: string[],
+    pitches: string[],
+    key: string
 }
 
 interface LearnScaleFormData {
@@ -20,27 +21,26 @@ interface LearnScaleFormParams {
     onReset: () => void,
 }
 
-const ANY_VALUE = "_"
+const ANY_KEY_VALUE = "_"
+const NO_PITCH_VALUE = ""
 
 function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
     const [data, setData] = React.useState<LearnScaleFormData>({
         notes: [],
-        pitches: [],
-        key: ANY_VALUE,
+        pitches: [NO_PITCH_VALUE],
+        key: ANY_KEY_VALUE,
     })
 
-    const disabled = (data.notes.length === 0) && (data.pitches.length > 0);
-
     const resetForm = () => {
-        setData({notes: [], pitches: [], key: ANY_VALUE})
+        setData({notes: [], pitches: [NO_PITCH_VALUE], key: ANY_KEY_VALUE})
     }
 
     const submitForm = (event: React.SyntheticEvent) => {
         event.preventDefault();
         onSubmit({
-            note: data.notes.join(",") || null,
-            pitch: data.pitches.join(",") || null,
-            key: data.key === ANY_VALUE ? null : data.key
+            notes: data.notes,
+            pitches: data.pitches,
+            key: data.key === ANY_KEY_VALUE ? "" : data.key
         } as LearnScaleFormSubmitData);
     }
 
@@ -62,7 +62,7 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
                     />
                     <MultiToggle
                         name={"pitch"}
-                        items={["No", ...PITCHES]}
+                        items={[{text: "No", value: NO_PITCH_VALUE} as TextValue, ...PITCHES]}
                         values={data.pitches}
                         onChange={(value) => setData({...data, pitches: value})}
                     />
@@ -73,14 +73,14 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
                 <label className="col-sm-2 col-form-label">Key:</label>
                 <div className="col-sm-10">
                     <ScaleKeyDropdown
-                        preloadOptions={[{text: "Any", value: ANY_VALUE}]}
+                        preloadOptions={[{text: "Any", value: ANY_KEY_VALUE}]}
                         selectedValue={data.key}
                         onChange={(value) => setData({...data, key: value})}
                     />
                 </div>
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={disabled}>Learn</button>
+            <button type="submit" className="btn btn-primary">Apply</button>
             <button
                 type="button" className="btn btn-link"
                 onClick={clearForm}>Clear
