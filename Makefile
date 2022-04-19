@@ -56,6 +56,17 @@ test-pytest:
 	$(PYTHON) -m pytest
 
 
+# Docker scripts
+build-image:
+	docker build --tag $(PACKAGE) .
+
+run-image:
+	docker run -p 5050:5000 -l $(PACKAGE) --name $(PACKAGE) --rm $(PACKAGE)
+
+spin-up:
+	make build-image
+	make run-image
+
 # Application
 
 run-api:

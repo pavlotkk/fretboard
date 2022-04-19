@@ -18,6 +18,7 @@ Fun project for learning music theory with python.
 3. [React](https://reactjs.org/) for Browser GUI
 4. [FastAPI](https://fastapi.tiangolo.com) for REST API
 5. [PyCharm](https://www.jetbrains.com/pycharm/) as IDE
+6. [Docker](https://www.docker.com/) for containerization
 
 ## Development
 
@@ -29,3 +30,7 @@ Fun project for learning music theory with python.
 0. `cd client`
 1. Call `make install` to prepare dev environment
 2. `make run-client` to start app
+
+## Production
+
+Call `make spin-up` to start all in Docker in production mode
