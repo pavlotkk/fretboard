@@ -5,7 +5,7 @@ name: Frontend
 
 defaults:
   run:
-    working-directory: client
+    working-directory: ./client
 
 on:
   push:
