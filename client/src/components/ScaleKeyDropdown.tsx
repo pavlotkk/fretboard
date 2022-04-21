@@ -36,6 +36,7 @@ export default function ScaleKeyDropdown(
                 setOptions(supportedScaleKeys)
             }
         })
+    // eslint-disable-next-line
     }, [])
 
     return (

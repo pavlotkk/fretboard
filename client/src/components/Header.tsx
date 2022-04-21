@@ -25,8 +25,8 @@ function NestedHeaderMenuItem({title, subItems = []}: MenuItem) {
     });
     return (
         <li className={"nav-item dropdown"} key={title}>
-            <a className={"nav-link dropdown-toggle"} style={style} href="#" id={dropdownId} data-bs-toggle="dropdown"
-               aria-expanded="false">{title}</a>
+            <button className={"btn btn-link nav-link dropdown-toggle"} style={style} id={dropdownId} data-bs-toggle="dropdown"
+               aria-expanded="false">{title}</button>
             <ul className="dropdown-menu" aria-labelledby={dropdownId}>
                 {menuItems}
             </ul>
@@ -61,7 +61,7 @@ function Header({menuItems = []}: MenuItems) {
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Fretboard</a>
+                <button className="btn btn-link navbar-brand">Fretboard</button>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarsExample03"
                         aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
