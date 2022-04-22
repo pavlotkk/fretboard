@@ -2,8 +2,9 @@ import NoteService from "../../services/note-service";
 
 describe("Note Service", () => {
     it.each([
-        ["", [""], 0],
-        ["hello", ["Hello"], 0],
+        ["", [], 0],
+        ["c       d", ["C", "D"], 0],
+        ["hello", [], 0],
         ["C#", ["C#"], 0],
         ["C#", ["C#"], 1],
         ["c", ["C"], 1],
@@ -23,8 +24,8 @@ describe("Note Service", () => {
         ["cb", true],
         ["cbb", true],
         ["c##", true],
-        ["c#b", false],
-        ["cb#", false],
+        ["c#b", true],
+        ["cb#", true],
         ["cc", false],
     ])("%p is valid = %p", (note_input: string, expected: boolean) => {
         const service = new NoteService(note_input)
@@ -44,6 +45,14 @@ describe("Note Service", () => {
         expect(service.hasPitch()).toEqual(hasPitch)
         expect(service.isSharp()).toEqual(isSharp)
         expect(service.isFlat()).toEqual(isFlat)
+    })
+
+    it.each([
+        ["c#d", "C#"],
+    ])( "non strict parsing %p to %p", (input: string, expected: string) => {
+        let actual = NoteService.parse(input, 0, false).join("")
+
+        expect(actual).toEqual(expected)
     })
 })
 

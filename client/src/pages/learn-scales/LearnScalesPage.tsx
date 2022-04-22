@@ -25,6 +25,17 @@ interface ScaleResponse {
     notes: string[]
 }
 
+function notesInputControl(input: string): string {
+    const formattedAnswer = NoteService.parse(input, NOTES_COUNT, false).filter(n => n.length > 0).join(" ")
+    const lastCharIsWhitespace = input.length > 0 && input[input.length - 1] === " "
+    const tooManyTrims = input.length - formattedAnswer.length > 1
+
+    if (lastCharIsWhitespace || tooManyTrims) {
+        return formattedAnswer + " "
+    } else {
+        return formattedAnswer
+    }
+}
 
 function LearnScalesPage() {
     const [answer, setAnswer] = React.useState<string>("")
@@ -40,7 +51,7 @@ function LearnScalesPage() {
     })
 
     const getScaleToLearn = (notes: string[], pitches: string[], key: string) => {
-        new Api().getScaleToLearn(notes, pitches, key ? [key]: null).then((resp: ScaleResponse) => {
+        new Api().getScaleToLearn(notes, pitches, key ? [key] : null).then((resp: ScaleResponse) => {
             setScale({
                 scale_id: resp.id,
                 scale_name: resp.name,
@@ -73,11 +84,6 @@ function LearnScalesPage() {
         event.preventDefault()
         setAnswer("")
         getScaleToLearn(form.form_last_notes, form.form_last_pitches, form.form_last_key)
-    }
-
-    const onAnswerChanged = (event: any) => {
-        const answer = event.target.value
-        setAnswer(answer)
     }
 
     const onSkipHandler = () => {
@@ -122,7 +128,7 @@ function LearnScalesPage() {
                             type="text"
                             className="form-control form-control-lg"
                             placeholder={"Type scale notes here.."}
-                            onChange={onAnswerChanged}
+                            onChange={(e) => setAnswer(notesInputControl(e.target.value))}
                             value={answer}
                         />
                     </div>
