@@ -59,10 +59,16 @@ def format_user(user: User, detailed=False) -> Optional[dict]:
     }
 
     if detailed:
-        formatted_user["scale_learning_session"] = {
-            k: {"cursor": v.cursor, "scales": [s.name for s in v.scales]}
-            for k, v in user.scale_learning_session.items()
-        }
+        if user.scale_learning_session:
+            learning_session = user.scale_learning_session
+            formatted_user["scale_learning_session"] = {
+                learning_session.id: {
+                    "cursor": learning_session.learning_scales.cursor,
+                    "scales": [
+                        f"{n} {k}" for n, k in learning_session.learning_scales.scales
+                    ],
+                }
+            }
 
     return formatted_user
 

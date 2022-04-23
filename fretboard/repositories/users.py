@@ -2,7 +2,7 @@ import copy
 from datetime import datetime, timedelta
 from typing import Optional
 
-from fretboard.entities.user import LearningScaleData, User
+from fretboard.entities.user import LearningScaleData, ScaleLearningSession, User
 from fretboard.music_theory import Scale
 
 
@@ -49,18 +49,25 @@ class UserRepository:
             UserRepository._users.pop(user_id)
 
     def get_next_learning_scale(self, user: User, session_id: str) -> Optional[Scale]:
-        learning_session = user.scale_learning_session.get(session_id)
-        if not learning_session:
+        if not user.scale_learning_session:
             return None
 
-        next_scale = learning_session.next_scale()
+        if user.scale_learning_session.id != session_id:
+            return None
+
+        next_scale = user.scale_learning_session.learning_scales.next_scale()
 
         self.save(user)
 
         return next_scale
 
     def set_learning_scales(self, user: User, session_id: str, scales: list[Scale]):
-        user.scale_learning_session[session_id] = LearningScaleData(scales=scales)
+        user.scale_learning_session = ScaleLearningSession(
+            id=session_id,
+            learning_scales=LearningScaleData(
+                scales=[(s.root_note, s.key) for s in scales]
+            ),
+        )
 
         self.save(user)
 

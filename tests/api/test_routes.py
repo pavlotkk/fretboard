@@ -89,3 +89,8 @@ def test__api_get_scale_to_learn__for_note_key(
     data = ScaleToLearnResponse(**resp.json())
     assert data
     assert data.name == f"{note} {Key(key).desc}"
+
+
+def test__api_get_stats(test_client: TestClient):
+    resp = test_client.get("/api/stats")
+    assert resp.status_code == 200, resp.text
