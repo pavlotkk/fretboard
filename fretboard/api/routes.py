@@ -8,6 +8,7 @@ from fretboard.api.dependencies import verify_user
 from fretboard.entities.base import JsonModel
 from fretboard.entities.user import User
 from fretboard.music_theory import Key, Note, Pitch, Scale
+from fretboard.repositories.users import UserRepository
 from fretboard.services.learning_service import LearningService
 
 router = APIRouter()
@@ -40,10 +41,41 @@ async def api_health():
     up_time_total_seconds %= 60
     seconds = up_time_total_seconds
 
+    UserRepository().flush()
+
     return HealthResponse(
         status="ok",
         up_time=f"{int(days)} days : {int(hours)} hours : {int(minutes)} minutes : {int(seconds)} seconds",
     )
+
+
+def format_user(user: User, detailed=False) -> Optional[dict]:
+    if not user:
+        return None
+
+    formatted_user = {
+        "id": user.id,
+        "last_activity": user.last_activity.isoformat(),
+    }
+
+    if detailed:
+        formatted_user["scale_learning_session"] = {
+            k: {"cursor": v.cursor, "scales": [s.name for s in v.scales]}
+            for k, v in user.scale_learning_session.items()
+        }
+
+    return formatted_user
+
+
+@router.get("/api/stats")
+async def api_stats(current_user: Optional[User] = Depends(verify_user)):
+    users_db = UserRepository()
+    response = {
+        "current_user": format_user(current_user),
+        "users": [format_user(u, detailed=True) for u in users_db.all().values()],
+    }
+
+    return response
 
 
 class ScaleKeyResponse(ApiResponse):
