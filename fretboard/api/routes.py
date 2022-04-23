@@ -2,9 +2,11 @@ import logging
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, Query
 
+from fretboard.api.dependencies import verify_user
+from fretboard.entities.base import JsonModel
+from fretboard.entities.user import User
 from fretboard.music_theory import Key, Note, Pitch, Scale
 from fretboard.services.learning_service import LearningService
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 app_start_dts = datetime.now()
 
 
-class ApiResponse(BaseModel):
+class ApiResponse(JsonModel):
     pass
 
 
@@ -95,6 +97,7 @@ class ScaleToLearnResponse(ApiResponse):
 
 @router.get("/api/learn/scale", response_model=ScaleToLearnResponse)
 async def api_learn_scale(
+    current_user: Optional[User] = Depends(verify_user),
     notes: Optional[list[str]] = Query([]),
     pitches: Optional[list[str]] = Query([]),
     keys: Optional[list[str]] = Query([]),
@@ -106,7 +109,7 @@ async def api_learn_scale(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-    session_service = LearningService()
+    session_service = LearningService(current_user)
     scale = session_service.get_scale_to_learn(notes, pitches, keys)
 
     return ScaleToLearnResponse(
