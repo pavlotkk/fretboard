@@ -7,10 +7,13 @@ import TheoryScaleForm, {TheoryScaleFormSubmitData} from "./TheoryScalesForm";
 
 function TheoryScalesPage() {
     const [scales, setScales] = React.useState<Scale[]>([])
+    const [loading, setLoading] = React.useState<boolean>(false)
 
     const onSubmitHandler = (data: TheoryScaleFormSubmitData) => {
+        setLoading(true)
         new Api().getScale(`${data.note}${data.pitch || ''}`.trim(), data.key).then(newScale => {
             setScales([...scales, newScale])
+            setLoading(false)
         })
     }
 
@@ -21,6 +24,7 @@ function TheoryScalesPage() {
                 <TheoryScaleForm
                     onSubmit={onSubmitHandler}
                     onReset={() => setScales([])}
+                    disabled={loading}
                 />
             </div>
             <div className={"d-flex justify-content-center"}>

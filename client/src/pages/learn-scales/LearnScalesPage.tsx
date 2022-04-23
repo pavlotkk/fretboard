@@ -49,14 +49,17 @@ function LearnScalesPage() {
         form_last_pitches: [],
         form_last_key: ""
     })
+    const [loading, setLoading] = React.useState<boolean>(false)
 
     const getScaleToLearn = (notes: string[], pitches: string[], key: string) => {
+        setLoading(true)
         new Api().getScaleToLearn(notes, pitches, key ? [key] : null).then((resp: ScaleResponse) => {
             setScale({
                 scale_id: resp.id,
                 scale_name: resp.name,
                 scale_notes: resp.notes,
             })
+            setLoading(false)
         })
     }
 
@@ -110,7 +113,7 @@ function LearnScalesPage() {
         <main className="container">
             <div className="bg-light p-5 rounded">
                 <h1>Select scale to learn</h1>
-                <LearnScaleForm onSubmit={onScaleSelectedHandler} onReset={onResetHandler}/>
+                <LearnScaleForm onSubmit={onScaleSelectedHandler} onReset={onResetHandler} disabled={loading}/>
             </div>
             <div className={formClasses} style={{marginTop: "10px"}}>
                 <h1 style={{textAlign: "center"}}>{scale.scale_name}</h1>
@@ -130,12 +133,14 @@ function LearnScalesPage() {
                             placeholder={"Type scale notes here.."}
                             onChange={(e) => setAnswer(notesInputControl(e.target.value))}
                             value={answer}
+                            disabled={loading}
                         />
                     </div>
                     <div className="col-12">
-                        <button type="submit" className="btn btn-primary" disabled={!nextAvailable}>Next</button>
+                        <button type="submit" className="btn btn-primary" disabled={loading || !nextAvailable}>Next</button>
                         <button
                             type="button" className="btn btn-link"
+                            disabled={loading}
                             onClick={onSkipHandler}>Skip
                         </button>
                     </div>

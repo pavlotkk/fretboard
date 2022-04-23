@@ -19,12 +19,13 @@ interface LearnScaleFormData {
 interface LearnScaleFormParams {
     onSubmit: (data: LearnScaleFormSubmitData) => void,
     onReset: () => void,
+    disabled?: boolean
 }
 
 const ANY_KEY_VALUE = "_"
 const NO_PITCH_VALUE = ""
 
-function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
+function LearnScaleForm({onSubmit, onReset, disabled = false}: LearnScaleFormParams) {
     const [data, setData] = React.useState<LearnScaleFormData>({
         notes: [],
         pitches: [NO_PITCH_VALUE],
@@ -80,7 +81,7 @@ function LearnScaleForm({onSubmit, onReset}: LearnScaleFormParams) {
                 </div>
             </div>
 
-            <button type="submit" className="btn btn-primary">Apply</button>
+            <button type="submit" className="btn btn-primary" disabled={disabled}>Apply</button>
             <button
                 type="button" className="btn btn-link"
                 onClick={clearForm}>Clear

@@ -16,6 +16,7 @@ export default function ScaleKeyDropdown(
         value = '',
         onChange
     }: ScaleKeyDropdownParams) {
+    const [loading, setLoading] = React.useState<boolean>(true)
     const [options, setOptions] = React.useState<TextValue[]>(preloadOptions)
 
     React.useEffect(() => {
@@ -35,12 +36,15 @@ export default function ScaleKeyDropdown(
             } else {
                 setOptions(supportedScaleKeys)
             }
+
+            setLoading(false)
         })
     // eslint-disable-next-line
     }, [])
 
     return (
         <Dropdown
+            disabled={loading}
             options={options}
             value={value}
             onChange={onChange}

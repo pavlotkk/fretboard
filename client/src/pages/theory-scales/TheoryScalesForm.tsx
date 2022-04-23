@@ -16,16 +16,15 @@ interface TheoryScaleFormData extends TheoryScaleFormSubmitData{
 interface TheoryScaleFormParams {
     onSubmit: (data: TheoryScaleFormSubmitData) => void,
     onReset: () => void,
+    disabled?: boolean
 }
 
-function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
+function TheoryScaleForm({onSubmit, onReset, disabled = false}: TheoryScaleFormParams) {
     const [data, setData] = React.useState<TheoryScaleFormData>({
         note: '',
         pitch: '',
         key: '',
     })
-
-    const disabled = !data.note || !data.key
 
     const resetForm = () => {
         setData({...data, note: '', pitch: ''})
@@ -72,7 +71,10 @@ function TheoryScaleForm({onSubmit, onReset}: TheoryScaleFormParams) {
                 </div>
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={disabled}>Add</button>
+            <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={disabled || !data.note || !data.key}>Add</button>
             <button
                 type="button" className="btn btn-link"
                 onClick={clearForm}>Clear</button>
