@@ -70,6 +70,7 @@ function Header({menuItems = []}: MenuItems) {
 
                 <HeaderMenu menuItems={menuItems}/>
 
+                <button className="btn btn-link navbar-brand">{window.app_config.version}</button>
             </div>
         </nav>
     );

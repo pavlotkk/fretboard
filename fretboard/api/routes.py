@@ -4,6 +4,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
+from fretboard.__version__ import version
 from fretboard.api.dependencies import verify_user
 from fretboard.entities.base import JsonModel
 from fretboard.entities.user import User
@@ -23,6 +24,7 @@ class ApiResponse(JsonModel):
 
 
 class HealthResponse(ApiResponse):
+    version: str
     status: str
     up_time: str
 
@@ -44,6 +46,7 @@ async def api_health():
     UserRepository().flush()
 
     return HealthResponse(
+        version=version,
         status="ok",
         up_time=f"{int(days)} days : {int(hours)} hours : {int(minutes)} minutes : {int(seconds)} seconds",
     )
