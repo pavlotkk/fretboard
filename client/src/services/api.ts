@@ -4,9 +4,16 @@ class Api {
     }
 
     host: string
+    user: string | null
 
-    constructor(host = "") {
+    constructor(host = "", userId: string | null = null) {
         this.host = (host || window.app_config.api_host || "").trim()
+        this.user = userId
+    }
+
+    withUser = (userId: string): Api => {
+        this.user = userId
+        return this
     }
 
     getSupportedScales = (useCache = true) => {
@@ -35,6 +42,10 @@ class Api {
 
         if (headers == null) {
             headers = {}
+        }
+
+        if(this.user){
+            headers["X-User-Id"] = this.user
         }
 
         return window.fetch(`${this.host}${url}?${urlParams}`, {

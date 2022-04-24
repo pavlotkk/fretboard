@@ -5,6 +5,7 @@ import classNames from "classnames";
 import LearnScalesAnswer from "./LearnScalesAnswer";
 import NoteService from "../../services/note-service";
 import {NOTES_COUNT} from "../../shared/constants";
+import useCurrentUser from "../../hooks/useCurrectUser";
 
 
 interface FormState {
@@ -38,6 +39,8 @@ function notesInputControl(input: string): string {
 }
 
 function LearnScalesPage() {
+    const currentUserId = useCurrentUser()
+
     const [answer, setAnswer] = React.useState<string>("")
     const [scale, setScale] = React.useState<ScaleState>({
         scale_id: null,
@@ -53,7 +56,7 @@ function LearnScalesPage() {
 
     const getScaleToLearn = (notes: string[], pitches: string[], key: string) => {
         setLoading(true)
-        new Api().getScaleToLearn(notes, pitches, key ? [key] : null).then((resp: ScaleResponse) => {
+        new Api().withUser(currentUserId).getScaleToLearn(notes, pitches, key ? [key] : null).then((resp: ScaleResponse) => {
             setScale({
                 scale_id: resp.id,
                 scale_name: resp.name,
