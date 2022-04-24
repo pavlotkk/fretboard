@@ -49,7 +49,7 @@ function HeaderMenu({menuItems = []}: MenuItems) {
     })
 
     return (
-        <div className="collapse navbar-collapse">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-sm-0">
                 {headerMenuItems}
             </ul>
@@ -59,12 +59,12 @@ function HeaderMenu({menuItems = []}: MenuItems) {
 
 function Header({menuItems = []}: MenuItems) {
     return (
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
+        <nav className="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar">
             <div className="container-fluid">
-                <button className="btn btn-link navbar-brand">Fretboard</button>
+                <NavLink to={"/fretboard"} className={"btn btn-link navbar-brand"}>Fretboard</NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarsExample03"
-                        aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 

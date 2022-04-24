@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {HashRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import LearnScalesPage from "./pages/learn-scales/LearnScalesPage";
 import TheoryScalesPage from "./pages/theory-scales/TheoryScalesPage";
+import FretboardPage from "./pages/fretboard/FretboardPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,6 +17,7 @@ root.render(
             <Routes>
                 <Route path="/" element={<Navigate to="/theory/scales" replace />} />
                 <Route path="/" element={<App/>}>
+                    <Route path="fretboard" element={<FretboardPage />}/>
                     <Route path="theory/scales" element={<TheoryScalesPage />}/>
                     <Route path="learn/scales" element={<LearnScalesPage/>}/>
                 </Route>

@@ -1,6 +1,66 @@
+.note__e {
+    background-color: #979EA8 !important;
+}
+
+.note__b {
+    background-color: #E08FFF !important;
+}
+
+.note__g {
+    background-color: #6DB1FF !important;
+}
+
+.note__d {
+    background-color: #FFE342 !important;
+}
+
+.note__a {
+    background-color: #DEDEFF !important;
+}
+
+.note__f {
+    background-color: #54C45E !important;
+}
+
+.note__c {
+    background-color: #FF8F8F !important;
+}
+
+.note__pitch {
+    background-color: white !important;
+}
+
+.note__pitch.note__f {
+    border-color: #54C45E;
+}
+
+.note__pitch.note__g {
+    border-color: #6DB1FF;
+}
+
+.note__pitch.note__a {
+    border-color: #DEDEFF;
+}
+
+.note__pitch.note__b {
+    border-color: #E08FFF;
+}
+
+.note__pitch.note__c {
+    border-color: #FF8F8F;
+}
+
+.note__pitch.note__d {
+    border-color: #FFE342;
+}
+
+.note__pitch.note__e {
+    border-color: #979EA8;
+}
+
 .scale-table__layout {
-  border-spacing: 0 5px;
-  border-collapse: separate;
+    border-spacing: 0 5px;
+    border-collapse: separate;
 }
 
 .scale-note {
@@ -36,4 +96,90 @@
 
 .hide {
     display: none !important;
+}
+
+.note-suggestions {
+    margin: 0;
+    padding: 0;
+}
+
+.note-suggestions__item {
+    display: inline-block;
+    list-style-type: none;
+}
+
+/* fretboard main layout */
+
+.fretboard-layout {
+    position: relative;
+}
+
+.fret {
+    border-width: 0.2vw;
+    border-style: solid;
+    border-collapse: separate;
+    width: 3.6125vw;
+    display: inline-table;
+
+    border-color: #00000014;
+    border-radius: 50%;
+    background-color: white;
+}
+
+/* fretboard canvas */
+
+.fretboard__canvas {
+    width: calc(100% - 100% / 13 + 0.5vw);
+    position: absolute;
+    top: 3vh;
+    left: calc(100% / 13 - 0.5vw);
+    z-index: 0;
+}
+
+.fretboard__canvas--frets {
+    height: 6vh;
+}
+
+.fretboard__canvas--fret {
+    width: calc(100% / 12);
+    border: 1px solid black;
+    text-align: center;
+    font-size: 2vw;
+}
+
+.fretboard__canvas--fret:first-child {
+    border-left-width: 1vw;
+}
+
+.fret--placeholder {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+/* notes on fretboard */
+
+.fretboard-layout__notes {
+    width: 100%;
+    position: absolute;
+    z-index: 9;
+}
+
+.fretboard-layout__notes--frets {
+    height: 6vh;
+}
+
+.fretboard-layout__notes--fret {
+    width: calc(100% / 13);
+    /*border: 1px solid black;*/
+    text-align: center;
+    font-size: 2vw;
+}
+
+.fret__0 {
+    border-width: 0.25vw;
+    border-style: solid;
+    border-radius: 0;
+    width: 3.76vw;
+    display: inline-table;
+    color: black;
 }
