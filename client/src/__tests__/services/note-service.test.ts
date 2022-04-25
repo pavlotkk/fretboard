@@ -1,4 +1,4 @@
-import NoteService from "../../services/note-service"
+import UserInputNoteService from "../../services/user-input-note-service"
 
 describe("Note Service", () => {
     it.each([
@@ -12,7 +12,7 @@ describe("Note Service", () => {
         ["c d# eB", ["C"], 1],
         ["c d# eB", ["C", "D#", "Eb", ""], 4],
     ])("parse %p as %p with len %p", (note_input: string, expected: string[], len: number) => {
-        const actual = NoteService.parse(note_input, len)
+        const actual = UserInputNoteService.parse(note_input, len)
 
         expect(actual).toEqual(expected)
     })
@@ -28,7 +28,7 @@ describe("Note Service", () => {
         ["cb#", true],
         ["cc", false],
     ])("%p is valid = %p", (note_input: string, expected: boolean) => {
-        const service = new NoteService(note_input)
+        const service = new UserInputNoteService(note_input)
 
         expect(service.isValid()).toEqual(expected)
     })
@@ -42,7 +42,7 @@ describe("Note Service", () => {
     ])(
         "%p hasPitch=%p, isSharp=%p, isFlat=%p",
         (note_input: string, hasPitch: boolean, isSharp: boolean, isFlat: boolean) => {
-            const service = new NoteService(note_input)
+            const service = new UserInputNoteService(note_input)
 
             expect(service.hasPitch()).toEqual(hasPitch)
             expect(service.isSharp()).toEqual(isSharp)
@@ -51,7 +51,7 @@ describe("Note Service", () => {
     )
 
     it.each([["c#d", "C#"]])("non strict parsing %p to %p", (input: string, expected: string) => {
-        let actual = NoteService.parse(input, 0, false).join("")
+        let actual = UserInputNoteService.parse(input, 0, false).join("")
 
         expect(actual).toEqual(expected)
     })

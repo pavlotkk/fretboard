@@ -35,7 +35,7 @@ $fret-default-border-color: #00000014;
 
 /* fretboard main layout */
 
-.fretboard-layout {
+.fretboard {
     position: relative;
 }
 
@@ -59,13 +59,13 @@ $fret-default-border-color: #00000014;
 
 /* notes on fretboard */
 
-.fretboard {
+.fretboard__forehead {
     width: 100%;
     position: absolute;
     z-index: 9;
 }
 
-.fretboard .fretboard__frets--fret {
+.fretboard__forehead .fretboard__frets--fret {
     width: calc(100% / ($frets-count + 1));
     border-style: none;
 }
