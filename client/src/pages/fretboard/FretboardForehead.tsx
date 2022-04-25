@@ -1,15 +1,15 @@
 import React from "react"
+import Fretboard from "../../entities/fretboard"
 
 interface Params {
-    tuning: string[]
-    frets: number
+    fretboard: Fretboard
 }
 
-export default function FretboardForehead({tuning, frets = 12}: Params) {
-    const rows = tuning.map((rootNote, stringNum) => {
+export default function FretboardForehead({fretboard}: Params) {
+    const rows = fretboard.tuning.map((rootNote, stringNum) => {
         return (
             <tr key={`${stringNum}-${rootNote}`} className={"fretboard__frets"}>
-                {new Array(frets + 1).fill("").map((_, fretNum) => {
+                {new Array(fretboard.frets + 1).fill("").map((_, fretNum) => {
                     return (
                         <td key={fretNum} className={"fretboard__frets--fret"}>
                             {fretNum === 0 ? (

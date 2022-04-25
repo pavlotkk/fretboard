@@ -1,18 +1,18 @@
 import React from "react"
+import Fretboard from "../../entities/fretboard"
 
 interface Params {
-    tuning: string[]
-    frets: number
+    fretboard: Fretboard
 }
 
-export default function FretboardCanvas({tuning, frets = 12}: Params) {
+export default function FretboardCanvas({fretboard}: Params) {
     return (
         <table className={"fretboard__canvas"}>
             <tbody>
-                {new Array(tuning.length - 1).fill("").map((v, index) => {
+                {new Array(fretboard.tuning.length - 1).fill("").map((v, index) => {
                     return (
                         <tr key={index} className={"fretboard__frets"}>
-                            {new Array(frets).fill("").map((v, index) => {
+                            {new Array(fretboard.frets).fill("").map((v, index) => {
                                 return (
                                     <td key={index} className={"fretboard__frets--fret"}>
                                         <span className={"fret fret--placeholder"}>&nbsp;</span>

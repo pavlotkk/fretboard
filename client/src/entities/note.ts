@@ -14,6 +14,26 @@ class Note {
         ;[this.name, this.pitch] = this.parse(name)
     }
 
+    root(): Note {
+        return new Note(this.name)
+    }
+
+    hasPitch(): boolean {
+        return this.pitch === Pitch.No
+    }
+
+    isSharp(): boolean {
+        return this.pitch === Pitch.Sharp
+    }
+
+    isFlat(): boolean {
+        return this.pitch === Pitch.Flat
+    }
+
+    isEqual(note: Note) {
+        return this.toString() === note.toString()
+    }
+
     toString(): string {
         return `${this.name}${this.pitch}`
     }

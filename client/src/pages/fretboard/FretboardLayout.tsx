@@ -1,17 +1,17 @@
 import React from "react"
 import FretboardCanvas from "./FretboardCanvas"
 import FretboardForehead from "./FretboardForehead"
+import Fretboard from "../../entities/fretboard"
 
 interface Params {
-    tuning: string[]
-    frets: number
+    fretboard: Fretboard
 }
 
-export default function FretboardLayout({tuning, frets = 12}: Params) {
+export default function FretboardLayout({fretboard}: Params) {
     return (
         <div className={"fretboard"}>
-            <FretboardCanvas tuning={tuning} frets={frets} />
-            <FretboardForehead tuning={tuning} frets={frets} />
+            <FretboardCanvas fretboard={fretboard} />
+            <FretboardForehead fretboard={fretboard} />
         </div>
     )
 }
