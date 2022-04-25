@@ -1,33 +1,15 @@
-import React from "react"
+import React, {useState} from "react"
 import "./../../styles/fretboard.scss"
+import FretboardHotKeys from "./FretboadHotKeys"
+import {CHROMATIC_SCALE} from "../../shared/constants"
 
 export default function FretboardPage() {
+    const [hotKeys, setHotKeys] = useState<string[]>([])
+
     return (
         <main className="container">
             <div className="bg-light p-4 rounded">
-                <ul className={"note-suggestions"}>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>A</button>
-                    </li>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>B</button>
-                    </li>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>C</button>
-                    </li>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>D</button>
-                    </li>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>E</button>
-                    </li>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>F</button>
-                    </li>
-                    <li className={"note-suggestions__item"}>
-                        <button className={"btn btn-link"}>G</button>
-                    </li>
-                </ul>
+                <FretboardHotKeys keys={CHROMATIC_SCALE} selectedKeys={hotKeys} selectKey={setHotKeys} />
             </div>
             <div className={"fretboard-layout"}>
                 <table className={"fretboard__canvas"}>
