@@ -6,6 +6,7 @@ import LearnScalesAnswer from "./LearnScalesAnswer";
 import NoteService from "../../services/note-service";
 import {NOTES_COUNT} from "../../shared/constants";
 import useCurrentUser from "../../hooks/useCurrectUser";
+import './../../styles/scale.scss';
 
 
 interface FormState {

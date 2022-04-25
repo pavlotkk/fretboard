@@ -1,0 +1,151 @@
+@use 'note';
+
+$frets-count: 12;
+$fret-font-size: 2vw;
+$fret-0-width: 1vw;
+$fret-height: 6vh;
+$fret-default-border-color: #00000014;
+
+.note-suggestions {
+    margin: 0;
+    padding: 0;
+}
+
+.note-suggestions__item {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.fret {
+    border-width: 0.2vw;
+    border-style: solid;
+    border-collapse: separate;
+    width: 3.6125vw;
+    display: inline-table;
+
+    border-color: $fret-default-border-color;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.fret--placeholder {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.fretboard__frets {
+    height: $fret-height;
+}
+
+.fretboard__frets--fret {
+    border: 1px solid black;
+    text-align: center;
+    font-size: $fret-font-size;
+}
+
+/* fretboard main layout */
+
+.fretboard-layout {
+    position: relative;
+}
+
+/* fretboard canvas */
+
+.fretboard__canvas {
+    width: calc(100% - 100% / ($frets-count + 1) + $fret-0-width / 2);
+    position: absolute;
+    top: calc($fret-height / 2);
+    left: calc(100% / ($frets-count + 1) - $fret-0-width / 2);
+    z-index: 0;
+}
+
+.fretboard__canvas .fretboard__frets--fret {
+    width: calc(100% / $frets-count);
+}
+
+.fretboard__frets--fret:first-child {
+    border-left-width: $fret-0-width;
+}
+
+
+/* notes on fretboard */
+
+.fretboard {
+    width: 100%;
+    position: absolute;
+    z-index: 9;
+}
+
+.fretboard .fretboard__frets--fret {
+    width: calc(100% / ($frets-count + 1));
+    border-style: none;
+}
+
+.fret__0 {
+    border-width: 0.25vw;
+    border-style: solid;
+    border-radius: 0;
+    width: 3.76vw;
+    display: inline-table;
+    color: black;
+}
+
+.note__e {
+    background-color: note.$e-color;
+}
+
+.note__b {
+    background-color: note.$b-color;
+}
+
+.note__g {
+    background-color: note.$g-color;
+}
+
+.note__d {
+    background-color: note.$d-color;
+}
+
+.note__a {
+    background-color: note.$a-color;
+}
+
+.note__f {
+    background-color: note.$f-color;
+}
+
+.note__c {
+    background-color: note.$c-color;
+}
+
+.note__pitch {
+    background-color: note.$pitch-color;
+}
+
+.note__pitch.note__f {
+    border-color: note.$f-color;
+}
+
+.note__pitch.note__g {
+    border-color: note.$g-color;
+}
+
+.note__pitch.note__a {
+    border-color: note.$a-color;
+}
+
+.note__pitch.note__b {
+    border-color: note.$b-color;
+}
+
+.note__pitch.note__c {
+    border-color: note.$c-color;
+}
+
+.note__pitch.note__d {
+    border-color: note.$d-color;
+}
+
+.note__pitch.note__e {
+    border-color: note.$e-color;
+}

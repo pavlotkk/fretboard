@@ -1,0 +1,34 @@
+.scale-table__layout {
+    border-spacing: 0 5px;
+    border-collapse: separate;
+}
+
+.scale-note {
+    box-sizing: border-box;
+    width: 75px;
+    height: 75px;
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px;
+}
+
+.note__no_pitch {
+
+}
+
+.scale-note__desc {
+    box-sizing: content-box;
+    border: 5px solid black;
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.scale-note__name {
+    padding: 0 5px;
+}
+
+.scale-note__sharps_flats_count {
+}

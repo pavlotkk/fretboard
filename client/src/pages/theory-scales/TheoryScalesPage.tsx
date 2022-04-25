@@ -3,6 +3,7 @@ import TheoryScalesTable from "./TheoryScalesTable";
 import Api from "../../services/api";
 import {Scale} from "../../interfaces/music";
 import TheoryScaleForm, {TheoryScaleFormSubmitData} from "./TheoryScalesForm";
+import './../../styles/scale.scss';
 
 
 function TheoryScalesPage() {
