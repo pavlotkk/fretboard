@@ -1,4 +1,4 @@
-@use 'note';
+@use "note";
 
 $frets-count: 12;
 $fret-font-size: 2vw;
@@ -66,7 +66,6 @@ $fret-default-border-color: #00000014;
 .fretboard__frets--fret:first-child {
     border-left-width: $fret-0-width;
 }
-
 
 /* notes on fretboard */
 

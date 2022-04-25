@@ -1,6 +1,6 @@
-import React from 'react';
-import {NavLink, useLocation} from "react-router-dom";
-import {MenuItem, MenuItems} from "../interfaces/menu";
+import React from "react"
+import {NavLink, useLocation} from "react-router-dom"
+import {MenuItem, MenuItems} from "../interfaces/menu"
 
 function SingleHeaderMenuItem({title, link}: MenuItem) {
     return (
@@ -11,22 +11,30 @@ function SingleHeaderMenuItem({title, link}: MenuItem) {
 }
 
 function NestedHeaderMenuItem({title, subItems = []}: MenuItem) {
-    const { pathname } = useLocation();
+    const {pathname} = useLocation()
     const style = {
-        color: subItems.some((item) => item.link === pathname) ? "#fff" : "rgba(255,255,255,.55)"
+        color: subItems.some((item) => item.link === pathname) ? "#fff" : "rgba(255,255,255,.55)",
     }
-    const dropdownId = `dropdown_${title}`.toLowerCase().replaceAll(" ", "_");
+    const dropdownId = `dropdown_${title}`.toLowerCase().replaceAll(" ", "_")
     const menuItems = subItems.map(({title, link}) => {
         return (
             <li key={link}>
-                <NavLink to={link as string} className={pathname === link ? "dropdown-item active" : "dropdown-item"}>{title}</NavLink>
+                <NavLink to={link as string} className={pathname === link ? "dropdown-item active" : "dropdown-item"}>
+                    {title}
+                </NavLink>
             </li>
         )
-    });
+    })
     return (
         <li className={"nav-item dropdown"} key={title}>
-            <button className={"btn btn-link nav-link dropdown-toggle"} style={style} id={dropdownId} data-bs-toggle="dropdown"
-               aria-expanded="false">{title}</button>
+            <button
+                className={"btn btn-link nav-link dropdown-toggle"}
+                style={style}
+                id={dropdownId}
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {title}
+            </button>
             <ul className="dropdown-menu" aria-labelledby={dropdownId}>
                 {menuItems}
             </ul>
@@ -35,7 +43,7 @@ function NestedHeaderMenuItem({title, subItems = []}: MenuItem) {
 }
 
 function HeaderMenuItem({title, link, subItems = []}: MenuItem) {
-    const isSingleItem = subItems === null || subItems.length === 0;
+    const isSingleItem = subItems === null || subItems.length === 0
     if (isSingleItem) {
         return SingleHeaderMenuItem({title: title, link: link})
     } else {
@@ -45,35 +53,40 @@ function HeaderMenuItem({title, link, subItems = []}: MenuItem) {
 
 function HeaderMenu({menuItems = []}: MenuItems) {
     const headerMenuItems = menuItems.map((item) => {
-        return <HeaderMenuItem {...item} key={item.title}/>
+        return <HeaderMenuItem {...item} key={item.title} />
     })
 
     return (
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-sm-0">
-                {headerMenuItems}
-            </ul>
+            <ul className="navbar-nav me-auto mb-2 mb-sm-0">{headerMenuItems}</ul>
         </div>
-    );
+    )
 }
 
 function Header({menuItems = []}: MenuItems) {
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar">
             <div className="container-fluid">
-                <NavLink to={"/fretboard"} className={"btn btn-link navbar-brand"}>Fretboard</NavLink>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <NavLink to={"/fretboard"} className={"btn btn-link navbar-brand"}>
+                    Fretboard
+                </NavLink>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <HeaderMenu menuItems={menuItems}/>
+                <HeaderMenu menuItems={menuItems} />
 
                 <button className="btn btn-link navbar-brand">{window.app_config.version}</button>
             </div>
         </nav>
-    );
+    )
 }
 
-export default Header;
+export default Header

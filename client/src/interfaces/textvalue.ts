@@ -1,4 +1,4 @@
 export interface TextValue {
-    text: string,
+    text: string
     value: string | number
 }

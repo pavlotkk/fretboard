@@ -1,13 +1,12 @@
-import React from "react";
-import LearnScaleForm, {LearnScaleFormSubmitData} from "./LearnScalesForm";
-import Api from "../../services/api";
-import classNames from "classnames";
-import LearnScalesAnswer from "./LearnScalesAnswer";
-import NoteService from "../../services/note-service";
-import {NOTES_COUNT} from "../../shared/constants";
-import useCurrentUser from "../../hooks/useCurrectUser";
-import './../../styles/scale.scss';
-
+import React from "react"
+import LearnScaleForm, {LearnScaleFormSubmitData} from "./LearnScalesForm"
+import Api from "../../services/api"
+import classNames from "classnames"
+import LearnScalesAnswer from "./LearnScalesAnswer"
+import NoteService from "../../services/note-service"
+import {NOTES_COUNT} from "../../shared/constants"
+import useCurrentUser from "../../hooks/useCurrectUser"
+import "./../../styles/scale.scss"
 
 interface FormState {
     form_last_notes: string[]
@@ -16,19 +15,21 @@ interface FormState {
 }
 
 interface ScaleState {
-    scale_id: string | null,
+    scale_id: string | null
     scale_name: string | null
-    scale_notes: string[],
+    scale_notes: string[]
 }
 
 interface ScaleResponse {
-    id: string,
+    id: string
     name: string
     notes: string[]
 }
 
 function notesInputControl(input: string): string {
-    const formattedAnswer = NoteService.parse(input, NOTES_COUNT, false).filter(n => n.length > 0).join(" ")
+    const formattedAnswer = NoteService.parse(input, NOTES_COUNT, false)
+        .filter((n) => n.length > 0)
+        .join(" ")
     const lastCharIsWhitespace = input.length > 0 && input[input.length - 1] === " "
     const tooManyTrims = input.length - formattedAnswer.length > 1
 
@@ -51,20 +52,23 @@ function LearnScalesPage() {
     const [form, setForm] = React.useState<FormState>({
         form_last_notes: [],
         form_last_pitches: [],
-        form_last_key: ""
+        form_last_key: "",
     })
     const [loading, setLoading] = React.useState<boolean>(false)
 
     const getScaleToLearn = (notes: string[], pitches: string[], key: string) => {
         setLoading(true)
-        new Api().withUser(currentUserId).getScaleToLearn(notes, pitches, key ? [key] : null).then((resp: ScaleResponse) => {
-            setScale({
-                scale_id: resp.id,
-                scale_name: resp.name,
-                scale_notes: resp.notes,
+        new Api()
+            .withUser(currentUserId)
+            .getScaleToLearn(notes, pitches, key ? [key] : null)
+            .then((resp: ScaleResponse) => {
+                setScale({
+                    scale_id: resp.id,
+                    scale_name: resp.name,
+                    scale_notes: resp.notes,
+                })
+                setLoading(false)
             })
-            setLoading(false)
-        })
     }
 
     const onScaleSelectedHandler = (data: LearnScaleFormSubmitData) => {
@@ -83,7 +87,7 @@ function LearnScalesPage() {
         setForm({
             form_last_notes: [],
             form_last_pitches: [],
-            form_last_key: ""
+            form_last_key: "",
         })
     }
 
@@ -102,10 +106,10 @@ function LearnScalesPage() {
         "bg-light": true,
         "p-5": true,
         "justify-content-center": true,
-        "hide": scale.scale_id == null
+        hide: scale.scale_id == null,
     })
 
-    let answerNotes = NoteService.parse(answer || '', NOTES_COUNT)
+    let answerNotes = NoteService.parse(answer || "", NOTES_COUNT)
     let nextAvailable: boolean
     if (answerNotes.length !== NOTES_COUNT) {
         nextAvailable = false
@@ -117,16 +121,13 @@ function LearnScalesPage() {
         <main className="container">
             <div className="bg-light p-5 rounded">
                 <h1>Select scale to learn</h1>
-                <LearnScaleForm onSubmit={onScaleSelectedHandler} onReset={onResetHandler} disabled={loading}/>
+                <LearnScaleForm onSubmit={onScaleSelectedHandler} onReset={onResetHandler} disabled={loading} />
             </div>
             <div className={formClasses} style={{marginTop: "10px"}}>
                 <h1 style={{textAlign: "center"}}>{scale.scale_name}</h1>
 
                 <div className={"d-flex justify-content-center"}>
-                    <LearnScalesAnswer
-                        actual_notes={answerNotes}
-                        expected_notes={scale.scale_notes}
-                    />
+                    <LearnScalesAnswer actual_notes={answerNotes} expected_notes={scale.scale_notes} />
                 </div>
 
                 <form className={"row g-3"} onSubmit={onSubmitAnswer}>
@@ -141,11 +142,11 @@ function LearnScalesPage() {
                         />
                     </div>
                     <div className="col-12">
-                        <button type="submit" className="btn btn-primary" disabled={loading || !nextAvailable}>Next</button>
-                        <button
-                            type="button" className="btn btn-link"
-                            disabled={loading}
-                            onClick={onSkipHandler}>Skip
+                        <button type="submit" className="btn btn-primary" disabled={loading || !nextAvailable}>
+                            Next
+                        </button>
+                        <button type="button" className="btn btn-link" disabled={loading} onClick={onSkipHandler}>
+                            Skip
                         </button>
                     </div>
                 </form>
@@ -154,4 +155,4 @@ function LearnScalesPage() {
     )
 }
 
-export default LearnScalesPage;
+export default LearnScalesPage

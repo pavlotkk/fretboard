@@ -1,38 +1,36 @@
-import React from "react";
-import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
-import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
-import {SingleToggle} from "../../components/Toggles";
+import React from "react"
+import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants"
+import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
+import {SingleToggle} from "../../components/Toggles"
 
 export interface TheoryScaleFormSubmitData {
-    note: string,
-    pitch: string,
+    note: string
+    pitch: string
     key: string
 }
 
-interface TheoryScaleFormData extends TheoryScaleFormSubmitData{
-
-}
+interface TheoryScaleFormData extends TheoryScaleFormSubmitData {}
 
 interface TheoryScaleFormParams {
-    onSubmit: (data: TheoryScaleFormSubmitData) => void,
-    onReset: () => void,
+    onSubmit: (data: TheoryScaleFormSubmitData) => void
+    onReset: () => void
     disabled?: boolean
 }
 
 function TheoryScaleForm({onSubmit, onReset, disabled = false}: TheoryScaleFormParams) {
     const [data, setData] = React.useState<TheoryScaleFormData>({
-        note: '',
-        pitch: '',
-        key: '',
+        note: "",
+        pitch: "",
+        key: "",
     })
 
     const resetForm = () => {
-        setData({...data, note: '', pitch: ''})
+        setData({...data, note: "", pitch: ""})
     }
 
-    const submitForm = (event: React.SyntheticEvent ) => {
-        event.preventDefault();
-        onSubmit(data);
+    const submitForm = (event: React.SyntheticEvent) => {
+        event.preventDefault()
+        onSubmit(data)
         resetForm()
     }
 
@@ -64,22 +62,18 @@ function TheoryScaleForm({onSubmit, onReset, disabled = false}: TheoryScaleFormP
             <div className="row mb-3">
                 <label className="col-sm-2 col-form-label">Key:</label>
                 <div className="col-sm-10">
-                    <ScaleKeyDropdown
-                        value={data.key}
-                        onChange={(value) => setData({...data, key: value})}
-                    />
+                    <ScaleKeyDropdown value={data.key} onChange={(value) => setData({...data, key: value})} />
                 </div>
             </div>
 
-            <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={disabled || !data.note || !data.key}>Add</button>
-            <button
-                type="button" className="btn btn-link"
-                onClick={clearForm}>Clear</button>
+            <button type="submit" className="btn btn-primary" disabled={disabled || !data.note || !data.key}>
+                Add
+            </button>
+            <button type="button" className="btn btn-link" onClick={clearForm}>
+                Clear
+            </button>
         </form>
     )
 }
 
-export default TheoryScaleForm;
+export default TheoryScaleForm

@@ -1,24 +1,24 @@
-import React from "react";
-import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants";
-import ScaleKeyDropdown from "../../components/ScaleKeyDropdown";
-import {MultiToggle} from "../../components/Toggles";
-import {TextValue} from "../../interfaces/textvalue";
+import React from "react"
+import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants"
+import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
+import {MultiToggle} from "../../components/Toggles"
+import {TextValue} from "../../interfaces/textvalue"
 
 export interface LearnScaleFormSubmitData {
-    notes: string[],
-    pitches: string[],
+    notes: string[]
+    pitches: string[]
     key: string
 }
 
 interface LearnScaleFormData {
-    notes: string[],
-    pitches: string[],
+    notes: string[]
+    pitches: string[]
     key: string
 }
 
 interface LearnScaleFormParams {
-    onSubmit: (data: LearnScaleFormSubmitData) => void,
-    onReset: () => void,
+    onSubmit: (data: LearnScaleFormSubmitData) => void
+    onReset: () => void
     disabled?: boolean
 }
 
@@ -37,12 +37,12 @@ function LearnScaleForm({onSubmit, onReset, disabled = false}: LearnScaleFormPar
     }
 
     const submitForm = (event: React.SyntheticEvent) => {
-        event.preventDefault();
+        event.preventDefault()
         onSubmit({
             notes: data.notes,
             pitches: data.pitches,
-            key: data.key === ANY_KEY_VALUE ? "" : data.key
-        } as LearnScaleFormSubmitData);
+            key: data.key === ANY_KEY_VALUE ? "" : data.key,
+        } as LearnScaleFormSubmitData)
     }
 
     const clearForm = () => {
@@ -81,13 +81,14 @@ function LearnScaleForm({onSubmit, onReset, disabled = false}: LearnScaleFormPar
                 </div>
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={disabled}>Apply</button>
-            <button
-                type="button" className="btn btn-link"
-                onClick={clearForm}>Clear
+            <button type="submit" className="btn btn-primary" disabled={disabled}>
+                Apply
+            </button>
+            <button type="button" className="btn btn-link" onClick={clearForm}>
+                Clear
             </button>
         </form>
     )
 }
 
-export default LearnScaleForm;
+export default LearnScaleForm

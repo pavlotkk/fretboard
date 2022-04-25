@@ -1,4 +1,4 @@
-import {TextValue} from "../interfaces/textvalue";
+import {TextValue} from "../interfaces/textvalue"
 
 function toTextValue(value: object | TextValue | string | number): TextValue {
     if (typeof value === "object") {
@@ -8,4 +8,4 @@ function toTextValue(value: object | TextValue | string | number): TextValue {
     }
 }
 
-export {toTextValue};
+export {toTextValue}

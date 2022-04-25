@@ -19,9 +19,13 @@ Fun project for learning music theory with python.
 1. [Python 3.9](https://www.python.org/)
 2. [Node 17.8.0](https://nodejs.org/en/)
 3. [React](https://reactjs.org/) for Browser GUI
-4. [FastAPI](https://fastapi.tiangolo.com) for REST API
-5. [PyCharm](https://www.jetbrains.com/pycharm/) as IDE
-6. [Docker](https://www.docker.com/) for containerization
+4. [SCSS](https://sass-lang.com/guide)
+5. [FastAPI](https://fastapi.tiangolo.com) for REST API
+6. [PyCharm](https://www.jetbrains.com/pycharm/) as IDE
+7. [Docker](https://www.docker.com/) for containerization
+
+Additionally:
+* [Prettier](https://www.jetbrains.com/help/idea/prettier.html#prettier_before_you_start) plugin for PyCharm
 
 ## Development
 

@@ -1,6 +1,6 @@
 class Api {
     static _cache = {
-        supportedScales: null
+        supportedScales: null,
     }
 
     host: string
@@ -18,8 +18,8 @@ class Api {
 
     getSupportedScales = (useCache = true) => {
         if (Api._cache.supportedScales === null || !useCache) {
-            return this.get('/api/supported-scale-keys').then(r => {
-                Api._cache.supportedScales = r.data;
+            return this.get("/api/supported-scale-keys").then((r) => {
+                Api._cache.supportedScales = r.data
                 return r.data
             })
         }
@@ -44,21 +44,21 @@ class Api {
             headers = {}
         }
 
-        if(this.user){
+        if (this.user) {
             headers["X-User-Id"] = this.user
         }
 
         return window.fetch(`${this.host}${url}?${urlParams}`, {
             method: method,
             headers: {
-                'content-type': "application/json",
-                ...headers
-            }
+                "content-type": "application/json",
+                ...headers,
+            },
         })
     }
 
     get = (url: string, params: any = null, headers: any = null) => {
-        return this.request("GET", url, params, headers).then(r => r.json())
+        return this.request("GET", url, params, headers).then((r) => r.json())
     }
 
     createSearchParams(params: object): string {
@@ -69,14 +69,14 @@ class Api {
         let urlParams: any[][] = []
 
         for (const [key, value] of Object.entries(params)) {
-            if (value == null || value === '') {
+            if (value == null || value === "") {
                 continue
             }
-            if(Array.isArray(value)){
-                if(value.length === 0){
+            if (Array.isArray(value)) {
+                if (value.length === 0) {
                     continue
                 }
-                for(const i of value){
+                for (const i of value) {
                     urlParams.push([key, i])
                 }
             } else {
@@ -88,4 +88,4 @@ class Api {
     }
 }
 
-export default Api;
+export default Api

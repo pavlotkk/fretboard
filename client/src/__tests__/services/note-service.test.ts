@@ -1,4 +1,4 @@
-import NoteService from "../../services/note-service";
+import NoteService from "../../services/note-service"
 
 describe("Note Service", () => {
     it.each([
@@ -39,20 +39,20 @@ describe("Note Service", () => {
         ["c#", true, true, false],
         ["cb", true, false, true],
         ["cH", false, false, false],
-    ])("%p hasPitch=%p, isSharp=%p, isFlat=%p", (note_input: string, hasPitch: boolean, isSharp:boolean, isFlat:boolean) => {
-        const service = new NoteService(note_input)
+    ])(
+        "%p hasPitch=%p, isSharp=%p, isFlat=%p",
+        (note_input: string, hasPitch: boolean, isSharp: boolean, isFlat: boolean) => {
+            const service = new NoteService(note_input)
 
-        expect(service.hasPitch()).toEqual(hasPitch)
-        expect(service.isSharp()).toEqual(isSharp)
-        expect(service.isFlat()).toEqual(isFlat)
-    })
+            expect(service.hasPitch()).toEqual(hasPitch)
+            expect(service.isSharp()).toEqual(isSharp)
+            expect(service.isFlat()).toEqual(isFlat)
+        }
+    )
 
-    it.each([
-        ["c#d", "C#"],
-    ])( "non strict parsing %p to %p", (input: string, expected: string) => {
+    it.each([["c#d", "C#"]])("non strict parsing %p to %p", (input: string, expected: string) => {
         let actual = NoteService.parse(input, 0, false).join("")
 
         expect(actual).toEqual(expected)
     })
 })
-

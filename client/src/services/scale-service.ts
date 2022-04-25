@@ -1,6 +1,6 @@
-import {Scale} from "../interfaces/music";
+import {Scale} from "../interfaces/music"
 
-export default class ScaleService{
+export default class ScaleService {
     scale: Scale
     desc: string
 
@@ -9,7 +9,7 @@ export default class ScaleService{
         this.desc = this.composeDesc()
     }
 
-    private composeDesc(): string{
+    private composeDesc(): string {
         let desc = ""
         if (this.scale.sharps_count > 0) {
             desc = `${this.scale.sharps_count} #`

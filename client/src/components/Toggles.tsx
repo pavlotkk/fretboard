@@ -1,10 +1,9 @@
-import {TextValue} from "../interfaces/textvalue";
-import {toTextValue} from "../shared/converters";
-import React from "react";
-
+import {TextValue} from "../interfaces/textvalue"
+import {toTextValue} from "../shared/converters"
+import React from "react"
 
 interface SingleToggleParams {
-    name: string,
+    name: string
     items: TextValue[] | string[]
     label?: string
     value: string
@@ -15,7 +14,7 @@ function SingleToggle({name, items, onChange, value = "", label = ""}: SingleTog
     items = items.map(toTextValue)
 
     const onChangeHandler = (e: any) => {
-        const currentValue = e.target.value;
+        const currentValue = e.target.value
         if (currentValue === value) {
             onChange("")
         } else {
@@ -36,7 +35,9 @@ function SingleToggle({name, items, onChange, value = "", label = ""}: SingleTog
                     value={v.value}
                     onChange={onChangeHandler}
                 />
-                <label className="btn btn-outline-primary" htmlFor={id}>{v.text}</label>
+                <label className="btn btn-outline-primary" htmlFor={id}>
+                    {v.text}
+                </label>
             </React.Fragment>
         )
     })
@@ -49,25 +50,24 @@ function SingleToggle({name, items, onChange, value = "", label = ""}: SingleTog
 }
 
 interface MultiToggleParams {
-    name: string,
+    name: string
     items: TextValue[] | string[] | any[]
     label?: string
     values: string[]
     onChange: (value: string[]) => void
 }
 
-
 function MultiToggle({name, items, onChange, values = [], label = ""}: MultiToggleParams) {
     items = items.map(toTextValue)
 
     const onChangeHandler = (e: any) => {
-        const currentValue = e.target.value;
+        const currentValue = e.target.value
         let selectedValues: string[] = []
         let found = false
 
         for (let v of values) {
             if (v === currentValue) {
-                found = true;
+                found = true
                 continue
             }
             selectedValues.push(v)
@@ -93,7 +93,9 @@ function MultiToggle({name, items, onChange, values = [], label = ""}: MultiTogg
                     value={item.value}
                     onChange={onChangeHandler}
                 />
-                <label className="btn btn-outline-primary" htmlFor={id}>{item.text}</label>
+                <label className="btn btn-outline-primary" htmlFor={id}>
+                    {item.text}
+                </label>
             </React.Fragment>
         )
     })
@@ -104,6 +106,5 @@ function MultiToggle({name, items, onChange, values = [], label = ""}: MultiTogg
         </div>
     )
 }
-
 
 export {SingleToggle, MultiToggle}

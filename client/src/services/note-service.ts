@@ -1,4 +1,4 @@
-import {ALLOWED_NOTE_SYMBOLS, ALLOWED_PITCH_SYMBOLS} from "../shared/constants";
+import {ALLOWED_NOTE_SYMBOLS, ALLOWED_PITCH_SYMBOLS} from "../shared/constants"
 
 const NoteColor = {
     C: "#FF8F8F",
@@ -27,7 +27,7 @@ function isValidNote(note: string): boolean {
     }
 
     // all pitches symbols should be allowed chars
-    return Array.from(note.slice(1)).every(ch => ALLOWED_PITCH_SYMBOLS.includes(ch))
+    return Array.from(note.slice(1)).every((ch) => ALLOWED_PITCH_SYMBOLS.includes(ch))
 }
 
 function formatNote(note: string): string {
@@ -51,7 +51,7 @@ class NoteService {
 
     getColor(): string {
         if (!this.isValid()) {
-            return 'white';
+            return "white"
         }
         return (NoteColor as any)[this.note[0]]
     }
@@ -88,19 +88,19 @@ class NoteService {
     }
 
     getStyle() {
-        const color = this.getColor();
+        const color = this.getColor()
 
         if (!this.isValid()) {
             return {
                 border: `5px solid black`,
                 borderRadius: "50%",
-                backgroundColor: color
+                backgroundColor: color,
             }
         } else if (!this.hasPitch()) {
             return {
                 border: `5px solid ${color}`,
                 borderRadius: "50%",
-                backgroundColor: color
+                backgroundColor: color,
             }
         } else if (this.isSharp()) {
             return {
@@ -125,23 +125,26 @@ class NoteService {
         let notes = input.trim().split(/\s/)
 
         if (strict) {
-            notes = notes.filter(n => isValidNote(n)).map(n => formatNote(n))
+            notes = notes.filter((n) => isValidNote(n)).map((n) => formatNote(n))
         } else {
-            notes = notes.filter(n => n.trim().length > 0).map(n => formatNote(n)).map(n => {
+            notes = notes
+                .filter((n) => n.trim().length > 0)
+                .map((n) => formatNote(n))
+                .map((n) => {
+                    // check first change (note name)
+                    if (!ALLOWED_NOTE_SYMBOLS.includes(n[0])) {
+                        return ""
+                    }
 
-                // check first change (note name)
-                if (!ALLOWED_NOTE_SYMBOLS.includes(n[0])) {
-                    return ""
-                }
+                    // no pitch, no need any other checks
+                    if (n.length === 1) {
+                        return n
+                    }
 
-                // no pitch, no need any other checks
-                if (n.length === 1) {
-                    return n
-                }
-
-                // remove invalid chars from pitch
-                return n[0] + n.slice(1).replace(/[^b#]/, "")
-            }).filter(n => n.trim().length > 0)
+                    // remove invalid chars from pitch
+                    return n[0] + n.slice(1).replace(/[^b#]/, "")
+                })
+                .filter((n) => n.trim().length > 0)
         }
 
         // align result to the required length
@@ -161,4 +164,4 @@ class NoteService {
     }
 }
 
-export default NoteService;
+export default NoteService

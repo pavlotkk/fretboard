@@ -1,5 +1,4 @@
-import {MenuItem} from "./interfaces/menu";
-
+import {MenuItem} from "./interfaces/menu"
 
 const MENU: MenuItem[] = [
     {
@@ -9,7 +8,7 @@ const MENU: MenuItem[] = [
                 title: "Scales",
                 link: "/theory/scales",
             },
-        ]
+        ],
     },
     {
         title: "Learn",
@@ -18,9 +17,8 @@ const MENU: MenuItem[] = [
                 title: "Scales",
                 link: "/learn/scales",
             },
-        ]
-    }
+        ],
+    },
 ]
 
-
-export default MENU;
+export default MENU
