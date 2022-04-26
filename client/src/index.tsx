@@ -13,7 +13,7 @@ root.render(
     <React.StrictMode>
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/theory/scales" replace />} />
+                <Route path="/" element={<Navigate to="/fretboard" replace />} />
                 <Route path="/" element={<App />}>
                     <Route path="fretboard" element={<FretboardPage />} />
                     <Route path="theory/scales" element={<TheoryScalesPage />} />
