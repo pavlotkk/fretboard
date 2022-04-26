@@ -27,10 +27,10 @@ interface ScaleResponse {
 }
 
 function notesInputControl(input: string): string {
-  const formattedAnswer = UserInputNoteService.parse(input, NOTES_COUNT, false)
-      .filter((n) => n.length > 0)
-      .join(" ")
-  const lastCharIsWhitespace = input.length > 0 && input[input.length - 1] === " "
+    const formattedAnswer = UserInputNoteService.parse(input, NOTES_COUNT, false)
+        .filter((n) => n.length > 0)
+        .join(" ")
+    const lastCharIsWhitespace = input.length > 0 && input[input.length - 1] === " "
     const tooManyTrims = input.length - formattedAnswer.length > 1
 
     if (lastCharIsWhitespace || tooManyTrims) {
@@ -109,8 +109,8 @@ function LearnScalesPage() {
         hide: scale.scale_id == null,
     })
 
-  let answerNotes = UserInputNoteService.parse(answer || "", NOTES_COUNT)
-  let nextAvailable: boolean
+    let answerNotes = UserInputNoteService.parse(answer || "", NOTES_COUNT)
+    let nextAvailable: boolean
     if (answerNotes.length !== NOTES_COUNT) {
         nextAvailable = false
     } else {

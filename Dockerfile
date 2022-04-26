@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY ["client/package.json", "client/package-lock.json", "client/tsconfig.json", "./"]
 
-RUN npm install --production
+RUN npm install --save-prod
 
 COPY client/ .
 COPY client/prod.env ./.env
