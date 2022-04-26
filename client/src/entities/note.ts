@@ -11,15 +11,20 @@ class Note {
     readonly pitch: Pitch
 
     constructor(name: string) {
-        ;[this.name, this.pitch] = this.parse(name)
+        ;[this.name, this.pitch] = Note.parse(name)
     }
 
     root(): Note {
         return new Note(this.name)
     }
 
-    hasPitch(): boolean {
-        return this.pitch === Pitch.No
+    private static parse(name: string): [string, Pitch] {
+        const parsedNote = parseNotes(name, 1, true)[0]
+        validateNote(parsedNote)
+        if (parsedNote.length === 1) {
+            return [parsedNote, Pitch.No]
+        }
+        return [parsedNote[0], parsedNote.slice(-1) as Pitch]
     }
 
     isSharp(): boolean {
@@ -38,12 +43,12 @@ class Note {
         return `${this.name}${this.pitch}`
     }
 
-    private parse(name: string): [string, Pitch] {
-        const parsedNote = parseNotes(name, 1, true)[0]
-        validateNote(parsedNote)
-        return [parsedNote[0], parsedNote.slice(-1) as Pitch]
+    hasPitch(): boolean {
+        return this.pitch !== Pitch.No
     }
 }
+
+// TODO: move to Service
 
 /**
  * Validate input note. Throws an Error if note is invalid

@@ -3,9 +3,25 @@ import Fretboard from "../../entities/fretboard"
 
 interface Params {
     fretboard: Fretboard
+    showNotes: string[]
 }
 
-export default function FretboardForehead({fretboard}: Params) {
+export default function FretboardForehead({fretboard, showNotes}: Params) {
+    const fretNote = function (stringNum: number, fretNum: number) {
+        let notesOnFret = fretboard.getNotesAt(stringNum, fretNum)
+        for (let note of notesOnFret) {
+            console.log(`${showNotes}.includes(${note.toString()}) == ${showNotes.includes(note.toString())}`)
+            if (showNotes.includes(note.toString())) {
+                return (
+                    <span className={`fret note__${note.name.toLowerCase()}${note.hasPitch() ? " note__pitch" : ""}`}>
+                        {note.toString()}
+                    </span>
+                )
+            }
+        }
+        return <span className={"fret"}>&nbsp;</span>
+    }
+
     const rows = fretboard.tuning.map((rootNote, stringNum) => {
         return (
             <tr key={`${stringNum}-${rootNote}`} className={"fretboard__frets"}>
@@ -15,7 +31,7 @@ export default function FretboardForehead({fretboard}: Params) {
                             {fretNum === 0 ? (
                                 <span className={`fret fret__0 note__${rootNote.toLowerCase()}`}>{rootNote}</span>
                             ) : (
-                                <span className={"fret"}>&nbsp;</span>
+                                fretNote(stringNum, fretNum)
                             )}
                         </td>
                     )

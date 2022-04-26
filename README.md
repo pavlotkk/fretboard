@@ -4,16 +4,19 @@
 # fretboard
 Fun project for learning music theory with python.
 
+![](docs/example-fretboard.png)
 ![](docs/example-theory-scales.png)
 ![](docs/example-learn-scales.png)
 
 ## Features:
-1. Build a scale from an any note:
+
+1. Show selected notes on fretboard
+2. Build a scale from an any note:
    * Major
    * Minor
    * Harmonic minor
    * Ascending and descending melodic minor
-2. Practice learning scale notes
+3. Practice learning scale notes
 
 ## Tech stack:
 1. [Python 3.9](https://www.python.org/)

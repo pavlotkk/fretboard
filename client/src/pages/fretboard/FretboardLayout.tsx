@@ -5,13 +5,14 @@ import Fretboard from "../../entities/fretboard"
 
 interface Params {
     fretboard: Fretboard
+    showNotes: string[]
 }
 
-export default function FretboardLayout({fretboard}: Params) {
+export default function FretboardLayout({fretboard, showNotes}: Params) {
     return (
         <div className={"fretboard"}>
             <FretboardCanvas fretboard={fretboard} />
-            <FretboardForehead fretboard={fretboard} />
+            <FretboardForehead fretboard={fretboard} showNotes={showNotes} />
         </div>
     )
 }
