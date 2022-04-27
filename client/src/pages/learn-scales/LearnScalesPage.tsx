@@ -138,7 +138,7 @@ function LearnScalesPage() {
                             placeholder={"Type scale notes here.."}
                             onChange={(e) => setAnswer(notesInputControl(e.target.value))}
                             value={answer}
-                            disabled={loading}
+                            disabled={loading || scale.scale_id === null}
                         />
                     </div>
                     <div className="col-12">

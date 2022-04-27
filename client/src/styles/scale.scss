@@ -1,33 +1,29 @@
 .scale-table__layout {
-    border-spacing: 0 5px;
+    border-spacing: 0.5vw;
     border-collapse: separate;
 }
 
 .scale-note {
     box-sizing: border-box;
-    width: 75px;
-    height: 75px;
-    font-size: 40px;
+    width: 6vw;
+    height: 6vw;
+    font-size: 2.5vw;
     text-align: center;
     vertical-align: middle;
-    display: inline-block;
-    margin: 5px;
+    display: table-cell;
+    margin: 0.5vw;
+
+    border-radius: 50%;
 }
 
-.note__no_pitch {
-}
-
-.scale-note__desc {
+.scale-desc {
     box-sizing: content-box;
-    border: 5px solid black;
-    font-size: 40px;
+    border: 0.3vw solid black;
+    font-size: 2vw;
     text-align: center;
     vertical-align: middle;
+
+    padding: 0 0.3vw;
 }
 
-.scale-note__name {
-    padding: 0 5px;
-}
-
-.scale-note__sharps_flats_count {
-}
+@import "note";

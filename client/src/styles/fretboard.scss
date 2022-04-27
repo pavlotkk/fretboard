@@ -1,5 +1,3 @@
-@use "note";
-
 $frets-count: 12;
 $fret-font-size: 2vw;
 $fret-0-width: 1vw;
@@ -79,62 +77,4 @@ $fret-default-border-color: #00000014;
     color: black;
 }
 
-.note__e {
-    background-color: note.$e-color;
-}
-
-.note__b {
-    background-color: note.$b-color;
-}
-
-.note__g {
-    background-color: note.$g-color;
-}
-
-.note__d {
-    background-color: note.$d-color;
-}
-
-.note__a {
-    background-color: note.$a-color;
-}
-
-.note__f {
-    background-color: note.$f-color;
-}
-
-.note__c {
-    background-color: note.$c-color;
-}
-
-.note__pitch {
-    background-color: note.$pitch-color;
-}
-
-.note__pitch.note__f {
-    border-color: note.$f-color;
-}
-
-.note__pitch.note__g {
-    border-color: note.$g-color;
-}
-
-.note__pitch.note__a {
-    border-color: note.$a-color;
-}
-
-.note__pitch.note__b {
-    border-color: note.$b-color;
-}
-
-.note__pitch.note__c {
-    border-color: note.$c-color;
-}
-
-.note__pitch.note__d {
-    border-color: note.$d-color;
-}
-
-.note__pitch.note__e {
-    border-color: note.$e-color;
-}
+@import "note";

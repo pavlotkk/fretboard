@@ -14,19 +14,17 @@ function TheoryScalesTable({scales = []}: ScaleTableParams) {
 
         const cols = scale.notes.map((n) => {
             return (
-                <td key={n} className={"scale-note"} style={NoteStyler.get(n)}>
+                <td key={n} className={`scale-note ${NoteStyler.get(n)}`}>
                     {n}
                 </td>
             )
         })
 
         const scaleNameClass = classNames({
-            "scale-note__desc": scale.name,
-            "scale-note__name": scale.name,
+            "scale-desc": scale.name,
         })
         const scaleSharpsFlatsCountClass = classNames({
-            "scale-note__desc": scaleService.desc,
-            "scale-note__sharps_flats_count": scaleService.desc,
+            "scale-desc": scaleService.desc,
         })
 
         return (

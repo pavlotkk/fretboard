@@ -9,7 +9,7 @@ interface LearnScalesAnswerParams {
 function LearnScalesAnswer({actual_notes = [], expected_notes = []}: LearnScalesAnswerParams) {
     const actualNotesCols = actual_notes.map((n, index) => {
         return (
-            <td key={index} className={"scale-note"} style={NoteStyler.get(n)}>
+            <td key={index} className={`scale-note ${NoteStyler.get(n)}`}>
                 {n}
             </td>
         )
