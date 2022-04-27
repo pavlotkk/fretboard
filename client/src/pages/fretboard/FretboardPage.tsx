@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react"
 import "./../../styles/fretboard.scss"
 import FretboardHotKeys, {HotKey} from "./FretboadHotKeys"
 import {CHROMATIC_SCALE} from "../../shared/constants"
-import Fretboard from "../../entities/fretboard"
+import Fretboard from "../../services/fretboard"
 import FretboardLayout from "./FretboardLayout"
 
 function getAllHotKeys(): HotKey[] {

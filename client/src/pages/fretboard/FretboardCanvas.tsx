@@ -1,5 +1,5 @@
 import React from "react"
-import Fretboard from "../../entities/fretboard"
+import Fretboard from "../../services/fretboard"
 
 interface Params {
     fretboard: Fretboard

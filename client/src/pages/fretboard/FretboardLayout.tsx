@@ -1,7 +1,7 @@
 import React from "react"
 import FretboardCanvas from "./FretboardCanvas"
 import FretboardForehead from "./FretboardForehead"
-import Fretboard from "../../entities/fretboard"
+import Fretboard from "../../services/fretboard"
 
 interface Params {
     fretboard: Fretboard
