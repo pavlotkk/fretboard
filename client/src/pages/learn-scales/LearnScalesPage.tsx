@@ -3,10 +3,10 @@ import LearnScaleForm, {LearnScaleFormSubmitData} from "./LearnScalesForm"
 import Api from "../../services/api"
 import classNames from "classnames"
 import LearnScalesAnswer from "./LearnScalesAnswer"
-import UserInputNoteService from "../../services/user-input-note-service"
 import {NOTES_COUNT} from "../../shared/constants"
 import useCurrentUser from "../../hooks/useCurrectUser"
 import "./../../styles/scale.scss"
+import parseNoteInput from "../../services/note-input"
 
 interface FormState {
     form_last_notes: string[]
@@ -27,7 +27,7 @@ interface ScaleResponse {
 }
 
 function notesInputControl(input: string): string {
-    const formattedAnswer = UserInputNoteService.parse(input, NOTES_COUNT, false)
+    const formattedAnswer = parseNoteInput(input, NOTES_COUNT, false)
         .filter((n) => n.length > 0)
         .join(" ")
     const lastCharIsWhitespace = input.length > 0 && input[input.length - 1] === " "
@@ -109,7 +109,7 @@ function LearnScalesPage() {
         hide: scale.scale_id == null,
     })
 
-    let answerNotes = UserInputNoteService.parse(answer || "", NOTES_COUNT)
+    let answerNotes = parseNoteInput(answer || "", NOTES_COUNT)
     let nextAvailable: boolean
     if (answerNotes.length !== NOTES_COUNT) {
         nextAvailable = false

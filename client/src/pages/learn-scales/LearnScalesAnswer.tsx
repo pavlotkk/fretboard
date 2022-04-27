@@ -1,5 +1,5 @@
 import React from "react"
-import UserInputNoteService from "../../services/user-input-note-service"
+import NoteStyler from "../../services/note-styler"
 
 interface LearnScalesAnswerParams {
     actual_notes: string[]
@@ -8,9 +8,8 @@ interface LearnScalesAnswerParams {
 
 function LearnScalesAnswer({actual_notes = [], expected_notes = []}: LearnScalesAnswerParams) {
     const actualNotesCols = actual_notes.map((n, index) => {
-        const noteService = new UserInputNoteService(n)
         return (
-            <td key={index} className={"scale-note"} style={noteService.getStyle()}>
+            <td key={index} className={"scale-note"} style={NoteStyler.get(n)}>
                 {n}
             </td>
         )

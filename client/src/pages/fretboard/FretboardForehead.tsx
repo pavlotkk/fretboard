@@ -10,10 +10,9 @@ export default function FretboardForehead({fretboard, showNotes}: Params) {
     const fretNote = function (stringNum: number, fretNum: number) {
         let notesOnFret = fretboard.getNotesAt(stringNum, fretNum)
         for (let note of notesOnFret) {
-            console.log(`${showNotes}.includes(${note.toString()}) == ${showNotes.includes(note.toString())}`)
             if (showNotes.includes(note.toString())) {
                 return (
-                    <span className={`fret note__${note.name.toLowerCase()}${note.hasPitch() ? " note__pitch" : ""}`}>
+                    <span className={`fret note__${note.value.toLowerCase()}${note.hasPitch() ? " note__pitch" : ""}`}>
                         {note.toString()}
                     </span>
                 )

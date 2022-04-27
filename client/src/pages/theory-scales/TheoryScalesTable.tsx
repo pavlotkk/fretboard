@@ -2,7 +2,7 @@ import React from "react"
 import classNames from "classnames"
 import {Scale} from "../../interfaces/music"
 import ScaleService from "../../services/scale-service"
-import UserInputNoteService from "../../services/user-input-note-service"
+import NoteStyler from "../../services/note-styler"
 
 interface ScaleTableParams {
     scales: Scale[]
@@ -13,9 +13,8 @@ function TheoryScalesTable({scales = []}: ScaleTableParams) {
         const scaleService = new ScaleService(scale)
 
         const cols = scale.notes.map((n) => {
-            const noteService = new UserInputNoteService(n)
             return (
-                <td key={n} className={"scale-note"} style={noteService.getStyle()}>
+                <td key={n} className={"scale-note"} style={NoteStyler.get(n)}>
                     {n}
                 </td>
             )

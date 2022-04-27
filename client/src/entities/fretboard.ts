@@ -1,4 +1,4 @@
-import {Note} from "./note"
+import {Note} from "../services/note"
 
 class Fretboard {
     readonly strings: number
