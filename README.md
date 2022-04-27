@@ -2,7 +2,7 @@
 [![Frontend](https://github.com/tpagit/fretboard/actions/workflows/frontend.yml/badge.svg?branch=main)](https://github.com/tpagit/fretboard/actions/workflows/frontend.yml)
 
 # fretboard
-Fun project for learning music theory with python.
+Fun project for learning music theory with python and javascript.
 
 ![](docs/example-fretboard.png)
 ![](docs/example-theory-scales.png)
