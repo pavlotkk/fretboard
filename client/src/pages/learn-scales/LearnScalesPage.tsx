@@ -1,5 +1,5 @@
 import React from "react"
-import LearnScaleForm, {LearnScaleFormSubmitData} from "./LearnScalesForm"
+import LearnScaleForm, {FormSubmitData as LearnScaleFormSubmitData} from "./LearnScalesForm"
 import Api from "../../services/api"
 import classNames from "classnames"
 import LearnScalesAnswer from "./LearnScalesAnswer"

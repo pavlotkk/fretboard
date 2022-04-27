@@ -4,20 +4,20 @@ import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
 import {MultiToggle} from "../../components/Toggles"
 import {TextValue} from "../../interfaces/textvalue"
 
-export interface LearnScaleFormSubmitData {
+export interface FormSubmitData {
     notes: string[]
     pitches: string[]
     key: string
 }
 
-interface LearnScaleFormData {
+interface FormData {
     notes: string[]
     pitches: string[]
     key: string
 }
 
-interface LearnScaleFormParams {
-    onSubmit: (data: LearnScaleFormSubmitData) => void
+interface FormParams {
+    onSubmit: (data: FormSubmitData) => void
     onReset: () => void
     disabled?: boolean
 }
@@ -25,8 +25,8 @@ interface LearnScaleFormParams {
 const ANY_KEY_VALUE = "_"
 const NO_PITCH_VALUE = ""
 
-function LearnScaleForm({onSubmit, onReset, disabled = false}: LearnScaleFormParams) {
-    const [data, setData] = React.useState<LearnScaleFormData>({
+function LearnScaleForm({onSubmit, onReset, disabled = false}: FormParams) {
+    const [data, setData] = React.useState<FormData>({
         notes: [],
         pitches: [NO_PITCH_VALUE],
         key: ANY_KEY_VALUE,
@@ -42,7 +42,7 @@ function LearnScaleForm({onSubmit, onReset, disabled = false}: LearnScaleFormPar
             notes: data.notes,
             pitches: data.pitches,
             key: data.key === ANY_KEY_VALUE ? "" : data.key,
-        } as LearnScaleFormSubmitData)
+        } as FormSubmitData)
     }
 
     const clearForm = () => {

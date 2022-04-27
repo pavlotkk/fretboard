@@ -3,22 +3,22 @@ import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants"
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
 import {SingleToggle} from "../../components/Toggles"
 
-export interface TheoryScaleFormSubmitData {
+export interface FormSubmitData {
     note: string
     pitch: string
     key: string
 }
 
-interface TheoryScaleFormData extends TheoryScaleFormSubmitData {}
+interface FormData extends FormSubmitData {}
 
-interface TheoryScaleFormParams {
-    onSubmit: (data: TheoryScaleFormSubmitData) => void
+interface FormParams {
+    onSubmit: (data: FormSubmitData) => void
     onReset: () => void
     disabled?: boolean
 }
 
-function TheoryScaleForm({onSubmit, onReset, disabled = false}: TheoryScaleFormParams) {
-    const [data, setData] = React.useState<TheoryScaleFormData>({
+function TheoryScaleForm({onSubmit, onReset, disabled = false}: FormParams) {
+    const [data, setData] = React.useState<FormData>({
         note: "",
         pitch: "",
         key: "",
