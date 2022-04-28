@@ -1,5 +1,5 @@
 import React from "react"
-import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants"
+import {NOTE_NAMES, PITCHES} from "../../shared/constants"
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
 import {SingleToggle} from "../../components/Toggles"
 
@@ -46,7 +46,7 @@ function TheoryScaleForm({onSubmit, onReset, disabled = false}: FormParams) {
                 <div className="col-sm-10 d-flex justify-content-between">
                     <SingleToggle
                         name={"note"}
-                        items={CHROMATIC_SCALE}
+                        items={NOTE_NAMES}
                         value={data.note}
                         onChange={(value) => setData({...data, note: value as string})}
                     />

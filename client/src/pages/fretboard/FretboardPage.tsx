@@ -1,12 +1,12 @@
 import React, {useMemo, useState} from "react"
 import "./../../styles/fretboard.scss"
 import FretboardHotKeys, {HotKey} from "./FretboadHotKeys"
-import {CHROMATIC_SCALE} from "../../shared/constants"
+import {NOTE_NAMES} from "../../shared/constants"
 import Fretboard from "../../services/fretboard"
 import FretboardLayout from "./FretboardLayout"
 
 function getAllHotKeys(): HotKey[] {
-    return CHROMATIC_SCALE.map((note) => {
+    return NOTE_NAMES.map((note) => {
         return {name: note, values: [note]} as HotKey
     })
 }
@@ -20,8 +20,7 @@ export default function FretboardPage() {
         return allHotKeys
             .filter((hk) => hotKeyNames.includes(hk.name))
             .map((hk) => hk.values)
-            .flat()
-        // eslint-disable-next-line
+            .flat() // eslint-disable-next-line
     }, [hotKeyNames])
 
     return (

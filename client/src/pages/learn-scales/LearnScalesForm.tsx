@@ -1,5 +1,5 @@
 import React from "react"
-import {CHROMATIC_SCALE, PITCHES} from "../../shared/constants"
+import {NOTE_NAMES, PITCHES} from "../../shared/constants"
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
 import {MultiToggle} from "../../components/Toggles"
 import {TextValue} from "../../interfaces/textvalue"
@@ -57,7 +57,7 @@ function LearnScaleForm({onSubmit, onReset, disabled = false}: FormParams) {
                 <div className="col-sm-10 d-flex justify-content-between">
                     <MultiToggle
                         name={"note"}
-                        items={CHROMATIC_SCALE}
+                        items={NOTE_NAMES}
                         values={data.notes}
                         onChange={(value) => setData({...data, notes: value})}
                     />
