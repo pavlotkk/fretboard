@@ -1,15 +1,15 @@
 import React from "react"
 import TheoryScalesTable from "./TheoryScalesTable"
 import Api from "../../services/api"
-import {Scale} from "../../interfaces/music"
+import {ApiScale} from "../../interfaces/api"
 import TheoryScaleForm, {FormSubmitData as TheoryScaleFormSubmitData} from "./TheoryScalesForm"
 import "./../../styles/scale.scss"
 
 function TheoryScalesPage() {
-    const [scales, setScales] = React.useState<Scale[]>([])
-    const [loading, setLoading] = React.useState<boolean>(false)
+  const [scales, setScales] = React.useState<ApiScale[]>([])
+  cons;t [loading, setLoading] = React.useState<boolean>(false)
 
-    const onSubmitHandler = (data: TheoryScaleFormSubmitData) => {
+    c;onst onSubmitHandler = (data: TheoryScaleFormSubmitData) => {
         setLoading(true)
         new Api().getScale(`${data.note}${data.pitch || ""}`.trim(), data.key).then((newScale) => {
             setScales([...scales, newScale])

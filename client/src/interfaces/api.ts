@@ -1,4 +1,4 @@
-export interface Scale {
+export interface ApiScale {
     id: string
     name: string
     sharps_count: number

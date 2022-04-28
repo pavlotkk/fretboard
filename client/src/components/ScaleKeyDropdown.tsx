@@ -2,7 +2,7 @@ import Dropdown from "./Dropdown"
 import React from "react"
 import {TextValue} from "../interfaces/textvalue"
 import Api from "../services/api"
-import {Scale} from "../interfaces/music"
+import {ApiScale} from "../interfaces/api"
 
 interface ScaleKeyDropdownParams {
     preloadOptions?: TextValue[]
@@ -16,7 +16,7 @@ export default function ScaleKeyDropdown({preloadOptions = [], value = "", onCha
 
     React.useEffect(() => {
         new Api().getSupportedScales(true).then((resp) => {
-            let supportedScaleKeys = resp.map((item: Scale) => {
+            let supportedScaleKeys = resp.map((item: ApiScale) => {
                 return {value: item.id, text: item.name}
             })
             supportedScaleKeys = [...options, ...supportedScaleKeys]
