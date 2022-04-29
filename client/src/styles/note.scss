@@ -9,98 +9,98 @@ $pitch-color: white;
 $pitch-border-size: 0.4vw;
 
 .note__e {
-  background-color: $e-color;
+    background-color: $e-color;
 }
 
 .note__b {
-  background-color: $b-color;
+    background-color: $b-color;
 }
 
 .note__g {
-  background-color: $g-color;
+    background-color: $g-color;
 }
 
 .note__d {
-  background-color: $d-color;
+    background-color: $d-color;
 }
 
 .note__a {
-  background-color: $a-color;
+    background-color: $a-color;
 }
 
 .note__f {
-  background-color: $f-color;
+    background-color: $f-color;
 }
 
 .note__c {
-  background-color: $c-color;
+    background-color: $c-color;
 }
 
 .note__none {
-  border: $pitch-border-size solid black;
-  background-color: $pitch-color;
+    border: $pitch-border-size solid black;
+    background-color: $pitch-color;
 }
 
 .note__pitch {
-  background-color: $pitch-color;
+    background-color: $pitch-color;
 }
 
 // sharp
 
 .note__pitch.note__sharp.note__f {
-  border: $pitch-border-size solid $f-color;
+    border: $pitch-border-size solid $f-color;
 }
 
 .note__pitch.note__sharp.note__g {
-  border: $pitch-border-size solid $g-color;
+    border: $pitch-border-size solid $g-color;
 }
 
 .note__pitch.note__sharp.note__a {
-  border: $pitch-border-size solid $a-color;
+    border: $pitch-border-size solid $a-color;
 }
 
 .note__pitch.note__sharp.note__b {
-  border: $pitch-border-size solid $b-color;
+    border: $pitch-border-size solid $b-color;
 }
 
 .note__pitch.note__sharp.note__c {
-  border: $pitch-border-size solid $c-color;
+    border: $pitch-border-size solid $c-color;
 }
 
 .note__pitch.note__sharp.note__d {
-  border: $pitch-border-size solid $d-color;
+    border: $pitch-border-size solid $d-color;
 }
 
 .note__pitch.note__sharp.note__e {
-  border: $pitch-border-size solid $e-color;
+    border: $pitch-border-size solid $e-color;
 }
 
 // flat
 
 .note__pitch.note__flat.note__f {
-  border: $pitch-border-size double $f-color;
+    border: $pitch-border-size double $f-color;
 }
 
 .note__pitch.note__flat.note__g {
-  border: $pitch-border-size double $g-color;
+    border: $pitch-border-size double $g-color;
 }
 
 .note__pitch.note__flat.note__a {
-  border: $pitch-border-size double $a-color;
+    border: $pitch-border-size double $a-color;
 }
 
 .note__pitch.note__flat.note__b {
-  border: $pitch-border-size double $b-color;
+    border: $pitch-border-size double $b-color;
 }
 
 .note__pitch.note__flat.note__c {
-  border: $pitch-border-size double $c-color;
+    border: $pitch-border-size double $c-color;
 }
 
 .note__pitch.note__flat.note__d {
-  border: $pitch-border-size double $d-color;
+    border: $pitch-border-size double $d-color;
 }
 
 .note__pitch.note__flat.note__e {
-  border: $pitch-border-size double $e-color;
+    border: $pitch-border-size double $e-color;
 }

@@ -1,5 +1,5 @@
-[![Api](https://github.com/tpagit/fretboard/actions/workflows/api.yml/badge.svg?branch=main)](https://github.com/tpagit/fretboard/actions/workflows/api.yml)
-[![Frontend](https://github.com/tpagit/fretboard/actions/workflows/frontend.yml/badge.svg?branch=main)](https://github.com/tpagit/fretboard/actions/workflows/frontend.yml)
+[![BE](https://github.com/tpagit/fretboard/actions/workflows/api.yml/badge.svg?branch=main)](https://github.com/tpagit/fretboard/actions/workflows/api.yml)
+[![FE](https://github.com/tpagit/fretboard/actions/workflows/frontend.yml/badge.svg?branch=main)](https://github.com/tpagit/fretboard/actions/workflows/frontend.yml)
 
 # fretboard
 Fun project for learning music theory with python and javascript.

@@ -36,7 +36,7 @@ function TheoryScalesTable({scales = []}: ScaleTableParams) {
         })
         const scaleSharpsFlatsCountClass = classNames({
             "scale-desc": scaleDesc,
-        }
+        })
 
         return (
             <tr key={scale.id}>

@@ -1,5 +1,5 @@
 import React from "react"
-import {NOTE_NAMES, PITCHES} from "../../shared/constants"
+import {MUSICAL_ALPHABET, PITCHES} from "../../shared/constants"
 import ScaleKeyDropdown from "../../components/ScaleKeyDropdown"
 import {SingleToggle} from "../../components/Toggles"
 
@@ -46,7 +46,7 @@ function TheoryScaleForm({onSubmit, onReset, disabled = false}: FormParams) {
                 <div className="col-sm-10 d-flex justify-content-between">
                     <SingleToggle
                         name={"note"}
-                        items={NOTE_NAMES}
+                        items={MUSICAL_ALPHABET}
                         value={data.note}
                         onChange={(value) => setData({...data, note: value as string})}
                     />
