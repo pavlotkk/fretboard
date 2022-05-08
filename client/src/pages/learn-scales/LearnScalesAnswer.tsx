@@ -32,6 +32,14 @@ interface LearnScalesAnswerParams {
 }
 
 function LearnScalesAnswer({scale, answer, loading, onSubmit, onSkip, onAnswerChanged}: LearnScalesAnswerParams) {
+    const userInput = React.useRef<HTMLInputElement>(null)
+
+    React.useEffect(() => {
+        if (userInput.current != null && !loading) {
+            userInput.current.focus()
+        }
+    }, [scale, answer, loading])
+
     const formClasses = classNames({
         "bg-light": true,
         "p-5": true,
@@ -63,6 +71,7 @@ function LearnScalesAnswer({scale, answer, loading, onSubmit, onSkip, onAnswerCh
                 }}>
                 <div className="col-md-12">
                     <input
+                        ref={userInput}
                         type="text"
                         className="form-control form-control-lg"
                         placeholder={"Type scale notes here.."}
