@@ -28,7 +28,9 @@ export default function FretboardForehead({fretboard, showNotes}: Params) {
                     return (
                         <td key={fretNum} className={"fretboard__frets--fret"}>
                             {fretNum === 0 ? (
-                                <span className={`fret fret__0 note__${rootNote.toLowerCase()}`}>{rootNote}</span>
+                                showNotes.length === 0 || showNotes.includes(rootNote) ? (
+                                    <span className={`fret fret__0 note__${rootNote.toLowerCase()}`}>{rootNote}</span>
+                                ) : null
                             ) : (
                                 fretNote(stringNum, fretNum)
                             )}
